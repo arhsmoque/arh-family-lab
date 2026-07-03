@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Deckmate — School Presentation Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/theme.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== Deck list view ===== -->
+<main id="view-list" class="view">
+  <header class="list-header">
+    <div>
+      <h1 class="fd">Deckmate</h1>
+      <p class="muted">Build a presentation. Present it from your phone. No account needed.</p>
+    </div>
+    <button class="btn btn-primary" id="btnNewDeck">+ New deck</button>
+  </header>
+  <div id="deckGrid" class="deck-grid"></div>
+  <p id="emptyState" class="muted empty-state" hidden>No decks yet — tap "New deck" to start your first presentation.</p>
+</main>
+
+<!-- ===== Editor view ===== -->
+<main id="view-editor" class="view" hidden>
+  <header class="editor-toolbar">
+    <button class="btn btn-ghost" id="btnBack">← Decks</button>
+    <input id="deckTitleInput" class="deck-title-input fd" type="text" aria-label="Deck title">
+    <div class="toolbar-actions">
+      <button class="btn" id="btnExport">Export PDF</button>
+      <button class="btn btn-accent" id="btnPresent">▶ Present</button>
+    </div>
+  </header>
+
+  <div class="editor-body">
+    <div class="slide-strip" id="slideStrip"></div>
+
+    <div class="canvas-wrap">
+      <div class="slide-canvas glass-card" id="slideCanvas"></div>
+      <div class="canvas-actions">
+        <button class="btn" id="btnMoveUp">↑ Move up</button>
+        <button class="btn" id="btnMoveDown">↓ Move down</button>
+        <button class="btn" id="btnDuplicateSlide">⧉ Duplicate</button>
+        <button class="btn btn-danger" id="btnDeleteSlide">Delete slide</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="fab" id="btnAddSlide" aria-label="Add slide">+</button>
+</main>
+
+<!-- ===== Template picker modal ===== -->
+<div id="templateModal" class="modal-backdrop" hidden>
+  <div class="modal glass-card">
+    <h2 class="fd">Add a slide</h2>
+    <div class="template-grid" id="templateGrid"></div>
+    <button class="btn btn-ghost" id="btnCancelTemplate">Cancel</button>
+  </div>
+</div>
+
+<!-- ===== Present mode ===== -->
+<div id="presentOverlay" class="present-overlay" hidden>
+  <div class="present-slide glass-card" id="presentSlide"></div>
+  <button class="present-nav present-prev" id="btnPrev" aria-label="Previous slide">‹</button>
+  <button class="present-nav present-next" id="btnNext" aria-label="Next slide">›</button>
+  <button class="present-exit" id="btnExitPresent" aria-label="Exit presentation">✕</button>
+  <div class="present-counter" id="presentCounter"></div>
+</div>
+
+<!-- ===== Print sheet (built at export time) ===== -->
+<div id="printSheet" class="print-sheet"></div>
+
+<script src="storage.js"></script>
+<script src="templates.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
