@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Studio — Dev Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/theme.css">
+<link rel="stylesheet" href="style.css">
+<style>
+  .pin-screen{min-height:100vh;display:grid;place-items:center;padding:20px;background:var(--brand);color:#fff}
+  .pin-card{width:min(360px,100%);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:var(--radius);padding:22px}
+  .pin-card h1{font-family:var(--fd);font-size:28px;margin:0 0 8px}
+  .pin-card p{color:rgba(255,255,255,.76);margin:0 0 16px}
+  .pin-card input{width:100%;text-align:center;letter-spacing:.25em;font-weight:900;border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:10px;background:rgba(255,255,255,.06);color:#fff}
+  .dev-tabs{display:flex;gap:6px;margin-bottom:16px}
+  .dev-tab{border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);padding:8px 14px;font-weight:700}
+  .dev-tab.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .dev-panel{display:none}
+  .dev-panel.active{display:block}
+  table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:var(--radius);overflow:hidden}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);font-size:13px}
+  th{color:var(--muted);font-size:11px;text-transform:uppercase}
+  .add-row{display:flex;gap:8px;margin-bottom:14px}
+  .add-row input{flex:1;border:1px solid var(--line);border-radius:6px;padding:8px}
+</style>
+</head>
+<body>
+
+<section class="pin-screen" id="pinScreen">
+  <form class="pin-card" onsubmit="event.preventDefault();unlock()">
+    <h1>Studio — Dev Console</h1>
+    <p>Full access. Keep this URL private.</p>
+    <input id="pinInput" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN" autofocus>
+    <button class="btn btn-primary" type="submit" style="width:100%;margin-top:12px">Unlock</button>
+    <p id="pinError" class="muted" style="display:none;margin-top:10px;color:#ffb4a8"></p>
+  </form>
+</section>
+
+<main class="view" id="devApp" hidden>
+  <div class="list-header">
+    <h1 class="fd">Dev Console</h1>
+  </div>
+
+  <div class="dev-tabs">
+    <button class="dev-tab active" data-panel="allowlist">Approved emails</button>
+    <button class="dev-tab" data-panel="users">Users &amp; usage</button>
+  </div>
+
+  <section class="dev-panel active" id="panel-allowlist">
+    <form class="add-row" id="addAllowForm">
+      <input id="newEmail" type="email" placeholder="email to approve" required>
+      <input id="newAlias" type="text" placeholder="alias (optional)">
+      <button class="btn btn-primary" type="submit">Approve</button>
+    </form>
+    <table>
+      <thead><tr><th>Email</th><th>Alias</th><th>Added</th><th></th></tr></thead>
+      <tbody id="allowlistBody"></tbody>
+    </table>
+  </section>
+
+  <section class="dev-panel" id="panel-users">
+    <table>
+      <thead><tr><th>Alias</th><th>Email</th><th>Projects</th><th>Cards</th><th>Storage used</th><th>Joined</th></tr></thead>
+      <tbody id="usersBody"></tbody>
+    </table>
+  </section>
+</main>
+
+<script src="studio.config.js"></script>
+<script src="firebase-rest.js"></script>
+<script src="dev.js"></script>
+</body>
+</html>

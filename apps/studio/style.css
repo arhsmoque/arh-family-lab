@@ -1,0 +1,72 @@
+.view{max-width:1100px;margin:0 auto;padding:20px 16px 100px}
+.muted{color:var(--muted)}
+
+/* ---------- Auth ---------- */
+.auth-view{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.auth-card{width:100%;max-width:420px;padding:32px}
+.auth-card h1{margin:0 0 6px;color:var(--brand);font-size:30px}
+.auth-tabs{display:flex;gap:6px;margin:18px 0}
+.auth-tab{flex:1;border:1px solid var(--line);background:transparent;border-radius:var(--radius);padding:8px;font-weight:600;font-size:13px}
+.auth-tab.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.field{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:10px}
+.field input{width:100%;margin-top:4px;border:1px solid var(--line);border-radius:6px;padding:9px 10px;font-size:14px;font-family:var(--fb)}
+#authForm .btn{width:100%;margin-top:6px}
+.auth-message{margin-top:14px;font-size:13px;padding:10px;border-radius:6px;background:#fff0ed;color:var(--danger)}
+.auth-message.ok{background:#eaf6ef;color:var(--ok)}
+.auth-hint{margin-top:10px;font-size:12px}
+
+/* ---------- Landing extras ---------- */
+.row-actions{display:flex;gap:8px}
+.section-title{color:var(--brand);margin:20px 0 10px}
+.section-head-row{display:flex;justify-content:space-between;align-items:center;margin:8px 0}
+.pinned-rail{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px}
+.pinned-chip{flex-shrink:0;min-width:150px;border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);padding:10px 12px;cursor:pointer;font-size:12px}
+.pinned-chip .pc-title{font-weight:700;color:var(--brand);display:block;margin-bottom:2px}
+.pinned-chip .pc-type{color:var(--muted)}
+
+/* ---------- Card grid (workspace) ---------- */
+.card-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:150px;grid-auto-flow:dense;gap:14px}
+@media (max-width:720px){.card-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:140px}}
+.wb-card{grid-column:span 1;grid-row:span 1;border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);padding:12px;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.wb-card.size-M{grid-column:span 2}
+.wb-card.size-W{grid-column:span 3}
+.wb-card.size-L{grid-column:span 2;grid-row:span 2}
+.wb-card.size-T{grid-row:span 2}
+@media (max-width:720px){.wb-card.size-W{grid-column:span 2}.wb-card.size-L{grid-column:span 2}}
+.wb-card-head{display:flex;align-items:flex-start;gap:6px;margin-bottom:6px}
+.wb-card-title{flex:1;border:none;background:transparent;font-weight:700;color:var(--brand);font-family:var(--fd);font-size:14px;padding:2px 0}
+.wb-card-icon-btn{border:none;background:transparent;font-size:14px;padding:2px 6px;border-radius:4px;color:var(--muted)}
+.wb-card-icon-btn.pinned{color:var(--warm)}
+.wb-card-body{flex:1;overflow:auto;font-size:13px}
+.wb-card-body textarea{width:100%;height:100%;border:none;background:transparent;resize:none;font-family:var(--fb);font-size:13px}
+.wb-card-body img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px}
+.wb-card-body .video-embed{width:100%;aspect-ratio:16/9;border:none;border-radius:6px}
+.wb-card-body .video-link{display:flex;align-items:center;gap:6px;color:var(--accent);text-decoration:none;font-size:13px}
+.wb-card-footer{display:flex;gap:4px;justify-content:space-between;margin-top:6px;flex-wrap:wrap}
+.wb-card-footer .size-btns{display:flex;gap:2px}
+.wb-card-footer button{font-size:11px;padding:3px 6px}
+.upload-row{display:flex;flex-direction:column;gap:6px;height:100%;justify-content:center}
+.upload-row input[type=file]{font-size:11px}
+.usage-note{font-size:11px;color:var(--muted)}
+
+/* ---------- Shared bits reused from Deckmate look ---------- */
+.list-header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.list-header h1{margin:0 0 4px;font-size:30px;color:var(--brand)}
+.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.deck-card{border-radius:var(--radius);border:1px solid var(--line);background:var(--surface);padding:18px;cursor:pointer;transition:box-shadow .15s ease,transform .15s ease}
+.deck-card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.deck-card h3{margin:0 0 6px;font-family:var(--fd);font-size:18px;color:var(--brand)}
+.deck-card .deck-meta{font-size:12px;color:var(--muted)}
+.empty-state{margin-top:30px;text-align:center}
+.editor-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:16px;position:sticky;top:0;background:var(--bg);z-index:5}
+.deck-title-input{flex:1;min-width:120px;border:none;background:transparent;font-size:20px;color:var(--brand);padding:6px}
+.deck-title-input:focus{outline:1px solid var(--line);border-radius:6px}
+.toolbar-actions{display:flex;gap:8px}
+.modal-backdrop{position:fixed;inset:0;background:rgba(18,50,58,.45);display:flex;align-items:center;justify-content:center;z-index:20;padding:16px}
+.modal-backdrop:not([hidden]){display:flex}
+.modal{width:100%;max-width:460px;padding:28px}
+.modal h2{margin:0 0 16px;color:var(--brand)}
+.template-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:16px}
+.template-option{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:14px;text-align:center;cursor:pointer}
+.template-option:hover{border-color:var(--accent)}
+.template-option .t-icon{font-size:24px;display:block;margin-bottom:6px}
