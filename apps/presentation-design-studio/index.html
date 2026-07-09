@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presentation Design Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/theme.css">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+</head>
+<body>
+<main class="studio-shell">
+  <section class="hero glass-card">
+    <div>
+      <p class="eyebrow">Reusable presentation design studio</p>
+      <h1 class="fd">Slides as pure canvas functions, IO at the edge.</h1>
+      <p class="muted">Paste JSON, Markdown, text, chart data, image URLs, or Mermaid. The studio adapts inputs into a neutral slide model that can render anywhere.</p>
+    </div>
+    <div class="hero-actions">
+      <button class="btn btn-primary" id="btnRender">Render canvas</button>
+      <button class="btn" id="btnExport">Export JSON</button>
+      <label class="btn btn-warm file-btn">
+        Import file
+        <input id="fileInput" type="file" accept=".json,.md,.txt,.jpg,.jpeg,.png,image/jpeg,image/png,text/plain,text/markdown,application/json">
+      </label>
+    </div>
+  </section>
+
+  <section class="ports-grid">
+    <aside class="panel glass-card">
+      <div class="panel-heading">
+        <h2 class="fd">Input port</h2>
+        <span id="saveStatus" class="status-pill">local</span>
+      </div>
+      <label for="adapterSelect">Adapter</label>
+      <select id="adapterSelect">
+        <option value="json">JSON canvas config</option>
+        <option value="text">Text</option>
+        <option value="md">Markdown</option>
+        <option value="txt">TXT file/plain notes</option>
+        <option value="image">Image URL</option>
+        <option value="jpg">JPG URL/data URI</option>
+        <option value="png">PNG URL/data URI</option>
+        <option value="chart">Chart CSV</option>
+        <option value="mermaid">Mermaid diagram</option>
+      </select>
+
+      <label for="inputBox">Input box</label>
+      <textarea id="inputBox" spellcheck="false"></textarea>
+
+      <div class="quick-row">
+        <button class="btn" data-sample="briefing">Briefing sample</button>
+        <button class="btn" data-sample="chart">Chart sample</button>
+        <button class="btn" data-sample="mermaid">Mermaid sample</button>
+      </div>
+
+      <details open>
+        <summary>Canvas JSON</summary>
+        <textarea id="configBox" spellcheck="false"></textarea>
+      </details>
+    </aside>
+
+    <section class="workspace">
+      <div class="canvas-toolbar glass-card">
+        <div>
+          <strong id="deckTitle">Untitled canvas</strong>
+          <span id="slideCount" class="muted">0 slides</span>
+        </div>
+        <div>
+          <button class="btn" id="btnPrev">Previous</button>
+          <button class="btn" id="btnNext">Next</button>
+        </div>
+      </div>
+      <div id="canvasHost" class="canvas-host"></div>
+      <div id="thumbRail" class="thumb-rail" aria-label="Slides"></div>
+    </section>
+  </section>
+</main>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
