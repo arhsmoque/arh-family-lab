@@ -25,4 +25,5 @@ Then open `http://localhost:4173`.
 
 ## Deploy
 
-Create a Cloudflare Pages project pointed at this repo, root directory `/`, no build command, output directory `/`.
+- **Cloudflare Pages**: point a project at this repo, root directory `/`, no build command, output directory `/`.
+- **GitHub Pages**: pushes to `main` build and deploy automatically via `.github/workflows/pages.yml`. One-time setup: in the repo's Settings → Pages, set Source to "GitHub Actions".
