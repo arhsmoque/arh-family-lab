@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Realistic ECC Tooth Lab</title>
+<style>
+  :root{
+    --bg:#f4efe5;--paper:#fffaf1;--ink:#17211f;--muted:#63736f;--green:#2f7b67;--lime:#7fc72f;--blue:#1f5e73;--warm:#c9822c;--danger:#9b3b2f;--line:rgba(23,33,31,.14);--shadow:0 24px 70px rgba(18,50,58,.16);--sans:"Aptos","Segoe UI",system-ui,sans-serif;--serif:Georgia,"Times New Roman",serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;font-family:var(--sans);color:var(--ink);background:radial-gradient(circle at 12% 8%,rgba(127,199,47,.20),transparent 30rem),radial-gradient(circle at 92% 0,rgba(31,94,115,.16),transparent 28rem),var(--bg)}
+  button,input{font:inherit}.shell{max-width:1280px;margin:0 auto;padding:22px}.hero{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end;margin-bottom:16px}.eyebrow{margin:0 0 6px;text-transform:uppercase;letter-spacing:.16em;color:var(--green);font-size:12px;font-weight:800}h1{margin:0;font-family:var(--serif);font-size:clamp(34px,6vw,72px);line-height:.92;color:#10322f}.hero p{max-width:850px;color:var(--muted);font-size:17px;line-height:1.45}.badge{border:1px solid var(--line);background:rgba(255,255,255,.66);border-radius:999px;padding:10px 14px;font-weight:800;color:var(--blue);white-space:nowrap}.lab{display:grid;grid-template-columns:minmax(300px,430px) 1fr;gap:16px}.panel,.stage,.note{background:rgba(255,250,241,.80);border:1px solid rgba(255,255,255,.58);border-radius:24px;box-shadow:var(--shadow);backdrop-filter:blur(20px)}.panel{padding:18px;align-self:start}.stage{position:relative;min-height:700px;overflow:hidden;padding:20px}.section-title{margin:0 0 10px;font-family:var(--serif);font-size:24px;color:#10322f}.control-group{border-top:1px solid var(--line);padding-top:14px;margin-top:14px}.control-group:first-of-type{border-top:0;padding-top:0}.label-row{display:flex;justify-content:space-between;gap:12px;margin:12px 0 7px;font-size:13px;color:var(--muted);font-weight:800}input[type=range]{width:100%;accent-color:var(--green)}.segmented{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.segmented button,.surface-list button,.btn,.risk{border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px 12px;color:var(--ink);font-weight:800;cursor:pointer}.segmented button.active,.surface-list button.active,.btn.primary{background:var(--green);border-color:var(--green);color:#fff}.stage-nav{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;margin-top:10px}.stage-dots{display:flex;justify-content:center;gap:7px}.stage-dot{width:11px;height:11px;border:0;border-radius:999px;background:rgba(47,123,103,.25);cursor:pointer;padding:0}.stage-dot.active{background:var(--green);box-shadow:0 0 0 4px rgba(47,123,103,.14)}.preset-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.surface-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.surface-list button{font-size:13px;text-align:left}.hint{color:var(--muted);font-size:13px;line-height:1.45}.viewer-header{display:flex;justify-content:space-between;align-items:start;gap:18px;position:relative;z-index:4}.viewer-header h2{margin:0;font-family:var(--serif);font-size:34px;color:#10322f}.viewer-header p{margin:5px 0 0;color:var(--muted)}
+  .tooth-space{height:520px;display:grid;place-items:center;perspective:1000px;position:relative;touch-action:none;cursor:grab}.tooth-space.dragging{cursor:grabbing}.tooth-rig{position:relative;width:min(500px,78vw);height:500px;transform-style:preserve-3d;transition:transform .22s ease;filter:drop-shadow(0 32px 34px rgba(34,44,38,.24))}.tooth-rig.dragging{transition:none}.tooth-svg{width:100%;height:100%;overflow:visible}.clinical-surface{opacity:.04;mix-blend-mode:multiply;transition:opacity .2s ease,stroke .2s ease,fill .2s ease}.clinical-surface.active{opacity:.70;stroke:rgba(31,94,115,.86);stroke-width:3;fill:rgba(127,199,47,.26)}.clinical-surface:focus-visible{outline:3px solid var(--blue);outline-offset:3px}.lesion{opacity:0;transition:opacity .25s ease,transform .25s ease}.stage-plaque .plaque{opacity:1}.stage-white .plaque,.stage-white .white-spot{opacity:1}.stage-brown .plaque,.stage-brown .brown-spot{opacity:1}.stage-cavity .plaque,.stage-cavity .cavity,.stage-cavity .fracture-shadow{opacity:1}.stage-white .white-spot{transform:scale(1.04);transform-origin:center}.stage-brown .brown-spot,.stage-cavity .cavity{transform:scale(1.07);transform-origin:center}.enamel-line{opacity:.42}.dentin-hint{opacity:.34}.specular{opacity:.72}.root-canal{opacity:.26}.gumline-shadow{opacity:.28}.annotation{position:absolute;border-left:3px solid var(--green);background:rgba(255,255,255,.82);padding:10px 12px;border-radius:12px;box-shadow:0 12px 35px rgba(18,50,58,.08);max-width:268px}.annotation strong{display:block;color:var(--green);font-size:13px;text-transform:uppercase;letter-spacing:.08em}.annotation span{display:block;margin-top:3px;font-size:13px;color:var(--ink);line-height:1.35}.ann1{left:32px;top:150px}.ann2{right:30px;top:230px}.ann3{left:50px;bottom:116px}.bottom-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.note{padding:16px;box-shadow:none;background:rgba(255,255,255,.68)}.note h3{margin:0 0 8px;color:#10322f}.note p{margin:0;color:var(--muted);line-height:1.45}.risk-triad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.risk{border-radius:16px;padding:12px;min-height:88px;text-align:left}.risk.active{border-color:var(--green);box-shadow:0 0 0 4px rgba(47,123,103,.11)}.risk b{display:block;color:var(--green);font-size:13px}.risk small{display:block;margin-top:5px;color:var(--muted);line-height:1.3}.risk-detail{margin-top:12px;border-left:3px solid var(--green);padding-left:10px;color:var(--muted);font-size:13px;line-height:1.45}.presenter-notes{margin-top:12px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:11px 12px}.presenter-notes summary{cursor:pointer;font-weight:800;color:var(--green)}.presenter-notes p{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.45}.present-strip{position:absolute;right:18px;bottom:18px;display:flex;gap:8px;z-index:5}.btn{box-shadow:0 10px 30px rgba(18,50,58,.08)}.truth-card{margin-top:12px;border:1px solid rgba(31,94,115,.22);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.80),rgba(238,246,240,.80));padding:12px;color:var(--muted);font-size:13px;line-height:1.42}.truth-card b{color:var(--blue)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  @media (max-width:900px){.hero,.lab,.bottom-grid{grid-template-columns:1fr}.stage{min-height:840px}.annotation{position:relative;left:auto;right:auto;top:auto;bottom:auto;margin:8px 0}.tooth-space{height:430px}.tooth-rig{height:410px}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Klinik Pergigian Dato Keramat · ECC teaching prop</p>
+      <h1>Realistic Tooth Lab</h1>
+      <p>Use this beside the CPG deck when the simplified tooth looks too cartoon-like. The model is still a teaching diagram, but it uses a single SVG anatomy illustration with enamel shading, root form, gingival margin, plaque band, white/brown lesions and cavitation overlays.</p>
+    </div>
+    <div class="badge">Live SVG · no backend</div>
+  </header>
+
+  <section class="lab">
+    <aside class="panel" aria-label="Teaching controls">
+      <h2 class="section-title">Presenter Controls</h2>
+      <p class="hint">Designed as a more realistic visual layer. It should support the CPG explanation, not replace clinical examination or official wording.</p>
+      <div class="control-group">
+        <div class="label-row"><span>ECC progression</span><span id="stageLabel">Plaque</span></div>
+        <div class="segmented" id="stageButtons">
+          <button data-stage="plaque" class="active">Plaque</button>
+          <button data-stage="white">White spot</button>
+          <button data-stage="brown">Brown spot</button>
+          <button data-stage="cavity">Cavitated</button>
+        </div>
+        <div class="stage-nav" aria-label="Stage navigation">
+          <button class="btn" id="prevStageBtn" type="button">Previous</button>
+          <div class="stage-dots" id="stageDots" aria-label="Jump to stage"></div>
+          <button class="btn" id="nextStageBtn" type="button">Next</button>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="label-row"><span>Rotate left / right</span><span id="rotYLabel">0°</span></div>
+        <input id="rotY" type="range" min="-42" max="42" value="0">
+        <div class="label-row"><span>Tilt up / down</span><span id="rotXLabel">0°</span></div>
+        <input id="rotX" type="range" min="-32" max="24" value="0">
+        <div class="preset-grid" aria-label="Preset views">
+          <button class="btn" id="facialViewBtn" type="button">Facial</button>
+          <button class="btn" id="occlusalViewBtn" type="button">Incisal tilt</button>
+          <button class="btn" id="proximalViewBtn" type="button">Proximal</button>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="label-row"><span>Surface focus</span><span id="surfaceLabel">Gingival margin</span></div>
+        <div class="surface-list" id="surfaceButtons">
+          <button data-surface="gingival" class="active">Gingival margin</button>
+          <button data-surface="smooth">Smooth surface</button>
+          <button data-surface="proximal">Proximal</button>
+          <button data-surface="incisal">Incisal edge</button>
+        </div>
+      </div>
+      <div class="control-group">
+        <button class="btn primary" id="playBtn">Auto step</button>
+        <button class="btn" id="resetBtn">Reset view</button>
+      </div>
+      <div class="truth-card"><b>Accuracy note:</b> this is a realistic presenter illustration, not a diagnostic 3D scan. It intentionally balances clinical readability with audience-friendly simplicity.</div>
+    </aside>
+
+    <section class="stage" aria-live="polite">
+      <div class="viewer-header">
+        <div><h2 id="viewerTitle">Plaque at gingival margin</h2><p id="viewerSub">Soft glutinous plaque accumulations at gingival margin.</p></div>
+        <div class="badge" id="sourceBadge">Source: Clinical presentation</div>
+      </div>
+
+      <div class="tooth-space" id="toothSpace" aria-label="Drag the realistic tooth model to rotate it">
+        <div class="tooth-rig stage-plaque" id="toothRig">
+          <svg class="tooth-svg" viewBox="0 0 420 560" role="img" aria-labelledby="toothTitle toothDesc">
+            <title id="toothTitle">Realistic primary anterior tooth ECC teaching model</title>
+            <desc id="toothDesc">A stylised but more realistic primary anterior tooth with roots, enamel, gingival margin, plaque, early white spot, brown spot and cavitated lesion overlays.</desc>
+            <defs>
+              <radialGradient id="enamelGlow" cx="40%" cy="22%" r="75%">
+                <stop offset="0" stop-color="#fffefa"/><stop offset="0.36" stop-color="#fff6df"/><stop offset="0.72" stop-color="#ead8b9"/><stop offset="1" stop-color="#cfb38a"/>
+              </radialGradient>
+              <linearGradient id="rootGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#f0dfc4"/><stop offset="0.48" stop-color="#dfc49b"/><stop offset="1" stop-color="#c7a478"/>
+              </linearGradient>
+              <linearGradient id="gumGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#f5adb0"/><stop offset="0.58" stop-color="#d97882"/><stop offset="1" stop-color="#b85d69"/>
+              </linearGradient>
+              <radialGradient id="cavityGrad" cx="45%" cy="42%" r="60%">
+                <stop offset="0" stop-color="#090504"/><stop offset="0.38" stop-color="#2d120d"/><stop offset="0.66" stop-color="#8c432b"/><stop offset="1" stop-color="rgba(140,67,43,0)"/>
+              </radialGradient>
+              <filter id="softTexture" x="-20%" y="-20%" width="140%" height="140%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="6" result="noise"/>
+                <feColorMatrix in="noise" type="saturate" values="0" result="gray"/>
+                <feBlend in="SourceGraphic" in2="gray" mode="soft-light"/>
+              </filter>
+              <filter id="innerShadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="-8" dy="12" stdDeviation="10" flood-color="#6a4a29" flood-opacity=".22"/>
+              </filter>
+            </defs>
+
+            <ellipse cx="210" cy="444" rx="135" ry="34" fill="rgba(55,45,34,.12)"/>
+            <path d="M64 354 C95 319 135 305 210 309 C284 305 326 320 356 354 C339 408 296 431 210 431 C124 431 82 408 64 354Z" fill="url(#gumGrad)"/>
+            <path class="gumline-shadow" d="M87 339 C118 318 161 312 210 316 C259 312 302 318 333 339" fill="none" stroke="#873f4c" stroke-width="14" stroke-linecap="round"/>
+
+            <g filter="url(#innerShadow)">
+              <path class="root" d="M149 306 C139 357 129 407 147 493 C160 534 186 535 196 492 C205 445 203 382 198 311Z" fill="url(#rootGrad)" stroke="#b1936a" stroke-width="2"/>
+              <path class="root" d="M222 311 C216 382 215 445 225 492 C235 535 260 534 274 493 C292 407 281 357 271 306Z" fill="url(#rootGrad)" stroke="#b1936a" stroke-width="2"/>
+              <path class="root-canal" d="M173 328 C168 378 166 430 176 489" fill="none" stroke="#8f6f4f" stroke-width="5" stroke-linecap="round"/>
+              <path class="root-canal" d="M247 328 C252 378 254 430 244 489" fill="none" stroke="#8f6f4f" stroke-width="5" stroke-linecap="round"/>
+            </g>
+
+            <path class="dentin-hint" d="M121 116 C142 65 190 45 238 61 C286 78 311 122 305 184 C299 250 267 298 212 318 C157 298 124 251 116 186 C113 157 114 134 121 116Z" fill="#d7b783"/>
+            <path class="crown" d="M113 112 C126 60 177 34 226 47 C276 61 312 104 316 161 C322 235 286 301 210 329 C135 302 99 236 104 162 C105 142 108 125 113 112Z" fill="url(#enamelGlow)" stroke="#aa946f" stroke-width="2.5" filter="url(#softTexture)"/>
+            <path class="enamel-line" d="M130 113 C146 76 183 59 221 68 C260 77 291 110 296 159 C302 221 273 276 211 303 C149 276 119 221 124 160 C125 143 127 126 130 113Z" fill="none" stroke="#fffdf3" stroke-width="8" stroke-linecap="round"/>
+            <path class="specular" d="M143 119 C158 82 193 69 225 79" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" opacity=".56"/>
+            <path class="specular" d="M133 167 C124 215 145 264 184 290" fill="none" stroke="#fff8df" stroke-width="7" stroke-linecap="round" opacity=".38"/>
+            <path d="M210 54 C205 108 204 254 210 326" fill="none" stroke="rgba(125,96,58,.16)" stroke-width="3"/>
+            <path d="M150 73 C165 118 166 247 147 282" fill="none" stroke="rgba(125,96,58,.12)" stroke-width="3"/>
+            <path d="M268 84 C254 126 252 246 273 282" fill="none" stroke="rgba(125,96,58,.12)" stroke-width="3"/>
+
+            <path class="lesion plaque" d="M121 260 C153 251 187 250 210 256 C235 250 269 251 300 260 C296 276 263 286 210 284 C157 286 125 276 121 260Z" fill="#c4a34c" opacity="0"/>
+            <ellipse class="lesion white-spot" cx="188" cy="218" rx="31" ry="19" fill="rgba(255,255,255,.88)" stroke="#d7c9a7" stroke-width="2" opacity="0"/>
+            <ellipse class="lesion brown-spot" cx="205" cy="217" rx="29" ry="21" fill="#9b6338" stroke="#74442a" stroke-width="2" opacity="0"/>
+            <ellipse class="lesion cavity" cx="206" cy="214" rx="34" ry="27" fill="url(#cavityGrad)" opacity="0"/>
+            <path class="lesion fracture-shadow" d="M200 212 C196 229 193 241 187 254" fill="none" stroke="#20100b" stroke-width="3" opacity="0"/>
+
+            <path class="clinical-surface gingival active" data-surface-shape="gingival" tabindex="0" role="button" aria-label="Focus gingival margin" d="M110 248 C145 235 181 234 210 242 C239 234 276 235 310 248 L303 282 C267 294 236 293 210 287 C183 293 152 294 117 282Z"/>
+            <path class="clinical-surface smooth" data-surface-shape="smooth" tabindex="0" role="button" aria-label="Focus smooth surface" d="M137 95 C159 70 196 59 231 69 C268 80 292 113 298 156 C305 215 275 267 211 294 C148 267 119 215 124 156 C126 132 130 112 137 95Z"/>
+            <path class="clinical-surface proximal" data-surface-shape="proximal" tabindex="0" role="button" aria-label="Focus proximal surface" d="M286 108 C314 135 319 198 299 247 C290 269 278 286 264 295 C253 262 252 140 286 108Z"/>
+            <path class="clinical-surface incisal" data-surface-shape="incisal" tabindex="0" role="button" aria-label="Focus incisal edge" d="M137 95 C161 49 230 42 271 80 C248 98 173 105 137 95Z"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="annotation ann1"><strong id="ann1Title">Surface</strong><span id="ann1Text">Start by pointing to where plaque collects near the gum line.</span></div>
+      <div class="annotation ann2"><strong>CPG phrasing</strong><span id="sourceText">“Soft glutinous plaque accumulations at gingival margin.”</span></div>
+      <div class="annotation ann3"><strong>Presenter prompt</strong><span id="promptText">Ask caregiver about feeding, sugar frequency and brushing routine.</span></div>
+
+      <div class="bottom-grid">
+        <div class="note"><h3>Risk factor convergence</h3><p>ECC is multifactorial. Use the triad to explain why “bottle feeding only” is too narrow.</p><div class="risk-triad"><button class="risk active" data-risk="host" type="button"><b>Host/tooth</b><small>Primary teeth, enamel stage, surfaces at risk.</small></button><button class="risk" data-risk="biofilm" type="button"><b>Microorganisms</b><small>Cariogenic bacteria and plaque biofilm.</small></button><button class="risk" data-risk="diet" type="button"><b>Carbohydrate/time</b><small>Fermentable sugars with repeated exposure.</small></button></div><p class="risk-detail" id="riskDetail">Primary anterior teeth make the visual story easy for parents: show surface, sign, then prevention action.</p></div>
+        <div class="note"><h3>Clinical bridge</h3><p id="bridgeText">Move from visual signs to CRA, OHE, fluoride toothpaste, fluoride varnish and recall interval.</p><details class="presenter-notes"><summary>Presenter notes</summary><p id="presenterNote">Keep language simple: this model supports explanation. Diagnosis and treatment decisions still follow clinical examination and the CPG.</p></details></div>
+      </div>
+      <div class="present-strip"><button class="btn" id="fullscreenBtn">Fullscreen</button></div>
+    </section>
+  </section>
+</main>
+
+<script>
+const stageOrder=["plaque","white","brown","cavity"];
+const copy={
+  plaque:{label:"Plaque",title:"Plaque at gingival margin",sub:"Soft glutinous plaque accumulations at gingival margin.",source:"“Soft glutinous plaque accumulations at gingival margin.”",prompt:"Ask caregiver about feeding, sugar frequency and brushing routine.",bridge:"This is where prevention messaging starts: feeding practice, toothbrushing and caregiver support.",note:"Good opening stage for caregivers: the visible yellow band lets her explain plaque without sounding punitive."},
+  white:{label:"White spot",title:"White / brown spot begins",sub:"Decalcified white or brown bands or spots beneath the plaque.",source:"“Decalcified white or brown bands or spots beneath the plaque.”",prompt:"Explain this as an early visible sign before a hole appears.",bridge:"Good moment to reinforce fluoride toothpaste, spit-not-rinse, and risk-based recall.",note:"Use this stage to keep attention: early ECC can be discussed before cavitation, which makes prevention feel practical."},
+  brown:{label:"Brown spot",title:"Discolouration becomes visible",sub:"White or brown spots can be shown before cavitation.",source:"Source describes white or brown spots beneath plaque and progression to cavitated lesions.",prompt:"Use simple language: not all early caries starts as a hole.",bridge:"Connect visual examination with clean, dry teeth under adequate light.",note:"This is an enhanced teaching stage, not a verbatim slide claim. Keep it as visual support for the CPG progression language."},
+  cavity:{label:"Cavitated",title:"Progression to cavitated lesion",sub:"The white or brown spots will progress to cavitated lesions.",source:"“The white or brown spots will progress to cavitated lesions.”",prompt:"Transition to treatment options and why prevention/recall matters.",bridge:"Now move into treatment choices: non-invasive for non-cavitated lesions, invasive methods when required.",note:"Use the cavity stage briefly, then return to prevention and recall. It should not dominate the session."}
+};
+const surfaceCopy={gingival:["Gingival margin","Common place to discuss plaque accumulation near gum line."],smooth:["Smooth surface","Use this when explaining early visible signs on the labial surface."],proximal:["Proximal","Bridge to when bitewing radiography may provide additional yield."],incisal:["Incisal edge","Shows this is an anterior teaching model; keep the focus on gingival plaque for ECC onset."]};
+const riskCopy={host:"Primary anterior teeth make the visual story easy for parents: show surface, sign, then prevention action.",biofilm:"Plaque biofilm is the shared thread across stages. Tie it back to brushing support and OHE.",diet:"Repeated sugar exposure over time is easier to explain when the stage changes are visible."};
+const viewPresets={facial:{x:-3,y:0},occlusal:{x:-25,y:0},proximal:{x:-4,y:32},reset:{x:0,y:0}};
+const rig=document.querySelector("#toothRig"),toothSpace=document.querySelector("#toothSpace"),stageButtons=document.querySelectorAll("[data-stage]"),stageDots=document.querySelector("#stageDots"),surfaceButtons=document.querySelectorAll("[data-surface]"),surfaces=document.querySelectorAll("[data-surface-shape]"),riskButtons=document.querySelectorAll("[data-risk]"),rotX=document.querySelector("#rotX"),rotY=document.querySelector("#rotY"),rotXLabel=document.querySelector("#rotXLabel"),rotYLabel=document.querySelector("#rotYLabel");
+let currentStage="plaque",playTimer=null,dragState=null;
+function setStage(stage){currentStage=stage;rig.classList.remove(...stageOrder.map(item=>`stage-${item}`));rig.classList.add(`stage-${stage}`);stageButtons.forEach(btn=>btn.classList.toggle("active",btn.dataset.stage===stage));document.querySelectorAll(".stage-dot").forEach(dot=>dot.classList.toggle("active",dot.dataset.stage===stage));const c=copy[stage];document.querySelector("#stageLabel").textContent=c.label;document.querySelector("#viewerTitle").textContent=c.title;document.querySelector("#viewerSub").textContent=c.sub;document.querySelector("#sourceText").textContent=c.source;document.querySelector("#promptText").textContent=c.prompt;document.querySelector("#bridgeText").textContent=c.bridge;document.querySelector("#presenterNote").textContent=c.note;applyRotation()}
+function setSurface(surface){surfaceButtons.forEach(btn=>btn.classList.toggle("active",btn.dataset.surface===surface));surfaces.forEach(shape=>shape.classList.toggle("active",shape.dataset.surfaceShape===surface));const [label,text]=surfaceCopy[surface];document.querySelector("#surfaceLabel").textContent=label;document.querySelector("#ann1Title").textContent=label;document.querySelector("#ann1Text").textContent=text}
+function setRisk(risk){riskButtons.forEach(btn=>btn.classList.toggle("active",btn.dataset.risk===risk));document.querySelector("#riskDetail").textContent=riskCopy[risk]}
+function setView({x,y}){rotX.value=x;rotY.value=y;applyRotation()}
+function applyRotation(){rotXLabel.textContent=`${rotX.value}°`;rotYLabel.textContent=`${rotY.value}°`;rig.style.transform=`rotateX(${rotX.value}deg) rotateY(${rotY.value}deg)`}
+function stepStage(delta){const currentIndex=stageOrder.indexOf(currentStage);const nextIndex=(currentIndex+delta+stageOrder.length)%stageOrder.length;setStage(stageOrder[nextIndex])}
+function buildStageDots(){stageDots.innerHTML="";stageOrder.forEach(stage=>{const dot=document.createElement("button");dot.className=`stage-dot${stage===currentStage?" active":""}`;dot.type="button";dot.dataset.stage=stage;dot.setAttribute("aria-label",`Jump to ${copy[stage].label}`);dot.addEventListener("click",()=>setStage(stage));stageDots.appendChild(dot)})}
+function clampRotation(value,min,max){return Math.max(min,Math.min(max,value))}
+stageButtons.forEach(btn=>btn.addEventListener("click",()=>setStage(btn.dataset.stage)));surfaceButtons.forEach(btn=>btn.addEventListener("click",()=>setSurface(btn.dataset.surface)));surfaces.forEach(shape=>{shape.addEventListener("click",()=>setSurface(shape.dataset.surfaceShape));shape.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();setSurface(shape.dataset.surfaceShape)}})});riskButtons.forEach(btn=>btn.addEventListener("click",()=>setRisk(btn.dataset.risk)));rotX.addEventListener("input",applyRotation);rotY.addEventListener("input",applyRotation);document.querySelector("#prevStageBtn").addEventListener("click",()=>stepStage(-1));document.querySelector("#nextStageBtn").addEventListener("click",()=>stepStage(1));document.querySelector("#facialViewBtn").addEventListener("click",()=>setView(viewPresets.facial));document.querySelector("#occlusalViewBtn").addEventListener("click",()=>setView(viewPresets.occlusal));document.querySelector("#proximalViewBtn").addEventListener("click",()=>setView(viewPresets.proximal));
+toothSpace.addEventListener("pointerdown",event=>{dragState={x:event.clientX,y:event.clientY,startX:Number(rotX.value),startY:Number(rotY.value)};toothSpace.classList.add("dragging");rig.classList.add("dragging");toothSpace.setPointerCapture(event.pointerId)});toothSpace.addEventListener("pointermove",event=>{if(!dragState)return;const dx=event.clientX-dragState.x,dy=event.clientY-dragState.y;rotY.value=clampRotation(dragState.startY+dx*.24,Number(rotY.min),Number(rotY.max));rotX.value=clampRotation(dragState.startX-dy*.18,Number(rotX.min),Number(rotX.max));applyRotation()});function stopDrag(){dragState=null;toothSpace.classList.remove("dragging");rig.classList.remove("dragging")}toothSpace.addEventListener("pointerup",stopDrag);toothSpace.addEventListener("pointercancel",stopDrag);document.querySelector("#resetBtn").addEventListener("click",()=>{setView(viewPresets.reset);setStage("plaque");setSurface("gingival");applyRotation()});document.querySelector("#playBtn").addEventListener("click",()=>{if(playTimer){clearInterval(playTimer);playTimer=null;document.querySelector("#playBtn").textContent="Auto step";return}let i=stageOrder.indexOf(currentStage);document.querySelector("#playBtn").textContent="Stop";playTimer=setInterval(()=>{i=(i+1)%stageOrder.length;setStage(stageOrder[i])},1700)});document.querySelector("#fullscreenBtn").addEventListener("click",()=>{document.documentElement.requestFullscreen?.()});buildStageDots();applyRotation();
+</script>
+</body>
+</html>
