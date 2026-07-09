@@ -20,6 +20,12 @@
   .app-card h3{margin:0 0 8px;font-family:var(--fd);color:var(--brand)}
   .app-card p{margin:0;font-size:14px;color:var(--muted);line-height:1.45}
   .tag{display:inline-block;margin-bottom:12px;border:1px solid var(--line);border-radius:999px;padding:5px 9px;font-size:12px;font-weight:800;color:var(--accent);background:rgba(255,255,255,.62)}
+  .download-card{border-radius:var(--radius);border:1px solid var(--line);background:linear-gradient(145deg,#fffdf6,#eef6f0);padding:20px;box-shadow:var(--shadow)}
+  .download-card h3{margin:0 0 8px;font-family:var(--fd);color:var(--brand)}
+  .download-card p{margin:0 0 14px;font-size:14px;color:var(--muted);line-height:1.45}
+  .download-list{display:grid;gap:10px}
+  .download-link{display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;background:#fff;padding:11px 12px;color:var(--brand);font-weight:800;text-decoration:none}
+  .download-link span{font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:.08em}
 </style>
 </head>
 <body>
@@ -34,11 +40,16 @@
       <h3>ECC Tooth Lab</h3>
       <p>Live teaching prop: rotate a simplified tooth model, focus surfaces, and step through plaque, white spot, brown spot and cavitation.</p>
     </a>
-    <a class="app-card" href="apps/ecc-cpg-dato-keramat/">
-      <span class="tag">Static deck</span>
-      <h3>ECC CPG Briefing</h3>
-      <p>Published static HTML briefing deck for quick mobile viewing and sharing.</p>
-    </a>
+    <section class="download-card" aria-label="ECC briefing downloads">
+      <span class="tag">Office-ready files</span>
+      <h3>ECC CPG Briefing Downloads</h3>
+      <p>Use these when the static HTML deck fails to render or when the clinic PC needs PowerPoint/PDF directly.</p>
+      <div class="download-list">
+        <a class="download-link" href="apps/ecc-cpg-dato-keramat/downloads/ecc-cpg-dato-keramat-briefing-final.pptx" download>Briefing deck <span>PPTX</span></a>
+        <a class="download-link" href="apps/ecc-cpg-dato-keramat/downloads/ecc-cpg-dato-keramat-briefing-final.pdf" download>Briefing deck <span>PDF</span></a>
+        <a class="download-link" href="apps/ecc-cpg-dato-keramat/downloads/cpg-ecc-kp-dato-keramat-faithful-enhanced-options.pptx" download>Faithful + enhanced options <span>PPTX</span></a>
+      </div>
+    </section>
     <a class="app-card" href="apps/presentation-design-studio/">
       <span class="tag">Prototype</span>
       <h3>Presentation Design Studio</h3>
