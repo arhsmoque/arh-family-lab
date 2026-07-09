@@ -7,8 +7,13 @@ A hub of small, static, no-build-step web apps for family & friends. Deploys to 
 - **[Deckmate](apps/presentation/)** — a phone-first presentation builder for school. Pick a slide template (title, bullets, image+caption, comparison, timeline, quote), fill it in, reorder, present fullscreen, export to PDF. Decks are saved in the browser (`localStorage`); no account, no backend.
 - **[Studio](apps/studio/)** — a personal workspace: sign in (email/password, admin-approved list), organize work into tabbed projects, fill each with resizable note/photo/video cards, pin any card for quick access from the landing page. Backed by the same Firebase Realtime Database as the homestay app (isolated `studio` path), called with plain REST — no SDK. See `apps/studio/SETUP.md` before using it: it needs a few one-time steps in the Firebase console (enable Email/Password auth, paste in API key + database secret, add security rules).
 
+## Clinical / presentation lab
+
+Clinical artifacts are linked from [`clinical.html`](clinical.html), separate from the family landing page.
+
 - **[ECC CPG Briefing](apps/ecc-cpg-dato-keramat/)** - the published Klinik Pergigian Dato Keramat briefing deck as a static HTML viewer.
 - **[Presentation Design Studio](apps/presentation-design-studio/)** - a reusable presentation canvas prototype. Browser IO lives in `app.js`; pure slide/canvas functions live in `studio-core.js`; content adapters live in `adapters.js`.
+- **[ECC Tooth Lab](apps/ecc-tooth-lab/)** - an interactive HTML teaching prop for ECC progression and tooth-surface explanation.
 
 ## Adding a new app
 
