@@ -30,6 +30,7 @@
     <button class="btn btn-ghost" id="btnBack">← Decks</button>
     <input id="deckTitleInput" class="deck-title-input fd" type="text" aria-label="Deck title">
     <div class="toolbar-actions">
+      <button class="btn" id="btnInspiration">Ideas & images</button>
       <button class="btn" id="btnExport">Export PDF</button>
       <button class="btn btn-accent" id="btnPresent">▶ Present</button>
     </div>
@@ -47,6 +48,15 @@
         <button class="btn btn-danger" id="btnDeleteSlide">Delete slide</button>
       </div>
     </div>
+
+    <aside class="research-panel glass-card" aria-label="Deck research notes">
+      <div class="panel-heading">
+        <h2 class="fd">Research tray</h2>
+        <button class="btn btn-ghost" id="btnOpenInspiration">Open</button>
+      </div>
+      <p class="muted">Keep useful links here so image credits and sources do not disappear before presenting.</p>
+      <div id="sourceList" class="source-list"></div>
+    </aside>
   </div>
 
   <button class="fab" id="btnAddSlide" aria-label="Add slide">+</button>
@@ -57,7 +67,76 @@
   <div class="modal glass-card">
     <h2 class="fd">Add a slide</h2>
     <div class="template-grid" id="templateGrid"></div>
-    <button class="btn btn-ghost" id="btnCancelTemplate">Cancel</button>
+    <section class="module-composer">
+      <div>
+        <h3 class="fd">Reusable module</h3>
+        <p class="muted">Paste repeated content once, then let an adapter generate slides.</p>
+      </div>
+      <label class="field-label" for="moduleKind">Adapter</label>
+      <select id="moduleKind" class="idea-input"></select>
+      <p class="muted module-hint" id="moduleHint"></p>
+      <textarea id="moduleInput" class="idea-input module-input" placeholder="Text, Markdown, image URLs, or label,value chart rows"></textarea>
+      <div class="module-actions">
+        <label class="btn btn-warm file-btn">Import file<input id="moduleFile" type="file" accept=".txt,.md,.csv,.jpg,.jpeg,.png,.webp,text/plain,text/markdown,text/csv,image/*"></label>
+        <button class="btn btn-primary" id="btnAddModule">Add module slides</button>
+        <button class="btn btn-ghost" id="btnCancelTemplate">Cancel</button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ===== Inspiration / source helper modal ===== -->
+<div id="inspirationModal" class="modal-backdrop" hidden>
+  <div class="modal inspiration-modal glass-card">
+    <div class="modal-head">
+      <div>
+        <h2 class="fd">Ideas, Images & Sources</h2>
+        <p class="muted">Search outside sources, then paste the best image or link back into Deckmate.</p>
+      </div>
+      <button class="btn btn-ghost" id="btnCloseInspiration">Close</button>
+    </div>
+
+    <label class="field-label" for="ideaQuery">Topic / keywords</label>
+    <input id="ideaQuery" class="idea-input" type="search" placeholder="Example: food chain, water cycle, tokoh kemerdekaan">
+
+    <div class="quick-search-grid" aria-label="External inspiration links">
+      <a class="search-card" data-search="canva" target="_blank" rel="noopener">
+        <b>Canva templates</b>
+        <span>Look at layouts and school-style presentation ideas.</span>
+      </a>
+      <a class="search-card" data-search="googleImages" target="_blank" rel="noopener">
+        <b>Google Images</b>
+        <span>Find visual references, then check the original source.</span>
+      </a>
+      <a class="search-card" data-search="wikimedia" target="_blank" rel="noopener">
+        <b>Wikimedia Commons</b>
+        <span>Better for reusable images and attribution.</span>
+      </a>
+      <a class="search-card" data-search="unsplash" target="_blank" rel="noopener">
+        <b>Unsplash</b>
+        <span>Good for clean background photos.</span>
+      </a>
+    </div>
+
+    <div class="helper-grid">
+      <section class="helper-card">
+        <h3>Add image slide</h3>
+        <label class="field-label" for="imageUrlQuick">Image URL</label>
+        <input id="imageUrlQuick" class="idea-input" type="url" placeholder="https://...jpg / png / webp">
+        <label class="field-label" for="imageCaptionQuick">Caption / credit</label>
+        <input id="imageCaptionQuick" class="idea-input" type="text" placeholder="Source: ...">
+        <button class="btn btn-primary" id="btnAddImageFromUrl">Add image slide</button>
+      </section>
+
+      <section class="helper-card">
+        <h3>Save a source</h3>
+        <label class="field-label" for="sourceTitleInput">Source title</label>
+        <input id="sourceTitleInput" class="idea-input" type="text" placeholder="Article, image, video, book">
+        <label class="field-label" for="sourceUrlInput">Link</label>
+        <input id="sourceUrlInput" class="idea-input" type="url" placeholder="https://...">
+        <button class="btn btn-primary" id="btnSaveSource">Save source</button>
+      </section>
+    </div>
   </div>
 </div>
 
@@ -73,8 +152,6 @@
 <!-- ===== Print sheet (built at export time) ===== -->
 <div id="printSheet" class="print-sheet"></div>
 
-<script src="storage.js"></script>
-<script src="templates.js"></script>
-<script src="app.js"></script>
+<script type="module" src="app.js"></script>
 </body>
 </html>
