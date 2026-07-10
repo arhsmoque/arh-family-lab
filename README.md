@@ -15,6 +15,7 @@ Clinical artifacts are linked from [`clinical.html`](clinical.html), separate fr
 - **[ECC CPG Briefing](apps/ecc-cpg-dato-keramat/)** - the published Klinik Pergigian Dato Keramat briefing deck as a static HTML viewer.
 - **[Presentation Design Studio](apps/presentation-design-studio/)** - a reusable presentation canvas prototype. Browser IO lives in `app.js`; pure slide/canvas functions live in `studio-core.js`; content adapters live in `adapters.js`.
 - **[ECC Tooth Lab](apps/ecc-tooth-lab/)** - an interactive HTML teaching prop for ECC progression and tooth-surface explanation.
+- **[Realistic ECC Tooth Lab](apps/ecc-realistic-tooth-lab/)** - a more realistic SVG-based teaching prop using one anatomy-style tooth illustration with enamel, root, gingival margin, lesion overlays and the same presenter flow.
 
 ## Adding a new app
 
@@ -34,4 +35,5 @@ Then open `http://localhost:4173`.
 
 ## Deploy
 
-Create a Cloudflare Pages project pointed at this repo, root directory `/`, no build command, output directory `/`.
+- **Cloudflare Pages**: point a project at this repo, root directory `/`, no build command, output directory `/`.
+- **GitHub Pages**: pushes to `main` build and deploy automatically via `.github/workflows/pages.yml`. One-time setup: in the repo's Settings → Pages, set Source to "GitHub Actions".
