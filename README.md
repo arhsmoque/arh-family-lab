@@ -7,6 +7,10 @@ A hub of small, static, no-build-step web apps for family & friends. Deploys to 
 - **[Deckmate](apps/presentation/)** — a phone-first presentation builder for school. Pick a slide template (title, bullets, image+caption, comparison, timeline, quote), fill it in, reorder, present fullscreen, export to PDF. Decks are saved in the browser (`localStorage`); no account, no backend.
 - **[Studio](apps/studio/)** — a personal workspace: sign in (email/password, admin-approved list), organize work into tabbed projects, fill each with resizable note/photo/video cards, pin any card for quick access from the landing page. Backed by the same Firebase Realtime Database as the homestay app (isolated `studio` path), called with plain REST — no SDK. See `apps/studio/SETUP.md` before using it: it needs a few one-time steps in the Firebase console (enable Email/Password auth, paste in API key + database secret, add security rules).
 
+## Design previews
+
+- **[Deckmate + Studio concept](previews/deckmate-studio/)** — isolated, no-data preview for operator and cloud-agent review. It does not replace or mutate either live app.
+
 ## Clinical / presentation lab
 
 Clinical artifacts are linked from [`clinical.html`](clinical.html), separate from the family landing page.
