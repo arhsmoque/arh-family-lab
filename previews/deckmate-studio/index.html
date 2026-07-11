@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family Lab — Deckmate & Studio Preview</title>
+  <link rel="stylesheet" href="../../shared/theme.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#preview">Skip to preview</a>
+  <header class="topbar">
+    <a class="brand" href="../../index.html" aria-label="Back to Family Lab">
+      <span class="brand-mark" aria-hidden="true">FL</span>
+      <span><strong>Family Lab</strong><small>Preview workspace</small></span>
+    </a>
+    <div class="preview-note"><span></span>Concept only · no live data</div>
+  </header>
+
+  <main id="preview">
+    <section class="intro">
+      <p class="eyebrow">One place to make and remember</p>
+      <h1>School ideas, from first note to confident presentation.</h1>
+      <p>Deckmate turns research into a clear story. Studio keeps the useful pieces close, so nothing gets lost between homework sessions.</p>
+      <div class="product-switch" role="tablist" aria-label="Choose preview">
+        <button role="tab" aria-selected="true" aria-controls="deckmate-panel" id="deckmate-tab" data-panel="deckmate-panel">
+          <span aria-hidden="true">✦</span><b>Deckmate</b><small>Shape the story</small>
+        </button>
+        <button role="tab" aria-selected="false" aria-controls="studio-panel" id="studio-tab" data-panel="studio-panel">
+          <span aria-hidden="true">⌂</span><b>Studio</b><small>Keep the pieces</small>
+        </button>
+      </div>
+    </section>
+
+    <section class="app-shell" id="deckmate-panel" role="tabpanel" aria-labelledby="deckmate-tab">
+      <aside class="rail">
+        <div class="rail-head"><span class="mini-logo">D</span><strong>Deckmate</strong></div>
+        <nav aria-label="Deck sections">
+          <button class="nav-item active"><span>01</span>My decks</button>
+          <button class="nav-item"><span>02</span>Idea tray</button>
+          <button class="nav-item"><span>03</span>Sources</button>
+        </nav>
+        <div class="rail-tip"><b>Today’s nudge</b><p>One idea per slide makes your story easier to follow.</p></div>
+      </aside>
+      <div class="workspace">
+        <header class="workspace-head">
+          <div><p class="context">Tuesday · School projects</p><h2>What are we presenting?</h2></div>
+          <button class="primary-action">＋ New deck</button>
+        </header>
+        <div class="continue-card">
+          <div class="continue-copy"><span class="status-pill">Continue</span><h3>The Water Cycle</h3><p>5 slides · edited 12 minutes ago</p><div class="progress"><span style="width:72%"></span></div><small>Story check: add a source to slide 4</small></div>
+          <div class="slide-stack" aria-label="Miniature slide preview"><span></span><span></span><span><b>Water<br>Cycle</b></span></div>
+        </div>
+        <section class="section-block">
+          <div class="section-heading"><h3>Your decks</h3><button>See all</button></div>
+          <div class="deck-row">
+            <article class="project-card sunflower"><div class="card-icon">☀</div><h4>Solar System</h4><p>8 slides · ready to present</p><span>Ready</span></article>
+            <article class="project-card coral"><div class="card-icon">✎</div><h4>Tokoh Merdeka</h4><p>3 slides · still drafting</p><span>Draft</span></article>
+            <article class="project-card mint"><div class="card-icon">＋</div><h4>Start with an idea</h4><p>Choose a story shape first.</p><span>New</span></article>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="app-shell studio-shell" id="studio-panel" role="tabpanel" aria-labelledby="studio-tab" hidden>
+      <aside class="rail">
+        <div class="rail-head"><span class="mini-logo">S</span><strong>Studio</strong></div>
+        <nav aria-label="Studio sections">
+          <button class="nav-item active"><span>01</span>My space</button>
+          <button class="nav-item"><span>02</span>Pinned</button>
+          <button class="nav-item"><span>03</span>Shared</button>
+        </nav>
+        <div class="rail-tip"><b>Saved safely</b><p>Your latest changes are synced. Offline drafts stay on this device.</p></div>
+      </aside>
+      <div class="workspace">
+        <header class="workspace-head">
+          <div><p class="context">Good afternoon, Sara</p><h2>Your study table</h2></div>
+          <button class="primary-action">＋ New project</button>
+        </header>
+        <div class="pinboard">
+          <article class="note-card note-yellow"><span class="pin">●</span><small>Science · pinned</small><h3>Water cycle keywords</h3><p>Evaporation → condensation → precipitation → collection</p><button>Open note</button></article>
+          <article class="note-card photo-card"><span class="pin">●</span><div class="photo-placeholder"><span>Image reference</span></div><small>Source saved</small><h3>Cloud types</h3></article>
+          <article class="note-card note-blue"><span class="pin">●</span><small>To remember</small><h3>Presentation opening</h3><p>“Have you ever wondered where rain begins?”</p><button>Send to Deckmate</button></article>
+        </div>
+        <section class="section-block">
+          <div class="section-heading"><h3>Projects</h3><button>Arrange</button></div>
+          <div class="folder-row"><article><span>SCI</span><div><h4>Science</h4><p>12 cards · 3 pinned</p></div></article><article><span>BM</span><div><h4>Bahasa Melayu</h4><p>7 cards · 1 pinned</p></div></article><article><span>＋</span><div><h4>New project</h4><p>Notes, photos and links</p></div></article></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="design-notes" aria-labelledby="notes-title">
+      <p class="eyebrow">Review lens</p><h2 id="notes-title">A family resemblance, not matching uniforms.</h2>
+      <div><article><b>Deckmate</b><p>Structured momentum, story readiness and a visible next step.</p></article><article><b>Studio</b><p>A tactile study table for collecting, pinning and reusing ideas.</p></article><article><b>Shared floor</b><p>Warm tokens, large targets, plain language, recovery and phone-first behavior.</p></article></div>
+    </section>
+  </main>
+  <script src="preview.js"></script>
+</body>
+</html>
