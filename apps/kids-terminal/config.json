@@ -9,7 +9,7 @@
   "parent": {
     "pin": "1234",
     "notifyUrl": "http://100.85.170.170:8080/notify",
-    "masterGatedEmail": "parent@family.com",
+    "masterGatedEmail": "arh.homelab@gmail.com",
     "cadets": [
       "aflah",
       "haidar",
