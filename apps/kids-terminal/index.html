@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agy Cadet Space Station</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../shared/theme.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 1. Authentication Screen (Cadet Sign-up / Login) -->
+  <div id="auth-overlay" class="auth-overlay">
+    <div class="auth-card glass-card">
+      <div class="auth-mascot">🚀</div>
+      <h2 class="fd" id="auth-title">Cadet Space Login</h2>
+      <p id="auth-subtitle" class="muted">Enter your cadet email and password to start coding!</p>
+
+      <form id="auth-form" onsubmit="return false;">
+        <div class="form-group">
+          <label>Cadet Email</label>
+          <input type="email" id="auth-email" placeholder="cadet.name@family.com" required>
+        </div>
+        <div class="form-group">
+          <label>Secret Password</label>
+          <input type="password" id="auth-password" placeholder="••••••••" required>
+        </div>
+        <button class="btn btn-primary btn-block" id="btn-auth-submit">🚀 Enter Space Station</button>
+      </form>
+      
+      <div class="auth-toggle">
+        <a href="#" id="link-toggle-auth">First time here? Register Cadet</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Main App Grid Layout -->
+  <div class="app-layout" id="main-layout" style="display: none;">
+    <!-- Left panel: Console, inputs, mascot, quick actions -->
+    <div class="control-panel glass-card">
+      <header class="mascot-header">
+        <div class="mascot-avatar" id="mascot">🤖</div>
+        <div class="speech-bubble">
+          <h2 class="fd" id="mascot-bubble-title">Welcome, Cadet!</h2>
+          <p id="mascot-bubble-text">Click a card below or talk to me! What shall we learn today?</p>
+        </div>
+      </header>
+
+      <!-- Workspace status -->
+      <section class="workspace-section">
+        <div class="workspace-info">
+          <span class="icon">📁</span>
+          <div class="details">
+            <label>Your Working Folder</label>
+            <span id="current-folder">No folder chosen yet</span>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-primary" id="btn-pick-folder">📁 Pick Folder</button>
+          <button class="btn btn-accent" id="btn-pick-file">📄 Pick File</button>
+        </div>
+      </section>
+
+      <!-- Quick Play Cards -->
+      <section class="cards-section">
+        <button class="play-card" data-action="explain">
+          <span class="card-icon">🤖</span>
+          <div class="card-text">
+            <h3>Explain File</h3>
+            <p>Teach me about the file I selected!</p>
+          </div>
+        </button>
+        <button class="play-card" data-action="game">
+          <span class="card-icon">🎮</span>
+          <div class="card-text">
+            <h3>Make a Game</h3>
+            <p>Create a fun game we can play!</p>
+          </div>
+        </button>
+        <button class="play-card" data-action="story">
+          <span class="card-icon">📝</span>
+          <div class="card-text">
+            <h3>Tell a Story</h3>
+            <p>Write an exciting adventure story!</p>
+          </div>
+        </button>
+        <button class="play-card" data-action="fix">
+          <span class="card-icon">🐞</span>
+          <div class="card-text">
+            <h3>Fix Mistakes</h3>
+            <p>Find and fix bugs in my files!</p>
+          </div>
+        </button>
+      </section>
+
+      <!-- Console log -->
+      <section class="console-section">
+        <div class="console-header">
+          <span>Agy Console Output</span>
+          <div class="console-actions">
+            <button class="btn btn-ghost" id="btn-read-aloud" title="Read Aloud" disabled>🔊 Read Aloud</button>
+            <button class="btn btn-ghost" id="btn-clear-console">🗑️ Clear</button>
+          </div>
+        </div>
+        <div class="console-body" id="console-output">
+          <div class="log-message system">Agy Cadet Terminal Ready. Waiting for connection...</div>
+        </div>
+      </section>
+
+      <!-- User prompt box -->
+      <section class="input-section">
+        <button class="btn-mic" id="btn-mic" title="Voice Typing">🎤</button>
+        <input type="text" id="prompt-input" placeholder="Type a message or click microphone to speak..." autocomplete="off">
+        <button class="btn btn-primary btn-send" id="btn-send">🚀 Go!</button>
+      </section>
+      
+      <!-- Footer: User status and Parent portal link -->
+      <footer class="app-footer">
+        <span class="cadet-badge">🧑‍🚀 Cadet: <strong id="user-badge-email">Guest</strong></span>
+        <button class="btn btn-ghost btn-signout" id="btn-signout">🚪 Log Out</button>
+        <button class="btn btn-warm" id="btn-open-parent-portal">🛡️ Parent Portal</button>
+      </footer>
+    </div>
+
+    <!-- Right panel: Visual Board & Parent Dev Console -->
+    <div class="visual-panel glass-card">
+      <header class="visual-header">
+        <!-- Visual Board Tab Headers -->
+        <div class="tab-headers">
+          <button class="tab-btn active" id="tab-btn-visual">🔮 Visual Board</button>
+          <button class="tab-btn" id="tab-btn-parent" style="display: none;">🛡️ Parent Dev Console</button>
+        </div>
+      </header>
+      
+      <!-- Tab 1: Visual Content -->
+      <div class="tab-content" id="tab-content-visual">
+        <div class="visual-content" id="visual-board">
+          <div class="visual-placeholder">
+            <div class="placeholder-icon">🚀</div>
+            <h3>Ready for Launch!</h3>
+            <p>Agy will show counting grids, quiz choices, and stories in this window when you start asking questions.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Parent Dev Console -->
+      <div class="tab-content" id="tab-content-parent" style="display: none;">
+        <div class="parent-console">
+          <!-- Parent Console Menu -->
+          <div class="parent-menu">
+            <button class="menu-btn active" id="menu-btn-logs">📈 Cadet Logs</button>
+            <button class="menu-btn" id="menu-btn-approval">⏳ Approvals</button>
+            <button class="menu-btn" id="menu-btn-settings">⚙️ Settings</button>
+          </div>
+
+          <!-- Section 1: Cadet Logs list -->
+          <div class="parent-section" id="parent-sec-logs">
+            <h3 class="fd">Activity Logs</h3>
+            <p class="muted">Monitor the Cadet queries, responses, and generated artifacts.</p>
+            <div class="logs-list" id="parent-logs-list">
+              <p class="muted">No logs recorded yet.</p>
+            </div>
+          </div>
+
+          <!-- Section 2: Gated Approvals list -->
+          <div class="parent-section" id="parent-sec-approval" style="display: none;">
+            <h3 class="fd">Pending Gated Approvals</h3>
+            <p class="muted">Review Cadet prompts containing restricted terms.</p>
+            <div class="approvals-list" id="parent-approvals-list">
+              <p class="muted">No pending approvals.</p>
+            </div>
+          </div>
+
+          <!-- Section 3: Live Settings Form -->
+          <div class="parent-section" id="parent-sec-settings" style="display: none;">
+            <h3 class="fd">Space Station Settings</h3>
+            <p class="muted">Adjust colors, language localizations, Socratic tutoring, and security PINs.</p>
+            <form id="settings-form" onsubmit="return false;">
+              <!-- Theme overrides -->
+              <h4>🎨 Visual Customization</h4>
+              <div class="settings-grid">
+                <div class="form-group">
+                  <label>Background Color</label>
+                  <input type="color" id="set-color-bg">
+                </div>
+                <div class="form-group">
+                  <label>Card Paper Color</label>
+                  <input type="color" id="set-color-paper">
+                </div>
+                <div class="form-group">
+                  <label>Accent Brand Color</label>
+                  <input type="color" id="set-color-accent">
+                </div>
+                <div class="form-group">
+                  <label>Console Screen Background</label>
+                  <input type="color" id="set-color-console-bg">
+                </div>
+                <div class="form-group">
+                  <label>Console Text color</label>
+                  <input type="color" id="set-color-console-text">
+                </div>
+                <div class="form-group">
+                  <label>Mascot Visibility</label>
+                  <select id="set-show-mascot">
+                    <option value="true">Visible</option>
+                    <option value="false">Hidden</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Speech settings -->
+              <h4>🗣️ Speech Translation Localizations</h4>
+              <div class="settings-grid">
+                <div class="form-group">
+                  <label>Microphone Language</label>
+                  <select id="set-stt-input">
+                    <option value="ms-MY">Malay (ms-MY)</option>
+                    <option value="en-US">English (en-US)</option>
+                    <option value="zh-CN">Mandarin (zh-CN)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Target Agent Language</label>
+                  <select id="set-stt-target">
+                    <option value="en-US">English (en-US)</option>
+                    <option value="ms-MY">Malay (ms-MY)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Voice Speaker Language</label>
+                  <select id="set-tts-target">
+                    <option value="ms-MY">Malay (ms-MY)</option>
+                    <option value="en-US">English (en-US)</option>
+                    <option value="zh-CN">Mandarin (zh-CN)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Voice Translation</label>
+                  <select id="set-speech-translation">
+                    <option value="true">Enabled</option>
+                    <option value="false">Disabled</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Parent controls -->
+              <h4>🛡️ Parent & Socratic Controls</h4>
+              <div class="settings-grid">
+                <div class="form-group">
+                  <label>Parent Security PIN</label>
+                  <input type="text" id="set-parent-pin" maxlength="6">
+                </div>
+                <div class="form-group">
+                  <label>Socratic Tutoring</label>
+                  <select id="set-socratic-mode">
+                    <option value="true">Enabled (Pedagogical loop)</option>
+                    <option value="false">Disabled (Direct answers)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Agent Persona Preset</label>
+                  <select id="set-persona">
+                    <option value="socratic_teacher">👩‍🏫 Warm Teacher</option>
+                    <option value="alfred">🤵 Alfred (Butler & Advisory)</option>
+                    <option value="jarvis">🤖 Jarvis (Tech Assistant)</option>
+                    <option value="friday">👩‍💻 Friday (Sassy Assistant)</option>
+                  </select>
+                </div>
+              </div>
+
+              <button class="btn btn-primary" id="btn-save-settings" style="margin-top: 16px; width: 100%;">💾 Save Configuration</button>
+              
+              <!-- Godmode reset container (Parent only) -->
+              <div id="godmode-section" style="margin-top: 24px; border-top: 2px dashed var(--line); padding-top: 16px; display: none;">
+                <h4 style="color: var(--danger);">⚡ Godmode System Reset</h4>
+                <p class="muted" style="font-size: 12px; margin-bottom: 12px;">Override all Cadets' custom setting snapshots back to the master dev original defaults.</p>
+                <button class="btn btn-danger" id="btn-godmode-reset" style="width: 100%;">💥 Reset All User Configurations</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Parent Security PIN Modal -->
+  <div id="parent-pin-modal" class="modal-overlay" style="display: none;">
+    <div class="pin-card glass-card">
+      <span class="lock-icon">🛡️</span>
+      <h3>Parent Security Gate</h3>
+      <p class="muted">Please enter your parent PIN to access the Dev Console.</p>
+      <input type="password" id="parent-pin-input" placeholder="••••" maxlength="6" autofocus>
+      <div class="modal-buttons">
+        <button class="btn btn-primary" id="btn-pin-submit">Unlock</button>
+        <button class="btn btn-danger btn-ghost" id="btn-pin-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="firebase-rest.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

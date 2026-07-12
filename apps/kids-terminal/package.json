@@ -1,0 +1,12 @@
+{
+  "name": "kids-terminal",
+  "version": "1.0.0",
+  "description": "Kid-friendly GUI wrapper and visual rendering engine for agy CLI",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "firebase": {
+    "url": "https://arh-firebase-db-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "root": "kids-terminal"
+  },
+  "auth": {
+    "apiKey": "REPLACE_WITH_WEB_API_KEY"
+  },
+  "parent": {
+    "pin": "1234",
+    "notifyUrl": "http://100.85.170.170:8080/notify",
+    "masterGatedEmail": "parent@family.com",
+    "cadets": [
+      "aflah",
+      "haidar",
+      "asma"
+    ],
+    "gatedKeywords": [
+      "delete",
+      "remove",
+      "destroy",
+      "format",
+      "rm -rf",
+      "system32",
+      "cmd.exe",
+      "powershell"
+    ]
+  },
+  "theme": {
+    "fontFamilyBody": "\"DM Sans\", system-ui, sans-serif",
+    "fontFamilyHeading": "\"Playfair Display\", Georgia, serif",
+    "fontSizeBody": "16px",
+    "fontSizeConsole": "15px",
+    "colorBackground": "#f7f1e8",
+    "colorPaper": "#fffaf2",
+    "colorSurface": "#ffffff",
+    "colorInk": "#17211f",
+    "colorMuted": "#63736f",
+    "colorBrand": "#12323a",
+    "colorAccent": "#2f7b67",
+    "colorWarm": "#c9822c",
+    "colorConsoleBackground": "#1e2524",
+    "colorConsoleText": "#6ef0d2"
+  },
+  "layout": {
+    "paneRatio": "55/45",
+    "allowResize": true,
+    "showMascot": true,
+    "showQuickCards": true
+  },
+  "engine": {
+    "socraticMode": true,
+    "skipPermissions": true,
+    "defaultSymbol": "⭐",
+    "defaultSymbolColor": "gold",
+    "cliExecutable": "agy.exe",
+    "persona": "socratic_teacher"
+  },
+  "speech": {
+    "speechToText": {
+      "inputLanguage": "ms-MY",
+      "targetLanguage": "en-US",
+      "translationEnabled": true
+    },
+    "textToSpeech": {
+      "inputLanguage": "en-US",
+      "targetLanguage": "ms-MY",
+      "translationEnabled": true,
+      "voiceRate": 0.9,
+      "voicePitch": 1.0
+    }
+  }
+}
