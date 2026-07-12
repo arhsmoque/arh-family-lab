@@ -1,106 +1,132 @@
-/* App state + view wiring. Slide markup is shared across editor / present / print. */
-const state = { deck: null, slideIndex: 0 };
+import {
+  addSource,
+  applySlideAction,
+  clampSlideIndex,
+  createSlide,
+  deleteSlide,
+  duplicateSlide,
+  insertSlides,
+  moveSlide,
+  renameDeck,
+  replaceSlide,
+  updateSlideField
+} from "./deck-core.js";
+import {adaptModule, adapterFromFile, ModuleAdapters} from "./deck-modules.js";
+import {esc, slideMarkup, templateOptions, thumbLabel} from "./slide-renderer.js";
+import {createLocalDeckStore} from "./storage-port.js";
+
+const store = createLocalDeckStore();
+const state = {deck: null, slideIndex: 0};
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $all = (sel, root = document) => Array.from(root.querySelectorAll(sel));
-const esc = (s) => (s || "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-function persist() {
-  if (state.deck) Storage.saveDeck(state.deck);
+const els = {
+  deckGrid: $("#deckGrid"),
+  emptyState: $("#emptyState"),
+  editor: $("#view-editor"),
+  deckTitle: $("#deckTitleInput"),
+  slideStrip: $("#slideStrip"),
+  slideCanvas: $("#slideCanvas"),
+  sourceList: $("#sourceList"),
+  templateModal: $("#templateModal"),
+  templateGrid: $("#templateGrid"),
+  moduleKind: $("#moduleKind"),
+  moduleInput: $("#moduleInput"),
+  moduleFile: $("#moduleFile"),
+  inspirationModal: $("#inspirationModal"),
+  ideaQuery: $("#ideaQuery")
+};
+
+function boot() {
+  bindDeckList();
+  bindEditor();
+  bindTemplateModal();
+  bindInspiration();
+  renderDeckList();
 }
 
-/* ---------------- Slide markup ---------------- */
-function slideMarkup(slide, editable) {
-  const d = slide.data;
-  const ce = editable ? 'contenteditable="true"' : "";
-  switch (slide.type) {
-    case "title":
-      return `<div class="slide-content s-title">
-        <h2 class="s-heading" data-field="heading" ${ce}>${esc(d.heading)}</h2>
-        <p class="s-subheading" data-field="subheading" ${ce}>${esc(d.subheading)}</p>
-      </div>`;
-
-    case "bullets":
-      return `<div class="slide-content s-bullets">
-        <h2 class="s-heading" data-field="heading" ${ce}>${esc(d.heading)}</h2>
-        <ul>${d.items
-          .map(
-            (it, i) => `<li>
-              <span data-field="items" data-index="${i}" ${ce}>${esc(it)}</span>
-              ${editable ? `<button class="btn btn-ghost remove-item-btn" data-action="removeItem" data-list="items" data-index="${i}">✕</button>` : ""}
-            </li>`
-          )
-          .join("")}</ul>
-        ${editable ? `<button class="btn add-item" data-action="addItem" data-list="items">+ Add point</button>` : ""}
-      </div>`;
-
-    case "image":
-      return `<div class="slide-content s-image">
-        <h2 class="s-heading" data-field="heading" ${ce}>${esc(d.heading)}</h2>
-        ${editable ? `<input class="img-url-input" data-field="imageUrl" placeholder="Paste an image URL…" value="${esc(d.imageUrl)}">` : ""}
-        ${d.imageUrl ? `<img src="${esc(d.imageUrl)}" alt="">` : editable ? "" : `<p class="muted">No image set</p>`}
-        <p class="s-caption" data-field="caption" ${ce}>${esc(d.caption)}</p>
-      </div>`;
-
-    case "compare":
-      return `<div class="slide-content s-compare-wrap">
-        <h2 class="s-heading" data-field="heading" ${ce}>${esc(d.heading)}</h2>
-        <div class="s-compare">
-          <div class="col">
-            <h4 data-field="leftTitle" ${ce}>${esc(d.leftTitle)}</h4>
-            <ul>${d.leftItems
-              .map(
-                (it, i) => `<li><span data-field="leftItems" data-index="${i}" ${ce}>${esc(it)}</span>
-                ${editable ? `<button class="btn btn-ghost remove-item-btn" data-action="removeItem" data-list="leftItems" data-index="${i}">✕</button>` : ""}</li>`
-              )
-              .join("")}</ul>
-            ${editable ? `<button class="btn add-item" data-action="addItem" data-list="leftItems">+ Add point</button>` : ""}
-          </div>
-          <div class="col">
-            <h4 data-field="rightTitle" ${ce}>${esc(d.rightTitle)}</h4>
-            <ul>${d.rightItems
-              .map(
-                (it, i) => `<li><span data-field="rightItems" data-index="${i}" ${ce}>${esc(it)}</span>
-                ${editable ? `<button class="btn btn-ghost remove-item-btn" data-action="removeItem" data-list="rightItems" data-index="${i}">✕</button>` : ""}</li>`
-              )
-              .join("")}</ul>
-            ${editable ? `<button class="btn add-item" data-action="addItem" data-list="rightItems">+ Add point</button>` : ""}
-          </div>
-        </div>
-      </div>`;
-
-    case "timeline":
-      return `<div class="slide-content s-timeline-wrap">
-        <h2 class="s-heading" data-field="heading" ${ce}>${esc(d.heading)}</h2>
-        <div class="s-timeline">
-          ${d.steps
-            .map(
-              (s, i) => `<div class="step">
-                <div class="step-label" data-field="steps.label" data-index="${i}" ${ce}>${esc(s.label)}</div>
-                <div class="step-detail" data-field="steps.detail" data-index="${i}" ${ce}>${esc(s.detail)}</div>
-                ${editable ? `<button class="btn btn-ghost remove-item-btn" data-action="removeStep" data-index="${i}">✕ remove</button>` : ""}
-              </div>`
-            )
-            .join("")}
-        </div>
-        ${editable ? `<button class="btn add-item" data-action="addStep">+ Add step</button>` : ""}
-      </div>`;
-
-    case "quote":
-      return `<div class="slide-content s-quote">
-        <p class="quote-text" data-field="quote" ${ce}>${esc(d.quote)}</p>
-        <p class="quote-attr" data-field="attribution" ${ce}>${esc(d.attribution)}</p>
-      </div>`;
-  }
+function bindDeckList() {
+  $("#btnNewDeck").addEventListener("click", () => {
+    const title = prompt("Deck name:", "My Presentation");
+    if (title === null) return;
+    openDeck(store.createDeck(title || "Untitled Deck").id);
+  });
 }
 
-/* ---------------- Deck list view ---------------- */
+function bindEditor() {
+  $("#btnBack").addEventListener("click", () => {
+    persist();
+    state.deck = null;
+    showView("view-list");
+    renderDeckList();
+  });
+
+  els.deckTitle.addEventListener("input", event => {
+    state.deck = renameDeck(state.deck, event.target.value);
+    persist();
+  });
+
+  els.slideCanvas.addEventListener("input", onCanvasInput);
+  els.slideCanvas.addEventListener("click", onCanvasAction);
+
+  $("#btnMoveUp").addEventListener("click", () => moveCurrentSlide(-1));
+  $("#btnMoveDown").addEventListener("click", () => moveCurrentSlide(1));
+  $("#btnDuplicateSlide").addEventListener("click", duplicateCurrentSlide);
+  $("#btnDeleteSlide").addEventListener("click", deleteCurrentSlide);
+  $("#btnPresent").addEventListener("click", enterPresentMode);
+  $("#btnExport").addEventListener("click", exportPdf);
+
+  $("#btnNext").addEventListener("click", presentNext);
+  $("#btnPrev").addEventListener("click", presentPrev);
+  $("#btnExitPresent").addEventListener("click", exitPresent);
+  document.addEventListener("keydown", onPresentKeydown);
+
+  let touchStartX = null;
+  $("#presentOverlay").addEventListener("touchstart", event => {
+    touchStartX = event.touches[0].clientX;
+  });
+  $("#presentOverlay").addEventListener("touchend", event => {
+    if (touchStartX === null) return;
+    const dx = event.changedTouches[0].clientX - touchStartX;
+    if (dx < -40) presentNext();
+    if (dx > 40) presentPrev();
+    touchStartX = null;
+  });
+}
+
+function bindTemplateModal() {
+  $("#btnAddSlide").addEventListener("click", openTemplateModal);
+  $("#btnCancelTemplate").addEventListener("click", () => {
+    els.templateModal.hidden = true;
+  });
+  $("#btnAddModule").addEventListener("click", addModuleSlides);
+  els.moduleFile.addEventListener("change", onModuleFile);
+
+  els.moduleKind.innerHTML = Object.entries(ModuleAdapters)
+    .map(([kind, adapter]) => `<option value="${kind}">${esc(adapter.label)}</option>`)
+    .join("");
+  els.moduleKind.addEventListener("change", updateModuleHint);
+  updateModuleHint();
+}
+
+function bindInspiration() {
+  $("#btnInspiration").addEventListener("click", openInspiration);
+  $("#btnOpenInspiration").addEventListener("click", openInspiration);
+  $("#btnCloseInspiration").addEventListener("click", () => {
+    els.inspirationModal.hidden = true;
+  });
+  els.ideaQuery.addEventListener("input", syncSearchLinks);
+  $("#btnAddImageFromUrl").addEventListener("click", addImageFromUrl);
+  $("#btnSaveSource").addEventListener("click", saveSourceFromModal);
+  syncSearchLinks();
+}
+
 function renderDeckList() {
-  const decks = Storage.listDecks();
-  const grid = $("#deckGrid");
-  grid.innerHTML = "";
-  $("#emptyState").hidden = decks.length > 0;
-  decks.forEach((deck) => {
+  const decks = store.listDecks();
+  els.deckGrid.innerHTML = "";
+  els.emptyState.hidden = decks.length > 0;
+  decks.forEach(deck => {
     const card = document.createElement("div");
     card.className = "deck-card";
     card.innerHTML = `
@@ -110,75 +136,60 @@ function renderDeckList() {
         <button class="btn" data-action="duplicate">Duplicate</button>
         <button class="btn btn-danger" data-action="delete">Delete</button>
       </div>`;
-    card.addEventListener("click", (e) => {
-      const action = e.target.dataset.action;
+    card.addEventListener("click", event => {
+      const action = event.target.dataset.action;
       if (action === "delete") {
-        e.stopPropagation();
+        event.stopPropagation();
         if (confirm(`Delete "${deck.title}"? This can't be undone.`)) {
-          Storage.deleteDeck(deck.id);
+          store.deleteDeck(deck.id);
           renderDeckList();
         }
         return;
       }
       if (action === "duplicate") {
-        e.stopPropagation();
-        Storage.duplicateDeck(deck.id);
+        event.stopPropagation();
+        store.duplicateDeck(deck.id);
         renderDeckList();
         return;
       }
       openDeck(deck.id);
     });
-    grid.appendChild(card);
+    els.deckGrid.append(card);
   });
 }
 
-function showView(id) {
-  $all(".view").forEach((v) => (v.hidden = v.id !== id));
-}
-
-$("#btnNewDeck").addEventListener("click", () => {
-  const title = prompt("Deck name:", "My Presentation");
-  if (title === null) return;
-  const deck = Storage.createDeck(title || "Untitled Deck");
-  openDeck(deck.id);
-});
-
-/* ---------------- Editor view ---------------- */
 function openDeck(id) {
-  state.deck = Storage.getDeck(id);
+  state.deck = store.getDeck(id);
   state.slideIndex = 0;
   showView("view-editor");
-  $("#deckTitleInput").value = state.deck.title;
-  renderSlideStrip();
-  renderCanvas();
+  els.deckTitle.value = state.deck.title;
+  renderEditor();
 }
 
-$("#btnBack").addEventListener("click", () => {
-  persist();
-  state.deck = null;
-  showView("view-list");
-  renderDeckList();
-});
+function showView(id) {
+  $all(".view").forEach(view => {
+    view.hidden = view.id !== id;
+  });
+}
 
-$("#deckTitleInput").addEventListener("input", (e) => {
-  state.deck.title = e.target.value;
-  persist();
-});
+function renderEditor() {
+  state.slideIndex = clampSlideIndex(state.deck, state.slideIndex);
+  renderSlideStrip();
+  renderCanvas();
+  renderSources();
+}
 
 function renderSlideStrip() {
-  const strip = $("#slideStrip");
-  strip.innerHTML = "";
-  state.deck.slides.forEach((slide, i) => {
-    const btn = document.createElement("button");
-    btn.className = "slide-thumb" + (i === state.slideIndex ? " active" : "");
-    const label = slide.data.heading || slide.data.quote || Templates[slide.type].label;
-    btn.innerHTML = `<span class="thumb-type">${Templates[slide.type].icon} ${i + 1}</span><span class="thumb-label">${esc(label).slice(0, 24)}</span>`;
-    btn.addEventListener("click", () => {
-      state.slideIndex = i;
-      renderSlideStrip();
-      renderCanvas();
+  els.slideStrip.innerHTML = "";
+  state.deck.slides.forEach((slide, index) => {
+    const button = document.createElement("button");
+    button.className = `slide-thumb${index === state.slideIndex ? " active" : ""}`;
+    button.innerHTML = `<span class="thumb-type">${esc(templateIcon(slide.type))} ${index + 1}</span><span class="thumb-label">${esc(thumbLabel(slide)).slice(0, 24)}</span>`;
+    button.addEventListener("click", () => {
+      state.slideIndex = index;
+      renderEditor();
     });
-    strip.appendChild(btn);
+    els.slideStrip.append(button);
   });
   const hasSlides = state.deck.slides.length > 0;
   $("#btnMoveUp").disabled = !hasSlides || state.slideIndex === 0;
@@ -188,129 +199,170 @@ function renderSlideStrip() {
 }
 
 function renderCanvas() {
-  const canvas = $("#slideCanvas");
   const slide = state.deck.slides[state.slideIndex];
-  if (!slide) {
-    canvas.innerHTML = `<p class="muted" style="text-align:center">No slides yet — tap the + button to add one.</p>`;
-    return;
-  }
-  canvas.innerHTML = slideMarkup(slide, true);
+  els.slideCanvas.innerHTML = slide ? slideMarkup(slide, true) : `<p class="muted no-slide">No slides yet. Add a template or generate a reusable module.</p>`;
 }
 
-/* Live-edit bindings: event delegation over the canvas */
-$("#slideCanvas").addEventListener("input", (e) => {
-  const el = e.target.closest("[data-field]");
-  if (!el) return;
-  const slide = state.deck.slides[state.slideIndex];
-  const field = el.dataset.field;
-  const value = el.tagName === "INPUT" ? el.value : el.innerText;
-
-  if (field === "steps.label" || field === "steps.detail") {
-    const key = field.split(".")[1];
-    slide.data.steps[+el.dataset.index][key] = value;
-  } else if (el.dataset.index !== undefined) {
-    slide.data[field][+el.dataset.index] = value;
-  } else {
-    slide.data[field] = value;
+function renderSources() {
+  els.sourceList.innerHTML = "";
+  if (!state.deck.sources.length) {
+    els.sourceList.innerHTML = `<p class="muted">No sources saved yet.</p>`;
+    return;
   }
+  state.deck.sources.forEach(source => {
+    const item = document.createElement("a");
+    item.className = "source-item";
+    item.href = source.url || "#";
+    item.target = "_blank";
+    item.rel = "noopener";
+    item.innerHTML = `<strong>${esc(source.title)}</strong><span>${esc(source.url)}</span>`;
+    els.sourceList.append(item);
+  });
+}
 
-  if (field === "imageUrl") renderCanvas();
-  if (field === "heading" || field === "quote") renderSlideStrip();
-  persist();
-});
-
-$("#slideCanvas").addEventListener("click", (e) => {
-  const btn = e.target.closest("[data-action]");
-  if (!btn) return;
+function onCanvasInput(event) {
+  const target = event.target.closest("[data-field]");
+  if (!target) return;
   const slide = state.deck.slides[state.slideIndex];
-  const { action, list, index } = btn.dataset;
-
-  if (action === "addItem") slide.data[list].push("New point");
-  if (action === "removeItem") slide.data[list].splice(+index, 1);
-  if (action === "addStep") slide.data.steps.push({ label: "Step", detail: "" });
-  if (action === "removeStep") slide.data.steps.splice(+index, 1);
-
-  renderCanvas();
-  persist();
-});
-
-$("#btnMoveUp").addEventListener("click", () => {
-  const s = state.deck.slides;
-  if (state.slideIndex === 0) return;
-  [s[state.slideIndex - 1], s[state.slideIndex]] = [s[state.slideIndex], s[state.slideIndex - 1]];
-  state.slideIndex--;
+  const value = target.tagName === "INPUT" ? target.value : target.innerText;
+  const nextSlide = updateSlideField(slide, target.dataset.field, value, target.dataset.index === undefined ? undefined : Number(target.dataset.index));
+  state.deck = replaceSlide(state.deck, state.slideIndex, nextSlide);
+  if (target.dataset.field === "imageUrl") renderCanvas();
   renderSlideStrip();
-  renderCanvas();
   persist();
-});
+}
 
-$("#btnMoveDown").addEventListener("click", () => {
-  const s = state.deck.slides;
-  if (state.slideIndex >= s.length - 1) return;
-  [s[state.slideIndex + 1], s[state.slideIndex]] = [s[state.slideIndex], s[state.slideIndex + 1]];
-  state.slideIndex++;
-  renderSlideStrip();
-  renderCanvas();
+function onCanvasAction(event) {
+  const button = event.target.closest("[data-action]");
+  if (!button) return;
+  const slide = state.deck.slides[state.slideIndex];
+  const nextSlide = applySlideAction(slide, button.dataset.action, button.dataset.list, Number(button.dataset.index));
+  state.deck = replaceSlide(state.deck, state.slideIndex, nextSlide);
+  renderEditor();
   persist();
-});
+}
 
-$("#btnDuplicateSlide").addEventListener("click", () => {
-  const original = state.deck.slides[state.slideIndex];
-  const copy = JSON.parse(JSON.stringify(original));
-  copy.id = Storage.newSlideId();
-  state.deck.slides.splice(state.slideIndex + 1, 0, copy);
-  state.slideIndex++;
-  renderSlideStrip();
-  renderCanvas();
+function moveCurrentSlide(delta) {
+  const result = moveSlide(state.deck, state.slideIndex, delta);
+  state.deck = result.deck;
+  state.slideIndex = result.index;
+  renderEditor();
   persist();
-});
+}
 
-$("#btnDeleteSlide").addEventListener("click", () => {
+function duplicateCurrentSlide() {
+  const result = duplicateSlide(state.deck, state.slideIndex);
+  state.deck = result.deck;
+  state.slideIndex = result.index;
+  renderEditor();
+  persist();
+}
+
+function deleteCurrentSlide() {
   if (!confirm("Delete this slide?")) return;
-  state.deck.slides.splice(state.slideIndex, 1);
-  state.slideIndex = Math.max(0, state.slideIndex - 1);
-  renderSlideStrip();
-  renderCanvas();
+  const result = deleteSlide(state.deck, state.slideIndex);
+  state.deck = result.deck;
+  state.slideIndex = result.index;
+  renderEditor();
   persist();
-});
+}
 
-/* ---------------- Template picker ---------------- */
-$("#btnAddSlide").addEventListener("click", () => {
-  const grid = $("#templateGrid");
-  grid.innerHTML = "";
-  Object.entries(Templates).forEach(([type, def]) => {
-    const opt = document.createElement("button");
-    opt.className = "template-option";
-    opt.innerHTML = `<span class="t-icon">${def.icon}</span>${def.label}`;
-    opt.addEventListener("click", () => {
-      const slide = newSlide(type);
-      state.deck.slides.splice(state.slideIndex + 1, 0, slide);
-      state.slideIndex = state.deck.slides.length ? state.slideIndex + 1 : 0;
-      if (state.deck.slides.length === 1) state.slideIndex = 0;
-      $("#templateModal").hidden = true;
-      renderSlideStrip();
-      renderCanvas();
+function openTemplateModal() {
+  els.templateGrid.innerHTML = "";
+  templateOptions().forEach(option => {
+    const button = document.createElement("button");
+    button.className = "template-option";
+    button.innerHTML = `<span class="t-icon">${esc(option.icon)}</span>${esc(option.label)}`;
+    button.addEventListener("click", () => {
+      state.deck = insertSlides(state.deck, [createSlide(option.type)], state.slideIndex);
+      state.slideIndex = state.deck.slides.length === 1 ? 0 : state.slideIndex + 1;
+      els.templateModal.hidden = true;
+      renderEditor();
       persist();
     });
-    grid.appendChild(opt);
+    els.templateGrid.append(button);
   });
-  $("#templateModal").hidden = false;
-});
-$("#btnCancelTemplate").addEventListener("click", () => ($("#templateModal").hidden = true));
+  els.templateModal.hidden = false;
+}
 
-/* ---------------- Present mode ---------------- */
+function addModuleSlides() {
+  const slides = adaptModule(els.moduleKind.value, els.moduleInput.value);
+  state.deck = insertSlides(state.deck, slides, state.slideIndex);
+  state.slideIndex = clampSlideIndex(state.deck, state.slideIndex + 1);
+  els.templateModal.hidden = true;
+  renderEditor();
+  persist();
+}
+
+async function onModuleFile(event) {
+  const file = event.target.files?.[0];
+  if (!file) return;
+  const kind = adapterFromFile(file);
+  els.moduleKind.value = kind;
+  updateModuleHint();
+  els.moduleInput.value = kind === "image" ? await readFileAsDataUrl(file) : await file.text();
+  event.target.value = "";
+}
+
+function updateModuleHint() {
+  $("#moduleHint").textContent = ModuleAdapters[els.moduleKind.value]?.hint || "";
+}
+
+function openInspiration() {
+  els.inspirationModal.hidden = false;
+  syncSearchLinks();
+}
+
+function syncSearchLinks() {
+  const query = encodeURIComponent(els.ideaQuery.value || state.deck?.title || "school presentation");
+  const links = {
+    canva: `https://www.canva.com/templates/search/presentations/?query=${query}`,
+    googleImages: `https://www.google.com/search?tbm=isch&q=${query}`,
+    wikimedia: `https://commons.wikimedia.org/w/index.php?search=${query}&title=Special:MediaSearch&type=image`,
+    unsplash: `https://unsplash.com/s/photos/${query}`
+  };
+  $all("[data-search]").forEach(link => {
+    link.href = links[link.dataset.search];
+  });
+}
+
+function addImageFromUrl() {
+  const url = $("#imageUrlQuick").value.trim();
+  if (!url) return;
+  state.deck = insertSlides(state.deck, [createSlide("image", {
+    heading: "Image slide",
+    imageUrl: url,
+    caption: $("#imageCaptionQuick").value.trim() || "Caption / credit"
+  })], state.slideIndex);
+  state.slideIndex = clampSlideIndex(state.deck, state.slideIndex + 1);
+  els.inspirationModal.hidden = true;
+  renderEditor();
+  persist();
+}
+
+function saveSourceFromModal() {
+  state.deck = addSource(state.deck, {
+    title: $("#sourceTitleInput").value,
+    url: $("#sourceUrlInput").value
+  });
+  $("#sourceTitleInput").value = "";
+  $("#sourceUrlInput").value = "";
+  renderSources();
+  persist();
+}
+
+function enterPresentMode() {
+  if (!state.deck.slides.length) return alert("Add at least one slide first.");
+  state.slideIndex = 0;
+  $("#presentOverlay").hidden = false;
+  renderPresentSlide();
+}
+
 function renderPresentSlide() {
   const slide = state.deck.slides[state.slideIndex];
   $("#presentSlide").innerHTML = slide ? slideMarkup(slide, false) : "";
   $("#presentCounter").textContent = `${state.slideIndex + 1} / ${state.deck.slides.length}`;
 }
-
-$("#btnPresent").addEventListener("click", () => {
-  if (!state.deck.slides.length) return alert("Add at least one slide first.");
-  state.slideIndex = 0;
-  $("#presentOverlay").hidden = false;
-  renderPresentSlide();
-});
 
 function presentNext() {
   if (state.slideIndex < state.deck.slides.length - 1) {
@@ -318,48 +370,49 @@ function presentNext() {
     renderPresentSlide();
   }
 }
+
 function presentPrev() {
   if (state.slideIndex > 0) {
     state.slideIndex--;
     renderPresentSlide();
   }
 }
+
 function exitPresent() {
   $("#presentOverlay").hidden = true;
-  renderSlideStrip();
-  renderCanvas();
+  renderEditor();
 }
 
-$("#btnNext").addEventListener("click", presentNext);
-$("#btnPrev").addEventListener("click", presentPrev);
-$("#btnExitPresent").addEventListener("click", exitPresent);
-
-document.addEventListener("keydown", (e) => {
+function onPresentKeydown(event) {
   if ($("#presentOverlay").hidden) return;
-  if (e.key === "ArrowRight" || e.key === " ") presentNext();
-  if (e.key === "ArrowLeft") presentPrev();
-  if (e.key === "Escape") exitPresent();
-});
+  if (event.key === "ArrowRight" || event.key === " ") presentNext();
+  if (event.key === "ArrowLeft") presentPrev();
+  if (event.key === "Escape") exitPresent();
+}
 
-// simple swipe support for present mode
-let touchStartX = null;
-$("#presentOverlay").addEventListener("touchstart", (e) => (touchStartX = e.touches[0].clientX));
-$("#presentOverlay").addEventListener("touchend", (e) => {
-  if (touchStartX === null) return;
-  const dx = e.changedTouches[0].clientX - touchStartX;
-  if (dx < -40) presentNext();
-  if (dx > 40) presentPrev();
-  touchStartX = null;
-});
-
-/* ---------------- Export to PDF (print) ---------------- */
-$("#btnExport").addEventListener("click", () => {
+function exportPdf() {
   const sheet = $("#printSheet");
   sheet.innerHTML = state.deck.slides
-    .map((slide) => `<div class="print-slide glass-card">${slideMarkup(slide, false)}</div>`)
+    .map(slide => `<div class="print-slide glass-card">${slideMarkup(slide, false)}</div>`)
     .join("");
   window.print();
-});
+}
 
-/* ---------------- Boot ---------------- */
-renderDeckList();
+function persist() {
+  if (state.deck) state.deck = store.saveDeck(state.deck);
+}
+
+function templateIcon(type) {
+  return templateOptions().find(option => option.type === type)?.icon || "Slide";
+}
+
+function readFileAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}
+
+boot();

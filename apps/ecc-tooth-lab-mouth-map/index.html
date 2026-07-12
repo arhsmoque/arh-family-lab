@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECC Interactive Tooth Lab</title>
+<style>
+  :root{
+    --bg:#f4efe5;
+    --paper:#fffaf1;
+    --ink:#17211f;
+    --muted:#63736f;
+    --green:#2f7b67;
+    --lime:#7fc72f;
+    --blue:#1f5e73;
+    --warm:#c9822c;
+    --danger:#9b3b2f;
+    --line:rgba(23,33,31,.14);
+    --shadow:0 24px 70px rgba(18,50,58,.16);
+    --sans:"Aptos","Segoe UI",system-ui,sans-serif;
+    --serif:Georgia,"Times New Roman",serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;font-family:var(--sans);color:var(--ink);background:
+    radial-gradient(circle at 12% 8%,rgba(127,199,47,.22),transparent 30rem),
+    radial-gradient(circle at 92% 0,rgba(31,94,115,.16),transparent 28rem),
+    var(--bg)}
+  button,input{font:inherit}
+  .shell{max-width:1240px;margin:0 auto;padding:22px}
+  .hero{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end;margin-bottom:16px}
+  .eyebrow{margin:0 0 6px;text-transform:uppercase;letter-spacing:.16em;color:var(--green);font-size:12px;font-weight:800}
+  h1{margin:0;font-family:var(--serif);font-size:clamp(34px,6vw,72px);line-height:.92;color:#10322f}
+  .hero p{max-width:780px;color:var(--muted);font-size:17px;line-height:1.45}
+  .badge{border:1px solid var(--line);background:rgba(255,255,255,.66);border-radius:999px;padding:10px 14px;font-weight:800;color:var(--blue)}
+  .lab{display:grid;grid-template-columns:minmax(300px,430px) 1fr;gap:16px}
+  .panel,.stage,.note{background:rgba(255,250,241,.78);border:1px solid rgba(255,255,255,.55);border-radius:24px;box-shadow:var(--shadow);backdrop-filter:blur(20px)}
+  .panel{padding:18px;align-self:start}
+  .stage{position:relative;min-height:650px;overflow:hidden;padding:20px}
+  .section-title{margin:0 0 10px;font-family:var(--serif);font-size:24px;color:#10322f}
+  .control-group{border-top:1px solid var(--line);padding-top:14px;margin-top:14px}
+  .control-group:first-of-type{border-top:0;padding-top:0}
+  .label-row{display:flex;justify-content:space-between;gap:12px;margin:12px 0 7px;font-size:13px;color:var(--muted);font-weight:800}
+  input[type=range]{width:100%;accent-color:var(--green)}
+  .segmented{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .segmented button,.surface-list button,.btn{
+    border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px 12px;color:var(--ink);font-weight:800;cursor:pointer
+  }
+  .segmented button.active,.surface-list button.active,.btn.primary{background:var(--green);border-color:var(--green);color:#fff}
+  .stage-nav{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;margin-top:10px}
+  .stage-dots{display:flex;justify-content:center;gap:7px}
+  .stage-dot{width:11px;height:11px;border:0;border-radius:999px;background:rgba(47,123,103,.25);cursor:pointer;padding:0}
+  .stage-dot.active{background:var(--green);box-shadow:0 0 0 4px rgba(47,123,103,.14)}
+  .preset-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+  .surface-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .surface-list button{font-size:13px;text-align:left}
+  .hint{color:var(--muted);font-size:13px;line-height:1.45}
+  .viewer-header{display:flex;justify-content:space-between;align-items:start;gap:18px;position:relative;z-index:4}
+  .viewer-header h2{margin:0;font-family:var(--serif);font-size:34px;color:#10322f}
+  .viewer-header p{margin:5px 0 0;color:var(--muted)}
+  .tooth-space{height:460px;display:grid;place-items:center;perspective:900px;position:relative;touch-action:none;cursor:grab}
+  .tooth-space.dragging{cursor:grabbing}
+  .tooth-rig{position:relative;width:min(420px,70vw);height:390px;transform-style:preserve-3d;transition:transform .22s ease}
+  .tooth-rig.dragging{transition:none}
+  .tooth{
+    position:absolute;left:50%;top:52%;width:190px;height:285px;transform:translate(-50%,-50%);border-radius:54% 54% 42% 42% / 38% 38% 62% 62%;
+    background:
+      radial-gradient(circle at 37% 22%,rgba(255,255,255,.95),transparent 22%),
+      linear-gradient(105deg,#fffef8 0%,#f6ecd9 46%,#e6d6bc 100%);
+    box-shadow:inset -24px -18px 34px rgba(116,86,48,.16),inset 16px 8px 24px rgba(255,255,255,.8),0 30px 55px rgba(38,45,40,.22);
+    transform-style:preserve-3d;
+  }
+  .tooth-back,.tooth-side,.tooth-top{position:absolute;left:50%;top:52%;pointer-events:none;background:linear-gradient(105deg,#f3e4c9,#d8bd91);box-shadow:inset -15px -12px 28px rgba(77,56,31,.16)}
+  .tooth-back{width:168px;height:260px;border-radius:54% 54% 42% 42% / 38% 38% 62% 62%;transform:translate(-50%,-50%) translateZ(-34px);opacity:.55}
+  .tooth-side{width:48px;height:230px;border-radius:48% 52% 40% 44%;top:54%;opacity:.72}
+  .tooth-side.left{transform:translate(-132px,-50%) rotateY(76deg)}
+  .tooth-side.right{transform:translate(84px,-50%) rotateY(-76deg)}
+  .tooth-top{width:126px;height:56px;border-radius:50%;transform:translate(-50%,-182px) rotateX(78deg);background:radial-gradient(circle at 38% 44%,#fff8e9,#dfc69e)}
+  .tooth:before,.tooth:after{content:"";position:absolute;bottom:-80px;width:80px;height:130px;background:linear-gradient(120deg,#efe1c8,#d9c3a2);border-radius:0 0 46px 46px;box-shadow:inset -15px -12px 18px rgba(75,58,35,.13)}
+  .tooth:before{left:26px;transform:rotate(7deg)}
+  .tooth:after{right:26px;transform:rotate(-7deg)}
+  .gum{position:absolute;left:50%;top:64%;width:330px;height:105px;transform:translateX(-50%);background:linear-gradient(180deg,#f2a5a6,#cc6f78);border-radius:58% 58% 35% 35%;filter:drop-shadow(0 12px 25px rgba(103,54,58,.22));z-index:-1}
+  .surface{position:absolute;border:2px solid rgba(47,123,103,.48);background:rgba(127,199,47,.10);opacity:.18;transition:opacity .2s ease,background .2s ease}
+  .surface.active{opacity:.95;background:rgba(127,199,47,.25)}
+  .surface:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+  .surface.occlusal{left:53px;top:16px;width:84px;height:45px;border-radius:50%}
+  .surface.smooth{left:20px;top:78px;width:150px;height:125px;border-radius:45%}
+  .surface.gingival{left:12px;top:187px;width:166px;height:38px;border-radius:12px}
+  .surface.proximal{right:-3px;top:86px;width:42px;height:108px;border-radius:40%}
+  .lesion{position:absolute;opacity:0;transition:opacity .25s ease,transform .25s ease}
+  .plaque{left:33px;top:178px;width:124px;height:32px;border-radius:18px;background:linear-gradient(90deg,#f0d481,#bba158);filter:blur(.2px)}
+  .white-spot{left:62px;top:135px;width:58px;height:28px;border-radius:50%;background:rgba(255,255,255,.85);border:1px solid rgba(180,160,120,.55)}
+  .brown-spot{left:78px;top:135px;width:47px;height:33px;border-radius:50%;background:radial-gradient(circle,#8a4a26,#b8733d 62%,transparent 65%)}
+  .cavity{left:76px;top:126px;width:62px;height:48px;border-radius:50%;background:radial-gradient(circle at 45% 40%,#120b08 0 28%,#4b2118 42%,#9c5538 63%,transparent 66%);box-shadow:inset 0 0 9px rgba(0,0,0,.8)}
+  .stage-plaque .plaque,.stage-white .plaque,.stage-white .white-spot,.stage-brown .plaque,.stage-brown .brown-spot,.stage-cavity .plaque,.stage-cavity .cavity{opacity:1}
+  .stage-white .white-spot{transform:scale(1.1)}
+  .stage-brown .brown-spot,.stage-cavity .cavity{transform:scale(1.13)}
+  .annotation{position:absolute;border-left:3px solid var(--green);background:rgba(255,255,255,.78);padding:10px 12px;border-radius:12px;box-shadow:0 12px 35px rgba(18,50,58,.08);max-width:260px}
+  .annotation strong{display:block;color:var(--green);font-size:13px;text-transform:uppercase;letter-spacing:.08em}
+  .annotation span{display:block;margin-top:3px;font-size:13px;color:var(--ink);line-height:1.35}
+  .ann1{left:32px;top:145px}.ann2{right:30px;top:210px}.ann3{left:50px;bottom:94px}
+  .bottom-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}
+  .note{padding:16px;box-shadow:none;background:rgba(255,255,255,.65)}
+  .note h3{margin:0 0 8px;color:#10322f}
+  .note p{margin:0;color:var(--muted);line-height:1.45}
+  .risk-triad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+  .risk{border:1px solid var(--line);border-radius:16px;padding:12px;background:#fff;min-height:88px;text-align:left;cursor:pointer}
+  .risk.active{border-color:var(--green);box-shadow:0 0 0 4px rgba(47,123,103,.11)}
+  .risk b{display:block;color:var(--green);font-size:13px}
+  .risk small{display:block;margin-top:5px;color:var(--muted);line-height:1.3}
+  .risk-detail{margin-top:12px;border-left:3px solid var(--green);padding-left:10px;color:var(--muted);font-size:13px;line-height:1.45}
+  .presenter-notes{margin-top:12px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:11px 12px}
+  .presenter-notes summary{cursor:pointer;font-weight:800;color:var(--green)}
+  .presenter-notes p{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.45}
+  .odontogram-card{margin-top:14px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,rgba(255,255,255,.82),rgba(238,246,240,.82));padding:14px}
+  .odontogram-head{display:flex;justify-content:space-between;gap:12px;align-items:start;margin-bottom:8px}
+  .odontogram-head h3{margin:0;color:#10322f;font-family:var(--serif);font-size:22px}
+  .odontogram-head p{margin:4px 0 0;color:var(--muted);font-size:13px;line-height:1.35}
+  .mouth-map{width:100%;height:auto;display:block}
+  .mouth-map .arch{fill:none;stroke:rgba(47,123,103,.32);stroke-width:4;stroke-linecap:round}
+  .mouth-tooth{cursor:pointer;outline:none}
+  .mouth-tooth .crown{fill:#fff9eb;stroke:#9f8c6a;stroke-width:2;transition:fill .2s ease,stroke .2s ease,filter .2s ease}
+  .mouth-tooth .root{fill:#ead8b9;stroke:#b9a17a;stroke-width:1.5}
+  .mouth-tooth .band,.mouth-tooth .spot,.mouth-tooth .pit{opacity:0;transition:opacity .2s ease,transform .2s ease}
+  .mouth-tooth.is-plaque .band{opacity:1;fill:#d1b35f}
+  .mouth-tooth.is-white .band{opacity:1;fill:#d1b35f}.mouth-tooth.is-white .spot{opacity:1;fill:#fff;stroke:#c8b58c}
+  .mouth-tooth.is-brown .band{opacity:1;fill:#d1b35f}.mouth-tooth.is-brown .spot{opacity:1;fill:#9b6338;stroke:#74442a}
+  .mouth-tooth.is-cavity .band{opacity:1;fill:#d1b35f}.mouth-tooth.is-cavity .pit{opacity:1;fill:#2a1710}
+  .mouth-tooth.active .crown{stroke:var(--green);stroke-width:3;filter:drop-shadow(0 5px 7px rgba(47,123,103,.25))}
+  .mouth-tooth:focus-visible .crown{stroke:var(--blue);stroke-width:4}
+  .tooth-label{font-size:12px;font-weight:800;fill:#10322f;text-anchor:middle;pointer-events:none}
+  .mouth-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .legend-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;background:#fff;padding:6px 9px;color:var(--muted);font-size:12px;font-weight:800}
+  .legend-swatch{width:10px;height:10px;border-radius:999px;background:var(--green)}
+  .legend-swatch.plaque{background:#d1b35f}.legend-swatch.white{background:#fff;border:1px solid #c8b58c}.legend-swatch.brown{background:#9b6338}.legend-swatch.cavity{background:#2a1710}
+  .case-note{margin-top:10px;border-left:3px solid var(--blue);padding-left:10px;color:var(--muted);font-size:13px;line-height:1.45}
+  .present-strip{position:absolute;right:18px;bottom:18px;display:flex;gap:8px;z-index:5}
+  .btn{box-shadow:0 10px 30px rgba(18,50,58,.08)}
+  @media (max-width:900px){
+    .hero,.lab,.bottom-grid{grid-template-columns:1fr}
+    .stage{min-height:760px}
+    .annotation{position:relative;left:auto;right:auto;top:auto;bottom:auto;margin:8px 0}
+    .tooth-space{height:420px}
+    .odontogram-head{display:block}
+  }
+</style>
+</head>
+<body>
+<main class="shell">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Klinik Pergigian Dato Keramat · ECC teaching prop</p>
+      <h1>Interactive Tooth Lab</h1>
+      <p>Use this beside the CPG deck to explain ECC visually: rotate the tooth, highlight surfaces, and step through plaque, white/brown spots and cavitation without relying on generic static stock images.</p>
+    </div>
+    <div class="badge">Live HTML · no backend</div>
+  </header>
+
+  <section class="lab">
+    <aside class="panel" aria-label="Teaching controls">
+      <h2 class="section-title">Presenter Controls</h2>
+      <p class="hint">Built as an anatomy-style teaching aid. It is intentionally simplified and should be used to support, not replace, the CPG wording.</p>
+
+      <div class="control-group">
+        <div class="label-row"><span>ECC progression</span><span id="stageLabel">Plaque</span></div>
+        <div class="segmented" id="stageButtons">
+          <button data-stage="plaque" class="active">Plaque</button>
+          <button data-stage="white">White spot</button>
+          <button data-stage="brown">Brown spot</button>
+          <button data-stage="cavity">Cavitated</button>
+        </div>
+        <div class="stage-nav" aria-label="Stage navigation">
+          <button class="btn" id="prevStageBtn" type="button">Previous</button>
+          <div class="stage-dots" id="stageDots" aria-label="Jump to stage"></div>
+          <button class="btn" id="nextStageBtn" type="button">Next</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="label-row"><span>Rotate left / right</span><span id="rotYLabel">0°</span></div>
+        <input id="rotY" type="range" min="-85" max="85" value="0">
+        <div class="label-row"><span>Tilt up / down</span><span id="rotXLabel">0°</span></div>
+        <input id="rotX" type="range" min="-70" max="28" value="0">
+        <div class="preset-grid" aria-label="Preset views">
+          <button class="btn" id="facialViewBtn" type="button">Facial</button>
+          <button class="btn" id="occlusalViewBtn" type="button">Occlusal</button>
+          <button class="btn" id="proximalViewBtn" type="button">Proximal</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="label-row"><span>Surface focus</span><span id="surfaceLabel">Gingival margin</span></div>
+        <div class="surface-list" id="surfaceButtons">
+          <button data-surface="gingival" class="active">Gingival margin</button>
+          <button data-surface="smooth">Smooth surface</button>
+          <button data-surface="proximal">Proximal</button>
+          <button data-surface="occlusal">Pits / fissures</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <button class="btn primary" id="playBtn">Auto step</button>
+        <button class="btn" id="resetBtn">Reset view</button>
+      </div>
+    </aside>
+
+    <section class="stage" aria-live="polite">
+      <div class="viewer-header">
+        <div>
+          <h2 id="viewerTitle">Plaque at gingival margin</h2>
+          <p id="viewerSub">Soft glutinous plaque accumulations at gingival margin.</p>
+        </div>
+        <div class="badge" id="sourceBadge">Source: Clinical presentation</div>
+      </div>
+
+      <div class="tooth-space" id="toothSpace" aria-label="Drag the tooth model to rotate it">
+        <div class="tooth-rig stage-plaque" id="toothRig">
+          <div class="gum"></div>
+          <div class="tooth-back"></div>
+          <div class="tooth-side left"></div>
+          <div class="tooth-side right"></div>
+          <div class="tooth-top"></div>
+          <div class="tooth">
+            <div class="surface occlusal" data-surface-shape="occlusal" role="button" tabindex="0" aria-label="Focus pits and fissures"></div>
+            <div class="surface smooth" data-surface-shape="smooth" role="button" tabindex="0" aria-label="Focus smooth surface"></div>
+            <div class="surface gingival active" data-surface-shape="gingival" role="button" tabindex="0" aria-label="Focus gingival margin"></div>
+            <div class="surface proximal" data-surface-shape="proximal" role="button" tabindex="0" aria-label="Focus proximal surface"></div>
+            <div class="lesion plaque"></div>
+            <div class="lesion white-spot"></div>
+            <div class="lesion brown-spot"></div>
+            <div class="lesion cavity"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="annotation ann1">
+        <strong id="ann1Title">Surface</strong>
+        <span id="ann1Text">Start by pointing to where plaque collects near the gum line.</span>
+      </div>
+      <div class="annotation ann2">
+        <strong>CPG phrasing</strong>
+        <span id="sourceText">“Soft glutinous plaque accumulations at gingival margin.”</span>
+      </div>
+      <div class="annotation ann3">
+        <strong>Presenter prompt</strong>
+        <span id="promptText">Ask caregiver about feeding, sugar frequency and brushing routine.</span>
+      </div>
+
+      <section class="odontogram-card" aria-label="ECC upper primary tooth map">
+        <div class="odontogram-head">
+          <div>
+            <h3>ECC Mouth Map</h3>
+            <p>Whole-mouth orientation adapted from odontogram thinking: select a primary anterior tooth, then use the model above to explain surface and stage.</p>
+          </div>
+          <span class="badge" id="toothBadge">Selected: 51</span>
+        </div>
+        <svg class="mouth-map" viewBox="0 0 720 210" role="listbox" aria-label="Upper primary anterior teeth map">
+          <title>Upper primary anterior ECC map</title>
+          <path class="arch" d="M105 150 C195 38 525 38 615 150"></path>
+          <g class="mouth-tooth active is-plaque" data-tooth="51" data-tooth-type="Primary right central incisor" role="option" tabindex="0" aria-selected="true" transform="translate(312 62)">
+            <path class="root" d="M23 78 C18 106 12 128 26 144 C38 126 42 104 39 78"></path>
+            <path class="crown" d="M8 16 C11 3 38 0 45 14 C52 30 50 66 40 80 C31 92 15 86 9 72 C2 55 1 31 8 16Z"></path>
+            <rect class="band" x="10" y="58" width="34" height="9" rx="5"></rect>
+            <ellipse class="spot" cx="28" cy="42" rx="9" ry="6"></ellipse>
+            <ellipse class="pit" cx="28" cy="42" rx="9" ry="7"></ellipse>
+            <text class="tooth-label" x="28" y="174">51</text>
+          </g>
+          <g class="mouth-tooth is-plaque" data-tooth="52" data-tooth-type="Primary right lateral incisor" role="option" tabindex="0" aria-selected="false" transform="translate(244 78) rotate(-10)">
+            <path class="root" d="M20 72 C16 100 12 119 24 134 C35 118 39 98 36 72"></path>
+            <path class="crown" d="M8 15 C12 4 34 1 40 13 C47 28 44 61 35 73 C27 84 13 80 8 68 C2 52 1 29 8 15Z"></path>
+            <rect class="band" x="9" y="53" width="30" height="8" rx="4"></rect>
+            <ellipse class="spot" cx="25" cy="38" rx="8" ry="5"></ellipse>
+            <ellipse class="pit" cx="25" cy="38" rx="8" ry="6"></ellipse>
+            <text class="tooth-label" x="24" y="164">52</text>
+          </g>
+          <g class="mouth-tooth is-plaque" data-tooth="61" data-tooth-type="Primary left central incisor" role="option" tabindex="0" aria-selected="false" transform="translate(362 62)">
+            <path class="root" d="M23 78 C18 106 12 128 26 144 C38 126 42 104 39 78"></path>
+            <path class="crown" d="M8 16 C11 3 38 0 45 14 C52 30 50 66 40 80 C31 92 15 86 9 72 C2 55 1 31 8 16Z"></path>
+            <rect class="band" x="10" y="58" width="34" height="9" rx="5"></rect>
+            <ellipse class="spot" cx="28" cy="42" rx="9" ry="6"></ellipse>
+            <ellipse class="pit" cx="28" cy="42" rx="9" ry="7"></ellipse>
+            <text class="tooth-label" x="28" y="174">61</text>
+          </g>
+          <g class="mouth-tooth is-plaque" data-tooth="62" data-tooth-type="Primary left lateral incisor" role="option" tabindex="0" aria-selected="false" transform="translate(431 78) rotate(10)">
+            <path class="root" d="M20 72 C16 100 12 119 24 134 C35 118 39 98 36 72"></path>
+            <path class="crown" d="M8 15 C12 4 34 1 40 13 C47 28 44 61 35 73 C27 84 13 80 8 68 C2 52 1 29 8 15Z"></path>
+            <rect class="band" x="9" y="53" width="30" height="8" rx="4"></rect>
+            <ellipse class="spot" cx="25" cy="38" rx="8" ry="5"></ellipse>
+            <ellipse class="pit" cx="25" cy="38" rx="8" ry="6"></ellipse>
+            <text class="tooth-label" x="24" y="164">62</text>
+          </g>
+        </svg>
+        <div class="mouth-legend" aria-label="ECC stage legend">
+          <span class="legend-chip"><span class="legend-swatch plaque"></span>Plaque</span>
+          <span class="legend-chip"><span class="legend-swatch white"></span>White spot</span>
+          <span class="legend-chip"><span class="legend-swatch brown"></span>Brown spot</span>
+          <span class="legend-chip"><span class="legend-swatch cavity"></span>Cavitated</span>
+        </div>
+        <p class="case-note" id="mouthNote">51 is selected. Use this as the anchor tooth, then rotate the large model above to explain the gingival margin and early visible signs.</p>
+      </section>
+
+      <div class="bottom-grid">
+        <div class="note">
+          <h3>Risk factor convergence</h3>
+          <p>ECC is multifactorial. Use the triad to explain why “bottle feeding only” is too narrow.</p>
+          <div class="risk-triad">
+            <button class="risk active" data-risk="host" type="button"><b>Host/tooth</b><small>Primary teeth, enamel stage, surfaces at risk.</small></button>
+            <button class="risk" data-risk="biofilm" type="button"><b>Microorganisms</b><small>Cariogenic bacteria and plaque biofilm.</small></button>
+            <button class="risk" data-risk="diet" type="button"><b>Carbohydrate/time</b><small>Fermentable sugars with repeated exposure.</small></button>
+          </div>
+          <p class="risk-detail" id="riskDetail">Primary anterior teeth make the visual story easy for parents: show surface, sign, then prevention action.</p>
+        </div>
+        <div class="note">
+          <h3>Clinical bridge</h3>
+          <p id="bridgeText">Move from visual signs to CRA, OHE, fluoride toothpaste, fluoride varnish and recall interval.</p>
+          <details class="presenter-notes">
+            <summary>Presenter notes</summary>
+            <p id="presenterNote">Keep language simple: this model supports explanation. Diagnosis and treatment decisions still follow clinical examination and the CPG.</p>
+          </details>
+        </div>
+      </div>
+
+      <div class="present-strip">
+        <button class="btn" id="fullscreenBtn">Fullscreen</button>
+      </div>
+    </section>
+  </section>
+</main>
+
+<script>
+const stageOrder = ["plaque", "white", "brown", "cavity"];
+const copy = {
+  plaque: {
+    label: "Plaque",
+    title: "Plaque at gingival margin",
+    sub: "Soft glutinous plaque accumulations at gingival margin.",
+    source: "“Soft glutinous plaque accumulations at gingival margin.”",
+    prompt: "Ask caregiver about feeding, sugar frequency and brushing routine.",
+    bridge: "This is where prevention messaging starts: feeding practice, toothbrushing and caregiver support.",
+    note: "Good opening stage for caregivers: the visible yellow band lets her explain plaque without sounding punitive."
+  },
+  white: {
+    label: "White spot",
+    title: "White / brown spot begins",
+    sub: "Decalcified white or brown bands or spots beneath the plaque.",
+    source: "“Decalcified white or brown bands or spots beneath the plaque.”",
+    prompt: "Explain this as an early visible sign before a hole appears.",
+    bridge: "Good moment to reinforce fluoride toothpaste, spit-not-rinse, and risk-based recall.",
+    note: "Use this stage to keep attention: early ECC can be discussed before cavitation, which makes prevention feel practical."
+  },
+  brown: {
+    label: "Brown spot",
+    title: "Discolouration becomes visible",
+    sub: "White or brown spots can be shown before cavitation.",
+    source: "Source describes white or brown spots beneath plaque and progression to cavitated lesions.",
+    prompt: "Use simple language: not all early caries starts as a hole.",
+    bridge: "Connect visual examination with clean, dry teeth under adequate light.",
+    note: "This is an enhanced teaching stage, not a verbatim slide claim. Keep it as visual support for the CPG progression language."
+  },
+  cavity: {
+    label: "Cavitated",
+    title: "Progression to cavitated lesion",
+    sub: "The white or brown spots will progress to cavitated lesions.",
+    source: "“The white or brown spots will progress to cavitated lesions.”",
+    prompt: "Transition to treatment options and why prevention/recall matters.",
+    bridge: "Now move into treatment choices: non-invasive for non-cavitated lesions, invasive methods when required.",
+    note: "Use the cavity stage briefly, then return to prevention and recall. It should not dominate the session."
+  }
+};
+const surfaceCopy = {
+  gingival: ["Gingival margin", "Common place to discuss plaque accumulation near gum line."],
+  smooth: ["Smooth surface", "Useful for explaining smooth surface signs in young children."],
+  proximal: ["Proximal", "Bridge to when bitewing radiography may provide additional yield."],
+  occlusal: ["Pits / fissures", "Bridge to fissure sealant consideration for primary molars."]
+};
+const riskCopy = {
+  host: "Primary anterior teeth make the visual story easy for parents: show surface, sign, then prevention action.",
+  biofilm: "Plaque biofilm is the shared thread across stages. Tie it back to brushing support and OHE.",
+  diet: "Repeated sugar exposure over time is easier to explain when the stage changes are visible."
+};
+const viewPresets = {
+  facial: { x: -8, y: 12 },
+  occlusal: { x: -58, y: 12 },
+  proximal: { x: -8, y: 82 },
+  reset: { x: 0, y: 0 }
+};
+const rig = document.querySelector("#toothRig");
+const toothSpace = document.querySelector("#toothSpace");
+const stageButtons = document.querySelectorAll("[data-stage]");
+const stageDots = document.querySelector("#stageDots");
+const surfaceButtons = document.querySelectorAll("[data-surface]");
+const surfaces = document.querySelectorAll("[data-surface-shape]");
+const riskButtons = document.querySelectorAll("[data-risk]");
+const mouthTeeth = document.querySelectorAll("[data-tooth]");
+const rotX = document.querySelector("#rotX");
+const rotY = document.querySelector("#rotY");
+const rotXLabel = document.querySelector("#rotXLabel");
+const rotYLabel = document.querySelector("#rotYLabel");
+let currentStage = "plaque";
+let selectedTooth = "51";
+let playTimer = null;
+let dragState = null;
+
+function setStage(stage){
+  currentStage = stage;
+  rig.classList.remove(...stageOrder.map(item => `stage-${item}`));
+  rig.classList.add(`stage-${stage}`);
+  stageButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.stage === stage));
+  document.querySelectorAll(".stage-dot").forEach(dot => dot.classList.toggle("active", dot.dataset.stage === stage));
+  const c = copy[stage];
+  document.querySelector("#stageLabel").textContent = c.label;
+  document.querySelector("#viewerTitle").textContent = c.title;
+  document.querySelector("#viewerSub").textContent = c.sub;
+  document.querySelector("#sourceText").textContent = c.source;
+  document.querySelector("#promptText").textContent = c.prompt;
+  document.querySelector("#bridgeText").textContent = c.bridge;
+  document.querySelector("#presenterNote").textContent = c.note;
+  updateMouthMap();
+  applyRotation();
+}
+function setSurface(surface){
+  surfaceButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.surface === surface));
+  surfaces.forEach(shape => shape.classList.toggle("active", shape.dataset.surfaceShape === surface));
+  const [label, text] = surfaceCopy[surface];
+  document.querySelector("#surfaceLabel").textContent = label;
+  document.querySelector("#ann1Title").textContent = label;
+  document.querySelector("#ann1Text").textContent = text;
+}
+function setRisk(risk){
+  riskButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.risk === risk));
+  document.querySelector("#riskDetail").textContent = riskCopy[risk];
+}
+function setMouthTooth(tooth){
+  selectedTooth = tooth;
+  mouthTeeth.forEach(item => {
+    const active = item.dataset.tooth === tooth;
+    item.classList.toggle("active", active);
+    item.setAttribute("aria-selected", active ? "true" : "false");
+  });
+  const activeTooth = document.querySelector(`[data-tooth="${tooth}"]`);
+  const toothType = activeTooth?.dataset.toothType ?? "Primary anterior tooth";
+  document.querySelector("#toothBadge").textContent = `Selected: ${tooth}`;
+  document.querySelector("#mouthNote").textContent = `${tooth} (${toothType}) is selected. ${copy[currentStage].label} is shown on the mouth map and the large model above.`;
+}
+function updateMouthMap(){
+  const conditionClass = `is-${currentStage}`;
+  mouthTeeth.forEach(item => {
+    item.classList.remove(...stageOrder.map(stage => `is-${stage}`));
+    item.classList.add(conditionClass);
+  });
+  setMouthTooth(selectedTooth);
+}
+function setView({ x, y }){
+  rotX.value = x;
+  rotY.value = y;
+  applyRotation();
+}
+function applyRotation(){
+  rotXLabel.textContent = `${rotX.value}°`;
+  rotYLabel.textContent = `${rotY.value}°`;
+  rig.style.transform = `rotateX(${rotX.value}deg) rotateY(${rotY.value}deg)`;
+}
+function stepStage(delta){
+  const currentIndex = stageOrder.indexOf(currentStage);
+  const nextIndex = (currentIndex + delta + stageOrder.length) % stageOrder.length;
+  setStage(stageOrder[nextIndex]);
+}
+function buildStageDots(){
+  stageDots.innerHTML = "";
+  stageOrder.forEach(stage => {
+    const dot = document.createElement("button");
+    dot.className = `stage-dot${stage === currentStage ? " active" : ""}`;
+    dot.type = "button";
+    dot.dataset.stage = stage;
+    dot.setAttribute("aria-label", `Jump to ${copy[stage].label}`);
+    dot.addEventListener("click", () => setStage(stage));
+    stageDots.appendChild(dot);
+  });
+}
+function clampRotation(value, min, max){
+  return Math.max(min, Math.min(max, value));
+}
+stageButtons.forEach(btn => btn.addEventListener("click", () => setStage(btn.dataset.stage)));
+surfaceButtons.forEach(btn => btn.addEventListener("click", () => setSurface(btn.dataset.surface)));
+surfaces.forEach(shape => {
+  shape.addEventListener("click", () => setSurface(shape.dataset.surfaceShape));
+  shape.addEventListener("keydown", event => {
+    if(event.key === "Enter" || event.key === " "){
+      event.preventDefault();
+      setSurface(shape.dataset.surfaceShape);
+    }
+  });
+});
+riskButtons.forEach(btn => btn.addEventListener("click", () => setRisk(btn.dataset.risk)));
+mouthTeeth.forEach(tooth => {
+  tooth.addEventListener("click", () => setMouthTooth(tooth.dataset.tooth));
+  tooth.addEventListener("keydown", event => {
+    if(event.key === "Enter" || event.key === " "){
+      event.preventDefault();
+      setMouthTooth(tooth.dataset.tooth);
+    }
+  });
+});
+rotX.addEventListener("input", applyRotation);
+rotY.addEventListener("input", applyRotation);
+document.querySelector("#prevStageBtn").addEventListener("click", () => stepStage(-1));
+document.querySelector("#nextStageBtn").addEventListener("click", () => stepStage(1));
+document.querySelector("#facialViewBtn").addEventListener("click", () => setView(viewPresets.facial));
+document.querySelector("#occlusalViewBtn").addEventListener("click", () => setView(viewPresets.occlusal));
+document.querySelector("#proximalViewBtn").addEventListener("click", () => setView(viewPresets.proximal));
+toothSpace.addEventListener("pointerdown", event => {
+  dragState = { x: event.clientX, y: event.clientY, startX: Number(rotX.value), startY: Number(rotY.value) };
+  toothSpace.classList.add("dragging");
+  rig.classList.add("dragging");
+  toothSpace.setPointerCapture(event.pointerId);
+});
+toothSpace.addEventListener("pointermove", event => {
+  if(!dragState) return;
+  const dx = event.clientX - dragState.x;
+  const dy = event.clientY - dragState.y;
+  rotY.value = clampRotation(dragState.startY + dx * 0.35, Number(rotY.min), Number(rotY.max));
+  rotX.value = clampRotation(dragState.startX - dy * 0.25, Number(rotX.min), Number(rotX.max));
+  applyRotation();
+});
+function stopDrag(){
+  dragState = null;
+  toothSpace.classList.remove("dragging");
+  rig.classList.remove("dragging");
+}
+toothSpace.addEventListener("pointerup", stopDrag);
+toothSpace.addEventListener("pointercancel", stopDrag);
+document.querySelector("#resetBtn").addEventListener("click", () => {
+  setView(viewPresets.reset);
+  setStage("plaque"); setSurface("gingival"); applyRotation();
+});
+document.querySelector("#playBtn").addEventListener("click", () => {
+  if(playTimer){
+    clearInterval(playTimer); playTimer = null;
+    document.querySelector("#playBtn").textContent = "Auto step";
+    return;
+  }
+  let i = stageOrder.indexOf(currentStage);
+  document.querySelector("#playBtn").textContent = "Stop";
+  playTimer = setInterval(() => {
+    i = (i + 1) % stageOrder.length;
+    setStage(stageOrder[i]);
+  }, 1700);
+});
+document.querySelector("#fullscreenBtn").addEventListener("click", () => {
+  document.documentElement.requestFullscreen?.();
+});
+buildStageDots();
+updateMouthMap();
+applyRotation();
+</script>
+</body>
+</html>

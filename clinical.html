@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clinical Presentation Lab — arh-family-lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/theme.css">
+<style>
+  body{background:radial-gradient(circle at top right,rgba(47,123,103,.16),transparent 28rem),var(--bg)}
+  main{max-width:1080px;margin:0 auto;padding:28px 16px 48px}
+  .back{display:inline-block;margin-bottom:28px;color:var(--accent);font-weight:700;text-decoration:none}
+  .eyebrow{margin:0 0 8px;text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:800;color:var(--accent)}
+  h1{margin:0;color:var(--brand);font-size:clamp(36px,7vw,68px);line-height:.95}
+  .lead{max-width:720px;color:var(--muted);font-size:17px;line-height:1.55}
+  .hero-panel{display:grid;grid-template-columns:1fr minmax(190px,260px);gap:20px;align-items:center;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,#fffdf6,#eef6f0);padding:22px;box-shadow:var(--shadow)}
+  .qr-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:14px;text-align:center}
+  .qr-card img{width:min(100%,210px);height:auto;image-rendering:pixelated}
+  .qr-card b{display:block;margin-top:8px;color:var(--brand)}
+  .qr-card small{display:block;margin-top:4px;color:var(--muted);line-height:1.35}
+  .section-head{margin:30px 0 12px}
+  .section-head h2{margin:0;font-family:var(--fd);color:var(--brand);font-size:clamp(26px,4vw,40px)}
+  .section-head p{margin:6px 0 0;color:var(--muted);line-height:1.45}
+  .option-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .option-card{display:flex;flex-direction:column;gap:12px;border:1px solid var(--line);border-radius:24px;background:var(--surface);padding:18px;color:inherit;text-decoration:none;box-shadow:0 16px 44px rgba(18,50,58,.08)}
+  .option-card h3{margin:0;font-family:var(--fd);color:var(--brand);font-size:24px}
+  .option-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
+  .option-card .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+  .pill{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:6px 9px;background:#fff;color:var(--accent);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+  .download-btn{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:2px;border-radius:15px;background:var(--brand);color:#fff;padding:12px 13px;font-weight:800}
+  .app-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:30px}
+  .app-card{display:block;border-radius:var(--radius);border:1px solid var(--line);background:var(--surface);padding:20px;text-decoration:none;color:inherit;transition:box-shadow .15s ease,transform .15s ease}
+  .app-card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+  .app-card h3{margin:0 0 8px;font-family:var(--fd);color:var(--brand)}
+  .app-card p{margin:0;font-size:14px;color:var(--muted);line-height:1.45}
+  .tag{display:inline-block;margin-bottom:12px;border:1px solid var(--line);border-radius:999px;padding:5px 9px;font-size:12px;font-weight:800;color:var(--accent);background:rgba(255,255,255,.62)}
+  @media (max-width:760px){
+    main{padding:18px 12px 34px}
+    .back{margin-bottom:16px}
+    .hero-panel{grid-template-columns:1fr;padding:18px;border-radius:22px}
+    .lead{font-size:15px}
+    .qr-card{display:grid;grid-template-columns:96px 1fr;gap:12px;text-align:left;align-items:center}
+    .qr-card img{width:96px}
+    .option-grid{grid-template-columns:1fr}
+    .option-card{border-radius:20px;padding:16px}
+    .app-grid{grid-template-columns:1fr;margin-top:18px}
+  }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="./">← Family landing</a>
+  <section class="hero-panel">
+    <div>
+      <p class="eyebrow">Klinik Pergigian Dato Keramat / ECC briefing</p>
+      <h1 class="fd">Choose the version to use</h1>
+      <p class="lead">Mobile-friendly landing for the ECC materials. Scan the QR code or open this page on the clinic PC, then choose the source PDF, the presentation deck, or the faithful/enhanced option deck.</p>
+    </div>
+    <div class="qr-card">
+      <img src="apps/ecc-cpg-dato-keramat/clinical-landing-qr.png" alt="QR code to this ECC clinical landing page">
+      <div>
+        <b>Scan for phone view</b>
+        <small>Opens this page directly. Layout adjusts for phone, tablet, and desktop.</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-head">
+    <h2>Presentation Options</h2>
+    <p>Three safe options so Dr. can choose the version that fits the room and device.</p>
+  </section>
+
+  <div class="option-grid">
+    <a class="option-card" href="apps/ecc-cpg-dato-keramat/downloads/source-cpg-mx-of-ecc.pdf" download>
+      <span class="tag">Original reference</span>
+      <h3>Source CPG PDF</h3>
+      <p>Closest to the original material. Use when she wants to verify wording or keep the content strictly source-first.</p>
+      <div class="meta"><span class="pill">PDF</span><span class="pill">2.2 MB</span></div>
+      <span class="download-btn">Download source PDF <span>↓</span></span>
+    </a>
+    <a class="option-card" href="apps/ecc-cpg-dato-keramat/downloads/pg-pengurusan-karies-kanak-kanak-awal-ecc.pptx" download>
+      <span class="tag">Presentation deck</span>
+      <h3>PG Pengurusan Karies Kanak-Kanak Awal</h3>
+      <p>The uploaded presentation option from Downloads. Best for direct use on an Office PC.</p>
+      <div class="meta"><span class="pill">PPTX</span><span class="pill">5.1 MB</span></div>
+      <span class="download-btn">Download presentation <span>↓</span></span>
+    </a>
+    <a class="option-card" href="apps/ecc-cpg-dato-keramat/downloads/pg-ecc-kp-dato-keramat-faithful-enhanced-options.pptx" download>
+      <span class="tag">Choice deck</span>
+      <h3>KP Dato Keramat Faithful + Enhanced</h3>
+      <p>Includes source-faithful material and enhanced alternatives at the end so she can swap only what she prefers.</p>
+      <div class="meta"><span class="pill">PPTX</span><span class="pill">3.3 MB</span></div>
+      <span class="download-btn">Download options deck <span>↓</span></span>
+    </a>
+  </div>
+
+  <section class="section-head">
+    <h2>Teaching Tools</h2>
+    <p>Optional HTML tools for explaining ECC visually or reusing slide-design components.</p>
+  </section>
+
+  <div class="app-grid">
+    <a class="app-card" href="apps/ecc-react-lab/dist/">
+      <span class="tag">React web app</span>
+      <h3>ECC CPG Interactive Lab</h3>
+      <p>Full bilingual CPG walkthrough with an interactive tooth-progression lab and a primary-dentition map for marking ECC stages.</p>
+    </a>
+    <a class="app-card" href="apps/ecc-tooth-lab/">
+      <span class="tag">Interactive HTML</span>
+      <h3>ECC Tooth Lab</h3>
+      <p>Simple presenter prop: rotate one tooth, focus surfaces, and step through plaque, white spot, brown spot and cavitation.</p>
+    </a>
+    <a class="app-card" href="apps/ecc-realistic-tooth-lab/">
+      <span class="tag">Realistic SVG</span>
+      <h3>Realistic ECC Tooth Lab</h3>
+      <p>More realistic presenter prop: one anatomy-style SVG tooth with enamel shading, root form, gingival margin, lesion overlays and the same staged flow.</p>
+    </a>
+    <a class="app-card" href="apps/ecc-tooth-lab-mouth-map/">
+      <span class="tag">Advanced HTML</span>
+      <h3>ECC Tooth Lab + Mouth Map</h3>
+      <p>Advanced version with the same tooth model plus an odontogram-style upper primary anterior map for selecting 51, 52, 61 and 62.</p>
+    </a>
+    <a class="app-card" href="apps/presentation-design-studio/">
+      <span class="tag">Prototype</span>
+      <h3>Presentation Design Studio</h3>
+      <p>Reusable slide canvas lab with configurable adapters and pure rendering functions.</p>
+    </a>
+  </div>
+</main>
+</body>
+</html>
