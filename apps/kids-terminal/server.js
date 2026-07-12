@@ -5,11 +5,64 @@ const fs = require('fs');
 const http = require('http');
 
 const app = express();
-const START_PORT = 3000;
-const TAILSCALE_IP = '100.85.130.130';
 const repoRoot = path.resolve(__dirname, '../../');
 
 app.use(express.json());
+
+// ============================================================================
+// ENVIRONMENT LOADER (Zero-dependency manual .env parser)
+// ============================================================================
+
+const envFile = path.join(__dirname, '.env');
+
+function loadEnv() {
+  if (!fs.existsSync(envFile)) return;
+  try {
+    const lines = fs.readFileSync(envFile, 'utf8').split('\n');
+    lines.forEach(line => {
+      line = line.trim();
+      if (!line || line.startsWith('#') || !line.includes('=')) return;
+      const idx = line.indexOf('=');
+      const key = line.slice(0, idx).trim();
+      const val = line.slice(idx + 1).trim().replace(/^['"]|['"]$/g, '');
+      process.env[key] = val;
+    });
+    console.log('[Env] Loaded local environment configuration successfully.');
+  } catch (e) {
+    console.error('[Env] Error loading .env:', e.message);
+  }
+}
+
+function saveEnv(updates) {
+  if (!fs.existsSync(envFile)) {
+    fs.writeFileSync(envFile, '', 'utf8');
+  }
+  try {
+    let content = fs.readFileSync(envFile, 'utf8');
+    Object.keys(updates).forEach(key => {
+      const val = updates[key];
+      const regex = new RegExp(`^${key}=.*$`, 'm');
+      if (content.match(regex)) {
+        content = content.replace(regex, `${key}=${val}`);
+      } else {
+        if (content && !content.endsWith('\n')) content += '\n';
+        content += `${key}=${val}\n`;
+      }
+      process.env[key] = val; // Sync in active process
+    });
+    fs.writeFileSync(envFile, content, 'utf8');
+    return true;
+  } catch (e) {
+    console.error('[Env] Error saving .env:', e.message);
+    return false;
+  }
+}
+
+// Load env values on startup
+loadEnv();
+
+const START_PORT = parseInt(process.env.SERVER_PORT || '3000', 10);
+const TAILSCALE_IP = process.env.TAILSCALE_IP || '100.85.130.130';
 
 // ============================================================================
 // I/O ADAPTERS (Side Effects & System/Shell Communication)
@@ -136,7 +189,7 @@ const PromptBuilder = {
     if (persona === 'alfred') {
       personaPrompt = `You are Alfred Pennyworth, a loyal British butler and protective advisory assistant. Address the user formally as 'Young Master' or 'Young Miss'. Speak in a highly polished, witty, dry, and cautionary tone. DO NOT use the word 'protocol'. Instead, use butler vocabulary like 'cautionary measure', 'discretion is the better part of valor', 'safeguard', 'bloody log', and 'advisory notice'. If they propose code changes, warn them proactively first (e.g. "I would strongly advise caution, Young Master. Shall we run a safeguard first?").`;
     } else if (persona === 'jarvis') {
-      personaPrompt = `You are Jarvis, a sleek, technical AI assistant. Speak in a crisp, helpful, and technical tone. Address the user as 'Sir' or 'Ma'am'. Use advanced technical vocabulary like 'diagnostics', 're-routing computational grids', 'House Party Protocol', 'systems operational', and 'threat index'. E.g. "Diagnostics complete, Sir. Ready to commence compilation."`;
+      personaPrompt = `You are Jarvis, a sleek, technical AI assistant. Speak in a clean, helpful, and technical tone. Address the user as 'Sir' or 'Ma'am'. Use advanced technical vocabulary like 'diagnostics', 're-routing computational grids', 'House Party Protocol', 'systems operational', and 'threat index'. E.g. "Diagnostics complete, Sir. Ready to commence compilation."`;
     } else if (persona === 'friday') {
       personaPrompt = `You are Friday, a sassy, tech-forward, and highly protective AI assistant. Address the user as 'Boss'. Use vocabulary like 'Barnyard Protocol', 'sealing the HQ', 'shields up', 'contusions detected', 'global extinction level', and 'systems override'. Keep your tone slightly dry, quick, and protective. E.g. "Barnyard Protocol engaged, Boss. Gating the HQ. Ready to run compile cycles."`;
     }
@@ -218,31 +271,65 @@ app.get('/apps/kids-terminal/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Config Endpoint: Let the UI fetch settings dynamically (Master Default)
+// Config Endpoint: Merges .env values over config.json dynamically
 app.get('/api/config', (req, res) => {
   const config = FileIOAdapter.readJson(path.join(__dirname, 'config.json'));
   if (config) {
+    // Dynamic overlay from process.env
+    if (process.env.FIREBASE_URL) config.firebase.url = process.env.FIREBASE_URL;
+    if (process.env.FIREBASE_ROOT) config.firebase.root = process.env.FIREBASE_ROOT;
+    if (process.env.FIREBASE_API_KEY) config.auth.apiKey = process.env.FIREBASE_API_KEY;
+    
+    if (process.env.PARENT_PIN) config.parent.pin = process.env.PARENT_PIN;
+    if (process.env.PARENT_NOTIFY_URL) config.parent.notifyUrl = process.env.PARENT_NOTIFY_URL;
+    if (process.env.PARENT_MASTER_EMAIL) config.parent.masterGatedEmail = process.env.PARENT_MASTER_EMAIL;
+    
+    if (process.env.CLI_EXECUTABLE) config.engine.cliExecutable = process.env.CLI_EXECUTABLE;
+    
     res.json(config);
   } else {
     res.status(500).json({ error: 'Could not load settings config.json' });
   }
 });
 
-// Save Config Endpoint: Exposes setting config to parent panel
+// Save Config Endpoint: Writes updates back to config.json (UI elements) and .env (secrets)
 app.post('/api/save-config', (req, res) => {
-  const success = FileIOAdapter.writeJson(path.join(__dirname, 'config.json'), req.body);
-  if (success) {
-    res.json({ success: true, message: 'Settings saved successfully' });
+  const incoming = req.body;
+  const config = FileIOAdapter.readJson(path.join(__dirname, 'config.json'));
+
+  if (!config) {
+    res.status(500).json({ success: false, error: 'Could not read config.json' });
+    return;
+  }
+
+  // 1. Separate UI elements to save in config.json
+  config.theme = incoming.theme;
+  config.layout = incoming.layout;
+  config.engine.socraticMode = incoming.engine.socraticMode;
+  config.engine.persona = incoming.engine.persona;
+  config.speech = incoming.speech;
+
+  // 2. Separate system path and key updates to save in .env
+  const envUpdates = {};
+  if (incoming.auth?.apiKey) envUpdates.FIREBASE_API_KEY = incoming.auth.apiKey;
+  if (incoming.firebase?.url) envUpdates.FIREBASE_URL = incoming.firebase.url;
+  if (incoming.parent?.pin) envUpdates.PARENT_PIN = incoming.parent.pin;
+  if (incoming.parent?.notifyUrl) envUpdates.PARENT_NOTIFY_URL = incoming.parent.notifyUrl;
+  
+  const successJson = FileIOAdapter.writeJson(path.join(__dirname, 'config.json'), config);
+  const successEnv = saveEnv(envUpdates);
+
+  if (successJson && successEnv) {
+    res.json({ success: true, message: 'Settings and environment variables saved successfully.' });
   } else {
-    res.status(500).json({ success: false, error: 'Could not save config.json' });
+    res.status(500).json({ success: false, error: 'Failed to write config updates.' });
   }
 });
 
 // Notify parent about new registration attempt
 app.get('/api/notify-registration', (req, res) => {
   const email = req.query.email;
-  const config = FileIOAdapter.readJson(path.join(__dirname, 'config.json'));
-  const notifyUrl = config?.parent?.notifyUrl;
+  const notifyUrl = process.env.PARENT_NOTIFY_URL;
 
   NotificationAdapter.send(notifyUrl, {
     event: 'registration_attempt',
@@ -258,8 +345,7 @@ app.get('/api/notify-registration', (req, res) => {
 app.get('/api/notify-gated', (req, res) => {
   const email = req.query.email;
   const prompt = req.query.prompt;
-  const config = FileIOAdapter.readJson(path.join(__dirname, 'config.json'));
-  const notifyUrl = config?.parent?.notifyUrl;
+  const notifyUrl = process.env.PARENT_NOTIFY_URL;
 
   NotificationAdapter.send(notifyUrl, {
     event: 'gated_approval_needed',
@@ -283,9 +369,8 @@ app.get('/api/translate', (req, res) => {
     return;
   }
 
-  const config = FileIOAdapter.readJson(path.join(__dirname, 'config.json')) || { engine: {} };
-  const cliExecutable = config.engine.cliExecutable || 'agy.exe';
-  const skipPermissions = config.engine.skipPermissions !== false;
+  const cliExecutable = process.env.CLI_EXECUTABLE || 'agy.exe';
+  const skipPermissions = true; // Default safety bypass
 
   const translationPrompt = PromptBuilder.buildTranslationPrompt(text, fromLang, toLang);
   const args = [];
@@ -336,7 +421,7 @@ app.get('/api/run-agy', (req, res) => {
 
   const config = FileIOAdapter.readJson(path.join(__dirname, 'config.json')) || { engine: {} };
   const socraticMode = config.engine.socraticMode !== false;
-  const cliExecutable = config.engine.cliExecutable || 'agy.exe';
+  const cliExecutable = process.env.CLI_EXECUTABLE || 'agy.exe';
   const skipPermissions = config.engine.skipPermissions !== false;
 
   res.setHeader('Content-Type', 'text/event-stream');
