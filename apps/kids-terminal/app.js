@@ -309,18 +309,22 @@ const ThemeEngine = {
       const pin = urlParams.get('pin');
       const portal = urlParams.get('portal');
 
-      // Parent Dev Direct Login
-      if (portal === 'parent' && pin) {
-        const correctPin = config?.parent?.pin || "1234";
-        if (pin === correctPin) {
-          const session = await Auth.currentSession();
-          if (session && session.email.toLowerCase() === (config?.parent?.masterGatedEmail || 'arh.homelab@gmail.com').toLowerCase()) {
-            State.session = session;
-            await loadAuthenticatedSession();
-            tabBtnParent.click(); // Open Dev Console
-            return;
+      // Parent Dev Gate Shortcut / Login
+      if (portal === 'parent') {
+        if (pin) {
+          const correctPin = config?.parent?.pin || "1234";
+          if (pin === correctPin) {
+            const session = await Auth.currentSession();
+            if (session && session.email.toLowerCase() === (config?.parent?.masterGatedEmail || 'arh.homelab@gmail.com').toLowerCase()) {
+              State.session = session;
+              await loadAuthenticatedSession();
+              tabBtnParent.click(); // Open Dev Console
+              return;
+            }
           }
         }
+        // If pin is invalid or not provided, show the PIN modal immediately
+        openParentPinGate();
       }
 
       // Kids PWSH Alias Auto-Login (with 1-week TTL verification)

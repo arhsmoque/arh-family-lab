@@ -266,6 +266,11 @@ Text: "${text}"`;
 // Serve static files from the repository root
 app.use(express.static(repoRoot));
 
+// Admin shortcut redirect
+app.get('/apps/kids-terminal/admin', (req, res) => {
+  res.redirect('/apps/kids-terminal/?portal=parent');
+});
+
 // Serve index.html for the kids-terminal route
 app.get('/apps/kids-terminal/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
