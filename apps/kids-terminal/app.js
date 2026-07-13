@@ -102,7 +102,8 @@ const State = {
   isRecording: false,
   lastAgentResponseText: '',
   config: null,
-  session: null
+  session: null,
+  parentUnlocked: false
 };
 
 // DOM selectors
@@ -213,6 +214,7 @@ btnAuthSubmit.addEventListener('click', async () => {
 btnSignout.addEventListener('click', () => {
   Auth.signOut();
   State.session = null;
+  State.parentUnlocked = false;
   authOverlay.style.display = 'flex';
   mainLayout.style.display = 'none';
   tabBtnParent.style.display = 'none';
@@ -1160,16 +1162,31 @@ tabBtnVisual.addEventListener('click', () => {
 });
 
 tabBtnParent.addEventListener('click', () => {
-  openParentPinGate();
+  if (State.parentUnlocked) {
+    tabBtnParent.classList.add('active');
+    tabBtnVisual.classList.remove('active');
+    tabContentVisual.style.display = 'none';
+    tabContentParent.style.display = 'block';
+  } else {
+    openParentPinGate();
+  }
 });
 
 btnOpenParentPortal.addEventListener('click', () => {
-  openParentPinGate();
+  if (State.parentUnlocked) {
+    tabBtnParent.click();
+  } else {
+    openParentPinGate();
+  }
 });
 
 linkAuthParentPortal.addEventListener('click', (e) => {
   e.preventDefault();
-  openParentPinGate();
+  if (State.parentUnlocked) {
+    tabBtnParent.click();
+  } else {
+    openParentPinGate();
+  }
 });
 
 function openParentPinGate() {
@@ -1199,6 +1216,7 @@ async function verifyParentPin() {
 
   if (enteredPin === correctPin) {
     parentPinModal.style.display = 'none';
+    State.parentUnlocked = true;
     
     // Check if parent setup bypass is needed (i.e. user is currently unauthenticated)
     if (!State.session) {
