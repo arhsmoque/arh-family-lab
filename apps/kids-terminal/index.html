@@ -11,7 +11,7 @@
 </head>
 <body>
 
-  <!-- 1. Authentication Screen (Cadet Sign-up / Login) -->
+  <!-- 1. Authentication Screen (Cadet Sign-up / Login Overlay) -->
   <div id="auth-overlay" class="auth-overlay">
     <div class="auth-card glass-card">
       <div class="auth-mascot">🚀</div>
@@ -32,6 +32,11 @@
       
       <div class="auth-toggle">
         <a href="#" id="link-toggle-auth">First time here? Register Cadet</a>
+      </div>
+      
+      <!-- Parent Setup gate (resolves bootstrapping login chicken-and-egg problem) -->
+      <div class="auth-parent-gate" style="margin-top: 16px; border-top: 1px dashed var(--line); padding-top: 12px;">
+        <a href="#" id="link-auth-parent-portal" style="color: var(--warm); font-weight: 700; text-decoration: none; font-size: 13px;">🛡️ Parent Setup & Configuration</a>
       </div>
     </div>
   </div>

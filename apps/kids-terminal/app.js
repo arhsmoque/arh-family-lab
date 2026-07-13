@@ -112,6 +112,7 @@ const authEmail = document.getElementById('auth-email');
 const authPassword = document.getElementById('auth-password');
 const btnAuthSubmit = document.getElementById('btn-auth-submit');
 const linkToggleAuth = document.getElementById('link-toggle-auth');
+const linkAuthParentPortal = document.getElementById('link-auth-parent-portal');
 const authTitle = document.getElementById('auth-title');
 const authSubtitle = document.getElementById('auth-subtitle');
 
@@ -226,6 +227,12 @@ async function loadAuthenticatedSession() {
   DomRenderer.setMascot('idle', `Hello Cadet!`, 'Select a working folder and type a question to Agy!');
   DomRenderer.log(`[System] Signed in as ${State.session.email}`, 'system');
 
+  // Skip Firebase DB profile load if this is the bootstrap parent-setup session
+  if (State.session.uid === 'parent-setup') {
+    document.getElementById('godmode-section').style.display = 'block';
+    return;
+  }
+
   // Load personalized user settings overrides from Firebase
   try {
     const userSettings = await Db.get(`users/${State.session.uid}/settings`, State.session.idToken);
@@ -241,7 +248,7 @@ async function loadAuthenticatedSession() {
   }
 
   // Reveal Godmode reset panel only if logged-in user matches parent email
-  const masterEmail = State.config?.parent?.masterGatedEmail || 'parent@family.com';
+  const masterEmail = State.config?.parent?.masterGatedEmail || 'arh.homelab@gmail.com';
   if (State.session.email.toLowerCase() === masterEmail.toLowerCase()) {
     document.getElementById('godmode-section').style.display = 'block';
   } else {
@@ -307,7 +314,7 @@ const ThemeEngine = {
         const correctPin = config?.parent?.pin || "1234";
         if (pin === correctPin) {
           const session = await Auth.currentSession();
-          if (session && session.email.toLowerCase() === (config?.parent?.masterGatedEmail || 'parent@family.com').toLowerCase()) {
+          if (session && session.email.toLowerCase() === (config?.parent?.masterGatedEmail || 'arh.homelab@gmail.com').toLowerCase()) {
             State.session = session;
             await loadAuthenticatedSession();
             tabBtnParent.click(); // Open Dev Console
@@ -988,7 +995,7 @@ async function runApprovedAgent(promptText, logId) {
 
 // Firebase log syncing
 async function pushActivityLog(prompt, response, status) {
-  if (!State.session) return null;
+  if (!State.session || State.session.uid === 'parent-setup') return null;
 
   // Extract artifacts/file outputs from response text
   const artifacts = ArtifactExtractor.extract(response);
@@ -1156,6 +1163,11 @@ btnOpenParentPortal.addEventListener('click', () => {
   openParentPinGate();
 });
 
+linkAuthParentPortal.addEventListener('click', (e) => {
+  e.preventDefault();
+  openParentPinGate();
+});
+
 function openParentPinGate() {
   parentPinModal.style.display = 'flex';
   parentPinInput.value = '';
@@ -1176,7 +1188,7 @@ parentPinInput.addEventListener('keydown', (e) => {
   }
 });
 
-function verifyParentPin() {
+async function verifyParentPin() {
   const enteredPin = parentPinInput.value;
   const parentConfig = State.config?.parent || {};
   const correctPin = parentConfig.pin || "1234";
@@ -1184,13 +1196,26 @@ function verifyParentPin() {
   if (enteredPin === correctPin) {
     parentPinModal.style.display = 'none';
     
-    // Unlock parent tab navigation
+    // Check if parent setup bypass is needed (i.e. user is currently unauthenticated)
+    if (!State.session) {
+      State.session = {
+        email: parentConfig.masterGatedEmail || 'arh.homelab@gmail.com',
+        uid: 'parent-setup',
+        idToken: 'parent-setup-dummy-token'
+      };
+      await loadAuthenticatedSession();
+      tabBtnParent.click(); // Open parent console settings directly
+      openParentSection('settings');
+      DomRenderer.setMascot('thinking', 'Setup Mode Unlocked!', 'Welcome! Set your Firebase API Key in the settings below to initialize the system.');
+      return;
+    }
+
+    // Unlock parent tab navigation standard flow
     tabBtnParent.classList.add('active');
     tabBtnVisual.classList.remove('active');
     tabContentVisual.style.display = 'none';
     tabContentParent.style.display = 'block';
     
-    // Default subtab to Cadet logs
     openParentSection('logs');
   } else {
     alert("Incorrect Security PIN. Access Denied.");
@@ -1230,6 +1255,11 @@ function openParentSection(secName) {
 
 // 1. Load activity logs from Firebase REST
 async function loadParentLogs() {
+  if (State.session.uid === 'parent-setup') {
+    parentLogsList.innerHTML = '<p class="muted">Logs are unavailable in Offline Setup Mode. Please configure the Firebase API Key first.</p>';
+    return;
+  }
+
   parentLogsList.innerHTML = '<p class="muted">Loading Cadet logs from Firebase...</p>';
   try {
     const data = await Db.get('logs', State.session.idToken);
@@ -1280,6 +1310,11 @@ async function loadParentLogs() {
 
 // 2. Load pending approvals
 async function loadParentPendingApprovals() {
+  if (State.session.uid === 'parent-setup') {
+    parentApprovalsList.innerHTML = '<p class="muted">Gated approvals are unavailable in Offline Setup Mode.</p>';
+    return;
+  }
+
   parentApprovalsList.innerHTML = '<p class="muted">Checking pending approvals...</p>';
   try {
     const data = await Db.get('logs', State.session.idToken);
@@ -1317,7 +1352,7 @@ async function loadParentPendingApprovals() {
       parentApprovalsList.appendChild(card);
     });
   } catch (err) {
-    parentApprovalsList.innerHTML = `<p class="error">Failed to load approvals: ${err.message}</p>`;
+    parentApprovalsList.innerHTML = `<p class="error">Failed to load approvals: ${err.message}</p>';
   }
 }
 
@@ -1397,11 +1432,11 @@ btnSaveSettings.addEventListener('click', async () => {
   btnSaveSettings.disabled = true;
   btnSaveSettings.innerText = 'Saving...';
   try {
-    const masterEmail = State.config?.parent?.masterGatedEmail || 'parent@family.com';
+    const masterEmail = State.config?.parent?.masterGatedEmail || 'arh.homelab@gmail.com';
     const username = State.session.email.split('@')[0].toLowerCase();
 
-    if (State.session.email.toLowerCase() === masterEmail.toLowerCase()) {
-      // Parent saves to master server config.json
+    // Parent saves (including bootstrap setup saves)
+    if (State.session.email.toLowerCase() === masterEmail.toLowerCase() || State.session.uid === 'parent-setup') {
       const updatedConfig = deepMerge(State.config, settingsOverride);
       const res = await fetch('/api/save-config', {
         method: 'POST',
@@ -1412,6 +1447,12 @@ btnSaveSettings.addEventListener('click', async () => {
       if (data.success) {
         State.config = updatedConfig;
         alert('Master dev configuration updated on the server!');
+        
+        // If we were in temporary bootstrap setup mode, force reload so standard Auth works
+        if (State.session.uid === 'parent-setup') {
+          window.location.reload();
+          return;
+        }
       } else {
         throw new Error(data.error);
       }
@@ -1443,6 +1484,11 @@ btnSaveSettings.addEventListener('click', async () => {
 
 // 5. Godmode System Reset: Deletes all Cadet customized overrides from Firebase
 btnGodmodeReset.addEventListener('click', async () => {
+  if (State.session.uid === 'parent-setup') {
+    alert("System Reset is unavailable in Offline Setup Mode.");
+    return;
+  }
+
   const check = confirm("WARNING: This will delete all customized Cadet configurations and reset them back to dev master default. Are you sure?");
   if (!check) return;
 
