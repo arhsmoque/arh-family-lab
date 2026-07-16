@@ -15,6 +15,7 @@ A hub of small, static, no-build-step web apps for family & friends. Deploys to 
 
 Clinical artifacts are linked from [`clinical.html`](clinical.html), separate from the family landing page.
 
+- **[Community CPR v0](apps/cpr-komuniti-v0/)** — preserved baseline release with a mobile-first interactive HTML guide and a matching downloadable 19-slide projector PPTX under `apps/cpr-komuniti-v0/downloads/`.
 - **[CPR Scenario Lab v1](apps/cpr-scenario-lab-v1/dist/)** — facilitator-led community CPR rehearsal with four physical learner roles, staged decisions, a compression-rhythm challenge, AED pad placement and a debrief map. React source and the committed static build live together under `apps/cpr-scenario-lab-v1/`.
 - **[ECC CPG Interactive Lab](apps/ecc-react-lab/dist/)** — full bilingual CPG walkthrough with an interactive tooth-progression lab and a primary-dentition map for marking ECC stages. Built with React and `react-odontogram`; source is in `apps/ecc-react-lab/` and the static build is committed under `apps/ecc-react-lab/dist/`.
 - **[ECC CPG Briefing](apps/ecc-cpg-dato-keramat/)** - the published Klinik Pergigian Dato Keramat briefing deck as a static HTML viewer.

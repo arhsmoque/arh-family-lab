@@ -23,6 +23,7 @@
   .section-head h2{margin:0;font-family:var(--fd);color:var(--brand);font-size:clamp(26px,4vw,40px)}
   .section-head p{margin:6px 0 0;color:var(--muted);line-height:1.45}
   .option-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .option-grid.cpr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .option-card{display:flex;flex-direction:column;gap:12px;border:1px solid var(--line);border-radius:24px;background:var(--surface);padding:18px;color:inherit;text-decoration:none;box-shadow:0 16px 44px rgba(18,50,58,.08)}
   .option-card h3{margin:0;font-family:var(--fd);color:var(--brand);font-size:24px}
   .option-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
@@ -42,7 +43,7 @@
     .lead{font-size:15px}
     .qr-card{display:grid;grid-template-columns:96px 1fr;gap:12px;text-align:left;align-items:center}
     .qr-card img{width:96px}
-    .option-grid{grid-template-columns:1fr}
+    .option-grid,.option-grid.cpr-grid{grid-template-columns:1fr}
     .option-card{border-radius:20px;padding:16px}
     .app-grid{grid-template-columns:1fr;margin-top:18px}
   }
@@ -92,6 +93,28 @@
       <p>Includes source-faithful material and enhanced alternatives at the end so she can swap only what she prefers.</p>
       <div class="meta"><span class="pill">PPTX</span><span class="pill">3.3 MB</span></div>
       <span class="download-btn">Download options deck <span>↓</span></span>
+    </a>
+  </div>
+
+  <section class="section-head">
+    <h2>Community CPR · v0</h2>
+    <p>The preserved baseline release in two coordinated formats: editable projector slides and a mobile-first interactive reference.</p>
+  </section>
+
+  <div class="option-grid cpr-grid">
+    <a class="option-card" href="apps/cpr-komuniti-v0/downloads/CPR-Komuniti-KKM-v0.pptx" download>
+      <span class="tag">Projector presentation · v0</span>
+      <h3>CPR Untuk Komuniti</h3>
+      <p>Editable 16:9 PowerPoint for a facilitator-led community session. Its closing QR opens the matching mobile v0 release.</p>
+      <div class="meta"><span class="pill">PPTX</span><span class="pill">19 slides</span></div>
+      <span class="download-btn">Download projector deck <span>↓</span></span>
+    </a>
+    <a class="option-card" href="apps/cpr-komuniti-v0/">
+      <span class="tag">Mobile interactive · v0</span>
+      <h3>CPR Pocket Guide</h3>
+      <p>Responsive Bahasa Melayu reference with adult, child, infant, AED and choking pathways, a 100–120 BPM trainer and scenario checks.</p>
+      <div class="meta"><span class="pill">HTML</span><span class="pill">Phone + desktop</span></div>
+      <span class="download-btn">Open mobile guide <span>→</span></span>
     </a>
   </div>
 
