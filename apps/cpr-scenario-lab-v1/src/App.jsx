@@ -9,7 +9,7 @@ const copy = {
     intro: 'Latihan keputusan untuk komuniti — dipandu fasilitator dan diikuti latihan manikin.',
     start: 'Mulakan latihan',
     rolesTitle: 'Agihkan empat peranan',
-    rolesLead: 'Berikan satu kad kepada setiap peserta. Setiap orang hanya perlu menjaga satu bahagian rantaian.',
+    rolesLead: 'Berikan satu kad kepada setiap peserta. Apabila nama peranan muncul, serahkan peranti atau beri ruang kepada orang itu untuk bertindak.',
     ready: 'Peranan sudah bersedia',
     back: 'Kembali',
     continue: 'Teruskan',
@@ -26,6 +26,7 @@ const copy = {
     activationReason: 'Arahan kepada individu tertentu mengurangkan kekeliruan. Gunakan pembesar suara jika telefon tersedia.',
     correct: 'Betul',
     tryAgain: 'Belum tepat',
+    retry: 'Cuba pilihan lain. Kita hanya bergerak selepas tindakan yang selamat dipilih.',
     compressor: 'Compressor / Penekan dada',
     compressionTitle: 'Bina rentak 100–120/min',
     compressionLead: 'Gunakan pad latihan atau kekunci Space. Sasaran: 30 tekanan pada rentak yang konsisten.',
@@ -33,7 +34,7 @@ const copy = {
     taps: 'tekanan',
     liveRate: 'rentak semasa',
     consistency: 'konsistensi',
-    rhythmReady: 'Lengkapkan sekurang-kurangnya 15 tekanan untuk membaca rentak.',
+    rhythmReady: 'Lengkapkan 30 tekanan. Bacaan rentak stabil selepas beberapa tekanan pertama.',
     rhythmGood: 'Rentak berada dalam julat latihan.',
     rhythmAdjust: 'Laraskan rentak ke 100–120/min.',
     resetAttempt: 'Set semula tekanan',
@@ -45,7 +46,7 @@ const copy = {
     debriefTitle: 'Rantaian lengkap',
     debriefLead: 'Lihat keseluruhan peta hanya selepas melalui setiap keputusan.',
     time: 'Masa latihan',
-    decisions: 'Keputusan tepat',
+    decisions: 'Tepat kali pertama',
     rhythm: 'Rentak akhir',
     discuss: 'Soalan debrief',
     discussText: 'Apakah tindakan yang melindungi rantaian? Di manakah kumpulan hampir kehilangan masa?',
@@ -59,7 +60,7 @@ const copy = {
     intro: 'Community decision rehearsal — facilitator-led and followed by manikin practice.',
     start: 'Start rehearsal',
     rolesTitle: 'Assign four roles',
-    rolesLead: 'Give one card to each learner. Each person protects one part of the chain.',
+    rolesLead: 'Give one card to each learner. When a role appears, pass the device or give that person space to act.',
     ready: 'Roles are ready',
     back: 'Back',
     continue: 'Continue',
@@ -76,6 +77,7 @@ const copy = {
     activationReason: 'Directing a specific person reduces ambiguity. Use speaker mode when a phone is available.',
     correct: 'Correct',
     tryAgain: 'Not yet',
+    retry: 'Try another option. The chain only moves after the safe action is selected.',
     compressor: 'Compressor',
     compressionTitle: 'Build a 100–120/min rhythm',
     compressionLead: 'Use the training pad or Space key. Target 30 consistent compressions.',
@@ -83,7 +85,7 @@ const copy = {
     taps: 'compressions',
     liveRate: 'live rate',
     consistency: 'consistency',
-    rhythmReady: 'Complete at least 15 compressions to read the rhythm.',
+    rhythmReady: 'Complete 30 compressions. The rhythm reading settles after the first few presses.',
     rhythmGood: 'Rhythm is inside the training range.',
     rhythmAdjust: 'Adjust the rhythm to 100–120/min.',
     resetAttempt: 'Reset compressions',
@@ -95,7 +97,7 @@ const copy = {
     debriefTitle: 'The full chain',
     debriefLead: 'Reveal the whole map only after travelling through each decision.',
     time: 'Rehearsal time',
-    decisions: 'Correct decisions',
+    decisions: 'Correct first try',
     rhythm: 'Final rhythm',
     discuss: 'Debrief question',
     discussText: 'Which action protected the chain? Where did the group nearly lose time?',
@@ -112,8 +114,15 @@ const roles = [
   { id: 'aed', symbol: 'ϟ', name: 'AED Runner', bm: 'Pembawa AED', instruction: 'Hidupkan, tampal, jauh', en: 'Power, place, clear', tone: 'aed' },
 ]
 
+const missions = {
+  bm: ['Kenal pasti', 'Aktifkan bantuan', 'Tekan dada', 'Gunakan AED'],
+  en: ['Recognise', 'Activate help', 'Compress', 'Use the AED'],
+}
+
+const missionByPhase = { recognition: 0, activation: 1, compressions: 2, aed: 3 }
+
 const initialState = {
-  phase: 'lobby', language: 'bm', answers: {}, timestamps: [], aedPads: [], calledClear: false, startedAt: null,
+  phase: 'lobby', language: 'bm', answers: {}, attempts: {}, timestamps: [], aedPads: [], calledClear: false, startedAt: null,
 }
 
 function reducer(state, action) {
@@ -121,7 +130,11 @@ function reducer(state, action) {
     case 'language': return { ...state, language: action.value }
     case 'start': return { ...initialState, language: state.language, phase: 'roles', startedAt: Date.now() }
     case 'phase': return { ...state, phase: action.value }
-    case 'answer': return { ...state, answers: { ...state.answers, [action.id]: action.index } }
+    case 'answer': return {
+      ...state,
+      answers: { ...state.answers, [action.id]: action.index },
+      attempts: { ...state.attempts, [action.id]: (state.attempts[action.id] || 0) + 1 },
+    }
     case 'tap': return { ...state, timestamps: [...state.timestamps.slice(-29), action.time] }
     case 'resetTaps': return { ...state, timestamps: [] }
     case 'pad': {
@@ -149,6 +162,7 @@ function getRhythm(timestamps) {
 function Decision({ id, title, lead, choices, reason, state, dispatch, role, onContinue, t }) {
   const selected = state.answers[id]
   const answered = selected !== undefined
+  const correct = selected === 1
   return (
     <StageShell state={state} dispatch={dispatch} role={role}>
       <p className="stage-kicker">{t.choose}</p>
@@ -157,30 +171,34 @@ function Decision({ id, title, lead, choices, reason, state, dispatch, role, onC
       <div className="choice-list">
         {choices.map((choice, index) => (
           <button
-            className={`choice ${answered && index === 1 ? 'correct' : ''} ${answered && index === selected && selected !== 1 ? 'wrong' : ''}`}
+            className={`choice ${answered && index === selected && correct ? 'correct' : ''} ${answered && index === selected && !correct ? 'wrong' : ''}`}
             key={choice}
             onClick={() => dispatch({ type: 'answer', id, index })}
-            disabled={answered}
+            disabled={correct}
           >
             <span>{String.fromCharCode(65 + index)}</span>{choice}
           </button>
         ))}
       </div>
-      {answered && <div className={`reason ${selected === 1 ? 'is-correct' : 'is-wrong'}`}><b>{selected === 1 ? t.correct : t.tryAgain}</b><p>{reason}</p></div>}
-      <NavRow state={state} dispatch={dispatch} continueDisabled={!answered} onContinue={onContinue} t={t} />
+      {answered && <div className={`reason ${correct ? 'is-correct' : 'is-wrong'}`} role="status" aria-live="polite"><b>{correct ? t.correct : t.tryAgain}</b><p>{correct ? reason : t.retry}</p></div>}
+      <NavRow state={state} dispatch={dispatch} continueDisabled={!correct} onContinue={onContinue} t={t} />
     </StageShell>
   )
 }
 
 function StageShell({ children, state, role }) {
-  const index = phases.indexOf(state.phase)
+  const missionIndex = missionByPhase[state.phase]
+  const missionLabels = missions[state.language]
   return (
     <main className="stage-shell">
       <header className="stage-top">
         <div><b>CPR</b><span>SCENARIO LAB v1</span></div>
-        <div className="status"><span>{Math.max(1, index)}/6</span>{role && <span className={`role-pill ${role.tone}`}>{role.symbol} {state.language === 'bm' ? role.bm : role.name}</span>}</div>
+        <div className="status"><span>{missionIndex !== undefined ? `${missionIndex + 1}/4` : state.phase === 'debrief' ? '✓' : 'BRIEF'}</span>{role && <span className={`role-pill ${role.tone}`}>{role.symbol} {state.language === 'bm' ? role.bm : role.name}</span>}</div>
       </header>
-      <section className="stage-content">{children}</section>
+      <section className="stage-content">
+        {missionIndex !== undefined && <nav className="mission-rail" aria-label={state.language === 'bm' ? 'Empat misi latihan' : 'Four rehearsal missions'}>{missionLabels.map((label, itemIndex) => <span key={label} className={itemIndex === missionIndex ? 'current' : itemIndex < missionIndex ? 'done' : ''}><i>{itemIndex < missionIndex ? '✓' : itemIndex + 1}</i>{label}</span>)}</nav>}
+        {children}
+      </section>
     </main>
   )
 }
@@ -200,7 +218,7 @@ function App() {
   const t = copy[state.language]
   const rhythm = useMemo(() => getRhythm(state.timestamps), [state.timestamps])
   const padsCorrect = state.aedPads.includes('left-upper') && state.aedPads.includes('right-lower')
-  const decisionScore = Number(state.answers.recognition === 1) + Number(state.answers.activation === 1)
+  const decisionScore = Number(state.answers.recognition === 1 && state.attempts.recognition === 1) + Number(state.answers.activation === 1 && state.attempts.activation === 1)
 
   const tap = () => dispatch({ type: 'tap', time: performance.now() })
   useEffect(() => {
@@ -237,15 +255,15 @@ function App() {
   if (state.phase === 'activation') return <Decision id="activation" title={t.activationTitle} lead={t.activationLead} choices={t.activationChoices} reason={t.activationReason} state={state} dispatch={dispatch} role={roles[1]} onContinue={() => dispatch({ type: 'phase', value: 'compressions' })} t={t} />
 
   if (state.phase === 'compressions') {
-    const enough = state.timestamps.length >= 15
+    const enough = state.timestamps.length >= 30
     const inRange = rhythm.bpm >= 100 && rhythm.bpm <= 120
     return (
       <div>
         <StageShell state={state} dispatch={dispatch} role={roles[2]}>
           <p className="stage-kicker">RHYTHM PRACTICE</p><h2>{t.compressionTitle}</h2><p className="stage-lead">{t.compressionLead}</p>
           <div className="compression-grid">
-            <button className={`tap-pad ${inRange ? 'on-target' : ''}`} onClick={tap}><strong>{state.timestamps.length}</strong><span>{t.tap}</span><small>{t.taps}</small></button>
-            <div className="metrics"><article><span>{t.liveRate}</span><b>{rhythm.bpm || '—'}</b><small>BPM</small></article><article><span>{t.consistency}</span><b>{rhythm.consistency || '—'}</b><small>%</small></article><p className={enough && inRange ? 'good' : 'caution'}>{!enough ? t.rhythmReady : inRange ? t.rhythmGood : t.rhythmAdjust}</p><button className="btn-subtle" onClick={() => dispatch({ type: 'resetTaps' })}>{t.resetAttempt}</button></div>
+            <button className={`tap-pad ${inRange ? 'on-target' : ''}`} onClick={tap} aria-label={`${t.tap}: ${state.timestamps.length} / 30`}><strong>{state.timestamps.length}</strong><span>{t.tap}</span><small>{t.taps} · /30</small></button>
+            <div className="metrics" aria-live="polite"><article><span>{t.liveRate}</span><b>{rhythm.bpm || '—'}</b><small>BPM</small></article><article><span>{t.consistency}</span><b>{rhythm.consistency || '—'}</b><small>%</small></article><p className={enough && inRange ? 'good' : 'caution'}>{!enough ? t.rhythmReady : inRange ? t.rhythmGood : t.rhythmAdjust}</p><button className="btn-subtle" onClick={() => dispatch({ type: 'resetTaps' })}>{t.resetAttempt}</button></div>
           </div>
           <NavRow state={state} dispatch={dispatch} continueDisabled={!enough} onContinue={() => dispatch({ type: 'phase', value: 'aed' })} t={t} />
         </StageShell>
