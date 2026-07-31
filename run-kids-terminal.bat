@@ -15,7 +15,7 @@ if %errorlevel% neq 0 (
 )
 
 :: Navigate to the app directory
-cd /d "%~dp0apps\kids-terminal"
+cd /d "%~dp0servers\kids-terminal"
 
 :: Check if node_modules exists, install if missing
 if not exist node_modules (
@@ -25,7 +25,7 @@ if not exist node_modules (
 
 :: Start the Express server and open browser
 echo [System] Starting server...
-start "" "http://localhost:3000/apps/kids-terminal/"
+start "" "http://localhost:3000/servers/kids-terminal/"
 node server.js
 
 pause

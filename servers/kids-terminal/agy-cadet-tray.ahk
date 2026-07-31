@@ -3,8 +3,8 @@
 Persistent
 
 ; Central Directories
-RepoRoot := "C:\Users\Admin7\arh-family-lab"
-AppDir := RepoRoot . "\apps\kids-terminal"
+RepoRoot := "D:\_ARH-DOMAIN\arh-family-lab"
+AppDir := RepoRoot . "\servers\kids-terminal"
 LockFile := AppDir . "\server.lock"
 
 ; Initialize Tray State
@@ -42,11 +42,11 @@ CheckStatus()
 ; ============================================================================
 
 OpenBrowser() {
-    Run("http://localhost:3000/apps/kids-terminal/")
+    Run("http://localhost:3000/servers/kids-terminal/")
 }
 
 OpenAdmin() {
-    Run("http://localhost:3000/apps/kids-terminal/admin")
+    Run("http://localhost:3000/servers/kids-terminal/admin")
 }
 
 CheckStatus() {

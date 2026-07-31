@@ -267,12 +267,12 @@ Text: "${text}"`;
 app.use(express.static(repoRoot));
 
 // Admin shortcut redirect
-app.get('/apps/kids-terminal/admin', (req, res) => {
-  res.redirect('/apps/kids-terminal/?portal=parent');
+app.get('/servers/kids-terminal/admin', (req, res) => {
+  res.redirect('/servers/kids-terminal/?portal=parent');
 });
 
 // Serve index.html for the kids-terminal route
-app.get('/apps/kids-terminal/', (req, res) => {
+app.get('/servers/kids-terminal/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
@@ -503,8 +503,8 @@ function startServer(port) {
   const server = app.listen(port, '0.0.0.0', () => {
     console.log(`================================================`);
     console.log(`🚀 Agy Cadet Space Station Server Running!`);
-    console.log(`🌐 Local: http://localhost:${port}/apps/kids-terminal/`);
-    console.log(`🔒 Tailscale: http://${TAILSCALE_IP}:${port}/apps/kids-terminal/`);
+    console.log(`🌐 Local: http://localhost:${port}/servers/kids-terminal/`);
+    console.log(`🔒 Tailscale: http://${TAILSCALE_IP}:${port}/servers/kids-terminal/`);
     console.log(`📁 Workspace: ${repoRoot}`);
     console.log(`================================================`);
   });

@@ -21,7 +21,7 @@ $FunctionBlock = @'
 # AGY KIDS TERMINAL CUSTOM ALIASES
 # ============================================================================
 
-$AgyConfigPath = "C:/Users/Admin7/arh-family-lab/apps/kids-terminal/config.json"
+$AgyConfigPath = "D:/_ARH-DOMAIN/arh-family-lab/servers/kids-terminal/config.json"
 
 if (Test-Path $AgyConfigPath) {
     $AgyConfig = Get-Content $AgyConfigPath -Raw | ConvertFrom-Json
@@ -36,9 +36,9 @@ if (Test-Path $AgyConfigPath) {
         if ($Action -eq "kids-terminal") {
             Write-Host "[*] Launching Parent Dev Console..." -ForegroundColor Green
             if ($Pin) {
-                Start-Process "http://localhost:3000/apps/kids-terminal/?portal=parent&pin=$Pin"
+                Start-Process "http://localhost:3000/servers/kids-terminal/?portal=parent&pin=$Pin"
             } else {
-                Start-Process "http://localhost:3000/apps/kids-terminal/?portal=parent"
+                Start-Process "http://localhost:3000/servers/kids-terminal/?portal=parent"
             }
         } else {
             Write-Host "Usage: arh kids-terminal <pin>" -ForegroundColor Yellow
@@ -50,7 +50,7 @@ if (Test-Path $AgyConfigPath) {
         param($Username, $Action, $Pin)
         if ($Action -eq "kids-terminal") {
             Write-Host "[*] Launching Agy Cadet Station for $Username..." -ForegroundColor Cyan
-            Start-Process "http://localhost:3000/apps/kids-terminal/?autologin=$Username&pin=$Pin"
+            Start-Process "http://localhost:3000/servers/kids-terminal/?autologin=$Username&pin=$Pin"
         } else {
             Write-Host "Usage: $Username kids-terminal <pin>" -ForegroundColor Yellow
         }
