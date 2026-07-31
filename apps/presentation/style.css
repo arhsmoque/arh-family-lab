@@ -5,6 +5,7 @@
 .list-header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px}
 .list-header h1{margin:0 0 4px;font-size:32px;color:var(--brand)}
 .list-header p{margin:0}
+.list-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
 .deck-card{border-radius:var(--radius);border:1px solid var(--line);background:var(--surface);padding:18px;cursor:pointer;transition:box-shadow .15s ease,transform .15s ease}
 .deck-card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
@@ -29,8 +30,12 @@
 
 .canvas-wrap{flex:1;min-width:0}
 .slide-canvas{aspect-ratio:16/9;width:100%;padding:6%;display:flex;flex-direction:column;justify-content:center;overflow:auto}
+.canvas-hint{margin:8px 2px 0;font-size:12px;text-align:center}
 .canvas-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 .no-slide{text-align:center}
+
+.save-indicator{font-size:12px;font-weight:700;color:var(--ok);opacity:0;transition:opacity .3s ease;white-space:nowrap}
+.save-indicator.show{opacity:1}
 
 .research-panel{padding:16px;position:sticky;top:78px}
 .panel-heading,.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
@@ -47,6 +52,11 @@
   .slide-strip{flex-direction:row;overflow-x:auto;width:100%;padding-bottom:4px}
   .slide-thumb{min-width:110px;flex-shrink:0}
   .research-panel{position:static;width:100%}
+  /* Finger-friendly tap targets on phones */
+  .remove-item-btn{min-height:36px;padding:8px 12px;font-size:13px}
+  .add-item{min-height:36px;padding:8px 14px;font-size:14px}
+  .deck-card .deck-actions button{min-height:36px;padding:8px 12px;font-size:13px}
+  .chart-edit-row input{min-height:36px;font-size:14px}
 }
 
 /* ---------- Slide content (shared by editor / present / print) ---------- */
@@ -91,6 +101,11 @@
 .chart-track{height:18px;border-radius:999px;background:rgba(18,50,58,.12);overflow:hidden}
 .chart-track span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--warm))}
 
+.chart-editor{margin-top:14px;display:grid;gap:8px}
+.chart-edit-row{display:grid;grid-template-columns:1fr minmax(70px,110px) auto;gap:8px;align-items:center}
+.chart-edit-row input{border:1px solid var(--line);border-radius:6px;padding:6px 8px;font-family:var(--fb);font-size:13px;background:rgba(255,255,255,.82);min-width:0}
+.chart-editor .add-item{justify-self:start;font-size:13px}
+
 .slide-list-input,.slide-list-input textarea,.step-input{width:100%;border:1px solid var(--line);border-radius:6px;padding:6px;font-family:var(--fb);font-size:13px;margin-bottom:4px}
 .remove-item-btn{font-size:11px;padding:2px 8px;margin-left:6px}
 
@@ -113,6 +128,13 @@
 .file-btn input{position:absolute;inset:0;opacity:0;cursor:pointer}
 
 .inspiration-modal{max-width:840px}
+
+/* ---------- In-page dialog (replaces prompt/confirm/alert) ---------- */
+.ui-modal{max-width:420px}
+.ui-modal h2{margin:0 0 10px;font-size:22px}
+.ui-modal-msg{margin:0;font-size:14px;line-height:1.5}
+.ui-modal-input{margin-top:14px}
+.ui-modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
 .quick-search-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
 .search-card,.helper-card{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.58);padding:14px;color:var(--ink);text-decoration:none}
 .search-card b,.helper-card h3{display:block;margin:0 0 6px;color:var(--brand)}
@@ -132,7 +154,7 @@
 /* ---------- Print / PDF export ---------- */
 .print-sheet{display:none}
 @media print{
-  #view-editor,#view-list,#templateModal,#presentOverlay,.fab{display:none !important}
+  #view-editor,#view-list,#templateModal,#inspirationModal,#presentOverlay,.fab,.ui-modal-backdrop{display:none !important}
   .print-sheet{display:block}
   .print-slide{width:100%;aspect-ratio:16/9;padding:6%;page-break-after:always;display:flex;flex-direction:column;justify-content:center;box-shadow:none;border:1px solid #ddd}
   .print-slide [contenteditable]:hover,.print-slide [contenteditable]:focus{background:none}

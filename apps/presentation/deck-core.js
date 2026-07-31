@@ -149,6 +149,12 @@ export function updateSlideField(slide, field, value, itemIndex) {
     next.data.steps[itemIndex][key] = value;
     return next;
   }
+  if (field === "rows.label" || field === "rows.value") {
+    const key = field.split(".")[1];
+    if (!next.data.rows[itemIndex]) return next;
+    next.data.rows[itemIndex][key] = key === "value" ? Number(value) || 0 : String(value);
+    return next;
+  }
   if (itemIndex !== undefined && Array.isArray(next.data[field])) {
     next.data[field][itemIndex] = value;
     return next;
@@ -163,6 +169,8 @@ export function applySlideAction(slide, action, list, index) {
   if (action === "removeItem" && Array.isArray(next.data[list])) next.data[list].splice(index, 1);
   if (action === "addStep") next.data.steps.push({label: "Step", detail: ""});
   if (action === "removeStep") next.data.steps.splice(index, 1);
+  if (action === "addChartRow" && Array.isArray(next.data.rows)) next.data.rows.push({label: "Item", value: 1});
+  if (action === "removeChartRow" && Array.isArray(next.data.rows)) next.data.rows.splice(index, 1);
   return next;
 }
 
@@ -171,6 +179,21 @@ export function addSource(deck, source) {
   const normalized = normalizeSource(source);
   if (!normalized) return current;
   return touch({...current, sources: [normalized, ...current.sources]});
+}
+
+export function deckToJson(deck) {
+  return JSON.stringify(normalizeDeck(deck), null, 2);
+}
+
+export function deckFromJson(text) {
+  const parsed = JSON.parse(text);
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+    throw new Error("Not a Deckmate deck file");
+  }
+  const deck = normalizeDeck(parsed);
+  deck.id = uid("deck");
+  deck.createdAt = deck.updatedAt = Date.now();
+  return deck;
 }
 
 export function clampSlideIndex(deck, index) {
@@ -195,7 +218,7 @@ function normalizeSlideData(type, data = {}) {
     merged.rows = Array.isArray(merged.rows) ? merged.rows.map(row => ({
       label: String(row.label || ""),
       value: Number(row.value) || 0
-    })).filter(row => row.label) : base.rows;
+    })) : base.rows;
   }
   return merged;
 }
