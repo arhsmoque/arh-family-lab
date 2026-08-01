@@ -768,7 +768,7 @@ const TranslationAdapter = {
   async translate(text, fromLang, toLang) {
     if (!text || fromLang === toLang) return text;
     try {
-      const queryParams = new URLSearchParams({ text, from: fromLang, to: toLang });
+      const queryParams = new URLSearchParams({ text, from: fromLang, to: toLang, idToken: State.session?.idToken || '' });
       const res = await fetch(`/api/translate?${queryParams.toString()}`);
       const data = await res.json();
       return data.success ? data.translation : text;
@@ -887,7 +887,8 @@ const NetworkAdapter = {
       prompt,
       directory: directory || '',
       persona,
-      ageTier: ageTier || 'junior'
+      ageTier: ageTier || 'junior',
+      idToken: State.session?.idToken || ''
     });
     if (approvedLogId) queryParams.set('approvedLogId', approvedLogId);
 

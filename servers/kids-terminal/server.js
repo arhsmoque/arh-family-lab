@@ -103,6 +103,28 @@ function getParentPin() {
   return config?.parent?.pin || '1234';
 }
 
+// Confirms a Firebase ID token is real and unexpired, by asking Firebase
+// itself (no Admin SDK / JWT verification needed for this scale). Used to
+// gate /api/run-agy and /api/translate, which otherwise had no auth at
+// all — anyone reachable on the network could invoke the AI CLI (which
+// runs with --dangerously-skip-permissions) with an arbitrary directory.
+async function verifyIdToken(idToken) {
+  if (!idToken) return false;
+  const config = readConfig();
+  const apiKey = process.env.FIREBASE_API_KEY || config?.auth?.apiKey || '';
+  if (!apiKey || apiKey.startsWith('REPLACE_')) return false;
+  try {
+    const r = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ idToken })
+    });
+    return r.ok;
+  } catch (e) {
+    return false;
+  }
+}
+
 // Fallback presets used only if config.json has no engine.providers entry for
 // the selected name (keeps old config.json files working after this change).
 const BUILTIN_PROVIDERS = {
@@ -184,6 +206,29 @@ function pinRateLimitOk(ip) {
   rec.count++;
   return rec.count <= 5;
 }
+
+// Generic per-IP rate limiter for routes that hit the filesystem / spawn a
+// CLI — CodeQL flagged /api/config and /api/run-agy as unbounded.
+function makeRateLimiter(maxPerMinute) {
+  const attempts = new Map(); // ip -> { count, resetAt }
+  return function rateLimit(req, res, next) {
+    const now = Date.now();
+    const rec = attempts.get(req.ip);
+    if (!rec || now > rec.resetAt) {
+      attempts.set(req.ip, { count: 1, resetAt: now + 60000 });
+      return next();
+    }
+    rec.count++;
+    if (rec.count > maxPerMinute) {
+      res.status(429).json({ error: 'Too many requests. Wait a minute and try again.' });
+      return;
+    }
+    next();
+  };
+}
+
+const configRateLimit = makeRateLimiter(60);
+const runAgyRateLimit = makeRateLimiter(20);
 
 // Admin guard for sensitive endpoints — only enforced when security is ON
 function requireAdminPin(req, res, next) {
@@ -435,7 +480,7 @@ choice_2_text: "Tickle the door knob"
 choice_2_action: "Describe what happens when you tickle the door knob"
 \`\`\``;
       outro = isTeen ? 'Pick a choice on the right panel to continue.' : 'Tap a choice on the right to keep going!';
-    } else if (/count|times|multiply|[0-9]+\s*[x×*]\s*[0-9]+/.test(lower)) {
+    } else if (/count|times|multiply|[0-9]{1,6}\s*[x×*]\s*[0-9]{1,6}/.test(lower)) {
       intro = isTeen
         ? 'Demo mode (agy.exe not installed) — sample counting grid for UI testing:'
         : 'Demo mode, Cadet! Let us count together with this practice grid!';
@@ -491,7 +536,7 @@ app.get('/servers/kids-terminal/', (req, res) => {
 });
 
 // Config Endpoint: Merges .env values over config.json dynamically
-app.get('/api/config', (req, res) => {
+app.get('/api/config', configRateLimit, (req, res) => {
   const config = FileIOAdapter.readJson(configPath);
   if (config) {
     const securityOn = isSecurityEnabled();
@@ -619,13 +664,18 @@ app.get('/api/notify-gated', (req, res) => {
 });
 
 // Translation Endpoint: Uses agy CLI dynamically to translate input/output
-app.get('/api/translate', (req, res) => {
+app.get('/api/translate', async (req, res) => {
   const text = req.query.text;
   const fromLang = req.query.from || 'en-US';
   const toLang = req.query.to || 'en-US';
 
   if (!text) {
     res.status(400).json({ error: 'Text is required' });
+    return;
+  }
+
+  if (!(await verifyIdToken(req.query.idToken))) {
+    res.status(401).json({ error: 'Please sign in first.' });
     return;
   }
 
@@ -675,7 +725,7 @@ app.get('/api/select-path', (req, res) => {
 });
 
 // Endpoint to stream agy response via Server-Sent Events (SSE)
-app.get('/api/run-agy', (req, res) => {
+app.get('/api/run-agy', runAgyRateLimit, async (req, res) => {
   const prompt = req.query.prompt;
   const directory = req.query.directory || repoRoot;
   const persona = req.query.persona || 'socratic_teacher';
@@ -684,6 +734,14 @@ app.get('/api/run-agy', (req, res) => {
 
   if (!prompt) {
     res.status(400).json({ error: 'Prompt is required' });
+    return;
+  }
+
+  // Runs the AI CLI with --dangerously-skip-permissions on an
+  // attacker-choosable directory — this endpoint had no auth at all
+  // before, so anyone reachable on the network/Tailscale could invoke it.
+  if (!(await verifyIdToken(req.query.idToken))) {
+    res.status(401).json({ error: 'Please sign in first.' });
     return;
   }
 

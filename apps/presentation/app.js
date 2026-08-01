@@ -415,11 +415,23 @@ function onCanvasInput(event) {
   persist();
 }
 
+// Blocks javascript:/data: etc. from a pasted image URL. Modern browsers
+// don't execute script from <img src> anyway, but there's no reason to
+// accept anything other than an actual image link here.
+function isSafeImageUrl(url) {
+  try {
+    const parsed = new URL(url, window.location.href);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 function updateImagePreview(url) {
   const wrap = els.slideCanvas.querySelector(".s-image");
   if (!wrap) return;
   let img = wrap.querySelector("img");
-  if (url) {
+  if (url && isSafeImageUrl(url)) {
     if (!img) {
       img = document.createElement("img");
       img.alt = "";
