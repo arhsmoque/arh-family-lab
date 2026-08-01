@@ -4,14 +4,31 @@
     - Identity Toolkit (Auth) for signup/login/token refresh.
     - Realtime Database REST for reading/writing app data, gated by
       security rules keyed on the signed-in user's ID token.
+
+  Config: studio.config.js defines STUDIO_APP_CONFIG (committed, no real
+  secrets). An optional gitignored studio.config.local.js may define
+  STUDIO_APP_CONFIG_LOCAL to override values (dbSecret, dev PIN) without
+  committing them. Both are merged here, section by section.
 */
+const APP_CONFIG = (() => {
+  // NB: top-level `const` in a classic script does NOT become a window
+  // property — reference the globals by name, guarded with typeof.
+  const base = typeof STUDIO_APP_CONFIG !== "undefined" ? STUDIO_APP_CONFIG : {};
+  const local = typeof STUDIO_APP_CONFIG_LOCAL !== "undefined" ? STUDIO_APP_CONFIG_LOCAL : {};
+  const merged = Object.assign({}, base, local);
+  for (const section of ["firebase", "auth", "limits", "security", "dev"]) {
+    merged[section] = Object.assign({}, base[section] || {}, local[section] || {});
+  }
+  return merged;
+})();
+
 const Auth = (() => {
   const AUTH_BASE = "https://identitytoolkit.googleapis.com/v1";
   const REFRESH_BASE = "https://securetoken.googleapis.com/v1/token";
   const SESSION_KEY = "arh-studio-session-v1";
 
   function apiKey() {
-    return STUDIO_APP_CONFIG.auth.apiKey;
+    return APP_CONFIG.auth.apiKey;
   }
 
   function readSession() {
@@ -33,6 +50,7 @@ const Auth = (() => {
   async function authFetch(endpoint, body) {
     const r = await fetch(`${AUTH_BASE}/${endpoint}?key=${apiKey()}`, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
     const data = await r.json();
@@ -50,6 +68,10 @@ const Auth = (() => {
     const data = await authFetch("accounts:signInWithPassword", { email, password, returnSecureToken: true });
     writeSession(sessionFromAuthResponse(data));
     return readSession();
+  }
+
+  async function sendPasswordReset(email) {
+    await authFetch("accounts:sendOobCode", { requestType: "PASSWORD_RESET", email });
   }
 
   function sessionFromAuthResponse(data) {
@@ -92,17 +114,21 @@ const Auth = (() => {
     clearSession();
   }
 
-  return { signUp, signIn, signOut, currentSession };
+  return { signUp, signIn, signOut, currentSession, sendPasswordReset };
 })();
 
 const Db = (() => {
   function base() {
-    return `${STUDIO_APP_CONFIG.firebase.url.replace(/\/$/, "")}/${STUDIO_APP_CONFIG.firebase.root}`;
+    return `${APP_CONFIG.firebase.url.replace(/\/$/, "")}/${APP_CONFIG.firebase.root}`;
   }
 
   async function req(path, method, idToken, body) {
     const url = `${base()}/${path}.json?auth=${idToken}`;
-    const r = await fetch(url, { method, body: body !== undefined ? JSON.stringify(body) : undefined });
+    const r = await fetch(url, {
+      method,
+      headers: body !== undefined ? { "Content-Type": "application/json" } : undefined,
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+    });
     const data = await r.json().catch(() => null);
     if (!r.ok) throw new Error(data?.error || `${method} ${path} failed (${r.status})`);
     return data;
@@ -116,6 +142,15 @@ const Db = (() => {
     push: async (path, idToken, value) => {
       const result = await req(path, "POST", idToken, value);
       return result.name;
+    },
+    // shallow=true returns { childKey: true } only — no payloads. Used by
+    // dev.html to list uids without downloading every user's cards.
+    shallowGet: async (path, idToken) => {
+      const url = `${base()}/${path}.json?shallow=true&auth=${idToken}`;
+      const r = await fetch(url);
+      const data = await r.json().catch(() => null);
+      if (!r.ok) throw new Error(data?.error || `GET ${path}?shallow=true failed (${r.status})`);
+      return data;
     },
   };
 })();

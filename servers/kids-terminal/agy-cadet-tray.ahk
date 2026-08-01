@@ -2,8 +2,14 @@
 #SingleInstance Force
 Persistent
 
-; Central Directories
-RepoRoot := "D:\_ARH-DOMAIN\arh-family-lab"
+; Central Directories — prefer ARH_FAMILY_LAB_ROOT env var; fall back to
+; deriving the repo root from this script's own location (it lives at
+; <repoRoot>\servers\kids-terminal\agy-cadet-tray.ahk), so a fresh clone at
+; any path works without editing this file.
+RepoRoot := EnvGet("ARH_FAMILY_LAB_ROOT")
+if (RepoRoot = "") {
+    RepoRoot := RegExReplace(A_ScriptDir, "[\\/]servers[\\/]kids-terminal$", "")
+}
 AppDir := RepoRoot . "\servers\kids-terminal"
 LockFile := AppDir . "\server.lock"
 

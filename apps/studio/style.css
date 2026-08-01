@@ -14,6 +14,12 @@
 .auth-message{margin-top:14px;font-size:13px;padding:10px;border-radius:6px;background:#fff0ed;color:var(--danger)}
 .auth-message.ok{background:#eaf6ef;color:var(--ok)}
 .auth-hint{margin-top:10px;font-size:12px}
+.auth-head-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.auth-head-row h1{margin:0 0 6px}
+.auth-forgot{width:100%;margin-top:8px;font-size:12px}
+.setup-panel{margin-top:18px;font-size:13px}
+.setup-panel h2{margin:0 0 10px;color:var(--brand);font-size:20px}
+.setup-panel code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:12px}
 
 /* ---------- Landing extras ---------- */
 .row-actions{display:flex;gap:8px}
@@ -70,3 +76,5 @@
 .template-option{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:14px;text-align:center;cursor:pointer}
 .template-option:hover{border-color:var(--accent)}
 .template-option .t-icon{font-size:24px;display:block;margin-bottom:6px}
+.modal-input{width:100%;border:1px solid var(--line);border-radius:6px;padding:9px 10px;font-size:14px;font-family:var(--fb);margin-bottom:16px}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px}

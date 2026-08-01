@@ -5,3 +5,6 @@ node_modules/
 server.lock
 .env
 .env.*
+
+# Studio app local secret override (dev PIN + DB secret) — never commit
+apps/studio/studio.config.local.js

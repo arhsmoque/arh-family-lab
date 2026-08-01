@@ -7,8 +7,8 @@
     "apiKey": "REPLACE_WITH_WEB_API_KEY"
   },
   "parent": {
-    "pin": "1234",
-    "notifyUrl": "http://100.85.170.170:8080/notify",
+    "pin": "REPLACE_WITH_A_PIN",
+    "notifyUrl": "http://REPLACE_WITH_PARENT_PHONE_TAILSCALE_IP:8080/notify",
     "masterGatedEmail": "arh.homelab@gmail.com",
     "cadets": [
       "aflah",
@@ -50,11 +50,55 @@
   },
   "engine": {
     "socraticMode": true,
-    "skipPermissions": true,
     "defaultSymbol": "⭐",
     "defaultSymbolColor": "gold",
-    "cliExecutable": "agy.exe",
-    "persona": "socratic_teacher"
+    "persona": "socratic_teacher",
+    "provider": "claude",
+    "providers": {
+      "mock": {
+        "executable": null,
+        "args": []
+      },
+      "claude": {
+        "executable": "claude",
+        "args": [
+          "--dangerously-skip-permissions",
+          "-p",
+          "{prompt}"
+        ]
+      },
+      "codex": {
+        "executable": "codex",
+        "args": [
+          "exec",
+          "--dangerously-bypass-approvals-and-sandbox",
+          "{prompt}"
+        ]
+      },
+      "kimi": {
+        "executable": "kimi",
+        "args": [
+          "--auto",
+          "-p",
+          "{prompt}"
+        ]
+      },
+      "antigravity": {
+        "executable": "antigravity",
+        "args": [
+          "-p",
+          "{prompt}"
+        ]
+      },
+      "agy": {
+        "executable": "agy.exe",
+        "args": [
+          "--dangerously-skip-permissions",
+          "-p",
+          "{prompt}"
+        ]
+      }
+    }
   },
   "speech": {
     "speechToText": {
@@ -63,11 +107,11 @@
       "translationEnabled": true
     },
     "textToSpeech": {
-      "inputLanguage": "en-US",
       "targetLanguage": "ms-MY",
-      "translationEnabled": true,
-      "voiceRate": 0.9,
-      "voicePitch": 1.0
+      "translationEnabled": true
     }
+  },
+  "security": {
+    "enabled": false
   }
 }

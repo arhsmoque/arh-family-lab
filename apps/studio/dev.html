@@ -47,6 +47,7 @@
   <div class="dev-tabs">
     <button class="dev-tab active" data-panel="allowlist">Approved emails</button>
     <button class="dev-tab" data-panel="users">Users &amp; usage</button>
+    <button class="dev-tab" data-panel="settings">Settings</button>
   </div>
 
   <section class="dev-panel active" id="panel-allowlist">
@@ -63,13 +64,28 @@
 
   <section class="dev-panel" id="panel-users">
     <table>
-      <thead><tr><th>Alias</th><th>Email</th><th>Projects</th><th>Cards</th><th>Storage used</th><th>Joined</th></tr></thead>
+      <thead><tr><th>Alias</th><th>Email</th><th>Storage used</th><th>Joined</th></tr></thead>
       <tbody id="usersBody"></tbody>
     </table>
+  </section>
+
+  <section class="dev-panel" id="panel-settings">
+    <h3 class="fd section-title">Registration gate</h3>
+    <p class="muted" style="max-width:560px">
+      OPEN — anyone can sign up and get a workspace (no allowlist check).
+      CLOSED — only emails on the Approved emails list can sign up.
+      The app reads this flag live from the database (<code>studio/config/registrationGate</code>);
+      it falls back to <code>security.registrationGate</code> in studio.config.js when unset.
+      Remember: the deployed Realtime Database rules must match the gate state — see SETUP.md.
+    </p>
+    <p><strong id="gateState">…</strong></p>
+    <button class="btn btn-primary" id="gateToggle">…</button>
   </section>
 </main>
 
 <script src="studio.config.js"></script>
+<!-- Optional gitignored secret override; a 404 here is harmless. -->
+<script src="studio.config.local.js"></script>
 <script src="firebase-rest.js"></script>
 <script src="dev.js"></script>
 </body>

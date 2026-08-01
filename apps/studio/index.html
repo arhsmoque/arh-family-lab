@@ -14,21 +14,34 @@
 <!-- ===== Auth view ===== -->
 <main id="view-auth" class="view auth-view">
   <div class="auth-card glass-card">
-    <h1 class="fd">Studio</h1>
-    <p class="muted">Your own workspace — notes, references, exam snippets, one project per tab.</p>
+    <div class="auth-head-row">
+      <h1 class="fd">Studio</h1>
+      <button class="btn btn-ghost lang-toggle" type="button">Bahasa Melayu</button>
+    </div>
+    <p class="muted" data-i18n="tagline">Your own workspace — notes, photos, and video links, one project at a time.</p>
 
-    <div class="auth-tabs">
-      <button class="auth-tab active" data-mode="login">Log in</button>
-      <button class="auth-tab" data-mode="signup">Sign up</button>
+    <!-- Shown instead of the form when the Firebase API key is still a placeholder -->
+    <div id="setupPanel" class="setup-panel" hidden>
+      <h2 class="fd">Studio isn't set up yet</h2>
+      <p>A parent or admin needs to add the Firebase API key to <code>studio.config.js</code> before anyone can sign in. The steps are in <code>SETUP.md</code>.</p>
+      <p>Ibu bapa atau admin perlu masukkan kunci API Firebase ke dalam <code>studio.config.js</code> dahulu sebelum sesiapa boleh log masuk. Langkahnya ada dalam <code>SETUP.md</code>.</p>
     </div>
 
-    <form id="authForm">
-      <label class="field">Email<input id="authEmail" type="email" required autocomplete="username"></label>
-      <label class="field">Password<input id="authPassword" type="password" required minlength="6" autocomplete="current-password"></label>
-      <button class="btn btn-primary" type="submit" id="authSubmit">Log in</button>
-    </form>
-    <p id="authMessage" class="auth-message" hidden></p>
-    <p class="muted auth-hint" id="signupHint" hidden>Only email addresses your admin has approved can sign up. Ask them to add yours first.</p>
+    <div id="authArea">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-mode="login" type="button" data-i18n="tabLogin">Log in</button>
+        <button class="auth-tab" data-mode="signup" type="button" data-i18n="tabSignup">Sign up</button>
+      </div>
+
+      <form id="authForm">
+        <label class="field"><span data-i18n="labelEmail">Email</span><input id="authEmail" type="email" required autocomplete="username"></label>
+        <label class="field"><span data-i18n="labelPassword">Password</span><input id="authPassword" type="password" required minlength="6" autocomplete="current-password"></label>
+        <button class="btn btn-primary" type="submit" id="authSubmit">Log in</button>
+      </form>
+      <button class="btn btn-ghost auth-forgot" id="btnForgot" type="button" data-i18n="forgot">Forgot password?</button>
+      <p id="authMessage" class="auth-message" hidden></p>
+      <p class="muted auth-hint" id="signupHint" hidden></p>
+    </div>
   </div>
 </main>
 
@@ -36,55 +49,71 @@
 <main id="view-landing" class="view" hidden>
   <header class="list-header">
     <div>
-      <h1 class="fd">Hi<span id="landingAlias"></span></h1>
-      <p class="muted">Your projects</p>
+      <h1 class="fd"><span data-i18n="hi">Hi</span><span id="landingAlias"></span></h1>
+      <p class="muted" data-i18n="yourProjects">Your projects</p>
     </div>
     <div class="row-actions">
-      <button class="btn" id="btnEditAlias">Edit name</button>
-      <button class="btn btn-ghost" id="btnSignOut">Sign out</button>
+      <button class="btn btn-ghost lang-toggle" type="button">Bahasa Melayu</button>
+      <button class="btn" id="btnEditAlias" data-i18n="editName">Edit name</button>
+      <button class="btn btn-ghost" id="btnSignOut" data-i18n="signOut">Sign out</button>
     </div>
   </header>
 
   <section id="pinnedSection" hidden>
-    <h3 class="fd section-title">📌 Quick access</h3>
+    <h3 class="fd section-title" data-i18n="quickAccess">📌 Quick access</h3>
     <div id="pinnedRail" class="pinned-rail"></div>
   </section>
 
   <div class="section-head-row">
-    <h3 class="fd section-title">Projects</h3>
-    <button class="btn btn-primary" id="btnNewProject">+ New project</button>
+    <h3 class="fd section-title" data-i18n="projects">Projects</h3>
+    <button class="btn btn-primary" id="btnNewProject" data-i18n="newProject">+ New project</button>
   </div>
   <div id="projectGrid" class="deck-grid"></div>
-  <p id="projectEmpty" class="muted empty-state" hidden>No projects yet — start one to add notes, photos, and references.</p>
+  <p id="projectEmpty" class="muted empty-state" hidden data-i18n="projectEmpty">Nothing here yet — make your first project!</p>
 </main>
 
 <!-- ===== Workspace view ===== -->
 <main id="view-workspace" class="view" hidden>
   <header class="editor-toolbar">
-    <button class="btn btn-ghost" id="btnBackToLanding">← Projects</button>
+    <button class="btn btn-ghost" id="btnBackToLanding" data-i18n="back">← Projects</button>
     <input id="projectNameInput" class="deck-title-input fd" type="text" aria-label="Project name">
     <div class="toolbar-actions">
-      <button class="btn btn-accent" id="btnAddCard">+ Add card</button>
+      <button class="btn btn-accent" id="btnAddCard" data-i18n="addCard">+ Add card</button>
     </div>
   </header>
   <div id="cardGrid" class="card-grid"></div>
-  <p id="cardEmpty" class="muted empty-state" hidden>No cards yet — add a note, photo, or video reference.</p>
+  <p id="cardEmpty" class="muted empty-state" hidden data-i18n="cardEmpty">Nothing here yet — make your first card!</p>
 </main>
 
 <!-- ===== Add-card modal ===== -->
 <div id="addCardModal" class="modal-backdrop" hidden>
   <div class="modal glass-card">
-    <h2 class="fd">Add a card</h2>
+    <h2 class="fd" data-i18n="addCardTitle">Add a card</h2>
     <div class="template-grid">
-      <button class="template-option" data-type="note"><span class="t-icon">📝</span>Note</button>
-      <button class="template-option" data-type="photo"><span class="t-icon">🖼️</span>Photo</button>
-      <button class="template-option" data-type="video"><span class="t-icon">🎬</span>Video link</button>
+      <button class="template-option" data-type="note"><span class="t-icon">📝</span><span data-i18n="note">Note</span></button>
+      <button class="template-option" data-type="photo"><span class="t-icon">🖼️</span><span data-i18n="photo">Photo</span></button>
+      <button class="template-option" data-type="video"><span class="t-icon">🎬</span><span data-i18n="video">Video link</span></button>
     </div>
-    <button class="btn btn-ghost" id="btnCancelAddCard">Cancel</button>
+    <button class="btn btn-ghost" id="btnCancelAddCard" data-i18n="cancel">Cancel</button>
+  </div>
+</div>
+
+<!-- ===== Generic prompt/confirm modal (replaces native prompt()/confirm()) ===== -->
+<div id="appModal" class="modal-backdrop" hidden>
+  <div class="modal glass-card">
+    <h2 class="fd" id="appModalTitle"></h2>
+    <p class="muted" id="appModalBody" hidden></p>
+    <input id="appModalInput" class="modal-input" type="text" hidden>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="appModalCancel" type="button">Cancel</button>
+      <button class="btn btn-primary" id="appModalOk" type="button">OK</button>
+    </div>
   </div>
 </div>
 
 <script src="studio.config.js"></script>
+<!-- Optional gitignored secret override; a 404 here is harmless (it just doesn't define STUDIO_APP_CONFIG_LOCAL). -->
+<script src="studio.config.local.js"></script>
 <script src="firebase-rest.js"></script>
 <script src="app.js"></script>
 </body>

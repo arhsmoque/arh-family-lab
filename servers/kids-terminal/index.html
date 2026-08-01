@@ -250,6 +250,22 @@
                 </div>
               </div>
 
+              <!-- Firebase connection (bootstrap setup) -->
+              <h4>🔥 Firebase Connection</h4>
+              <div class="settings-grid">
+                <div class="form-group">
+                  <label>Firebase Web API Key</label>
+                  <input type="text" id="set-api-key" placeholder="Paste your Firebase Web API Key">
+                </div>
+                <div class="form-group">
+                  <label>Security Gate</label>
+                  <select id="set-security-enabled">
+                    <option value="false">Off (Parent Portal opens without a PIN)</option>
+                    <option value="true">On (PIN required for Parent Portal)</option>
+                  </select>
+                </div>
+              </div>
+
               <!-- Parent controls -->
               <h4>🛡️ Parent & Socratic Controls</h4>
               <div class="settings-grid">
@@ -272,6 +288,19 @@
                     <option value="jarvis">🤖 Jarvis (Tech Assistant)</option>
                     <option value="friday">👩‍💻 Friday (Sassy Assistant)</option>
                   </select>
+                </div>
+                <div class="form-group">
+                  <label>AI Backend Provider</label>
+                  <input type="text" id="set-provider" list="provider-options" placeholder="claude">
+                  <datalist id="provider-options">
+                    <option value="mock">Mock / Demo (no AI, free, always works)</option>
+                    <option value="claude">Claude Code</option>
+                    <option value="codex">Codex</option>
+                    <option value="kimi">Kimi Code</option>
+                    <option value="antigravity">Antigravity</option>
+                    <option value="agy">Agy (custom)</option>
+                  </datalist>
+                  <p class="muted" style="font-size: 12px; margin-top: 4px;">Hit a usage limit? Type a different provider name here and save — no code changes needed. Add more providers under engine.providers in config.json.</p>
                 </div>
               </div>
 

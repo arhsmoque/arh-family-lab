@@ -2,11 +2,11 @@ const $ = (sel, root = document) => root.querySelector(sel);
 const $all = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 const esc = (s) => (s || "").toString().replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-const SECRET = () => STUDIO_APP_CONFIG.dev.dbSecret;
+const SECRET = () => APP_CONFIG.dev.dbSecret;
 
 function unlock() {
   const pin = $("#pinInput").value.trim();
-  if (pin !== String(STUDIO_APP_CONFIG.dev.pin)) {
+  if (pin !== String(APP_CONFIG.dev.pin)) {
     $("#pinError").style.display = "block";
     $("#pinError").textContent = "Invalid PIN.";
     return;
@@ -24,7 +24,7 @@ $all(".dev-tab").forEach((tab) =>
 );
 
 async function loadAll() {
-  await Promise.all([loadAllowlist(), loadUsers()]);
+  await Promise.all([loadAllowlist(), loadUsers(), loadSettings()]);
 }
 
 async function loadAllowlist() {
@@ -63,31 +63,55 @@ $("#addAllowForm").addEventListener("submit", async (e) => {
   loadAllowlist();
 });
 
+/*
+  shallow=true lists uids without pulling any card data (photo cards hold
+  big base64 blobs), then we fetch only the two small leaves we display.
+*/
 async function loadUsers() {
-  const users = (await Db.get("users", SECRET())) || {};
-  const rows = Object.entries(users).map(([uid, u]) => {
-    const projects = Object.keys(u.projects || {}).length;
-    const cards = Object.values(u.cards || {}).reduce((sum, projectCards) => sum + Object.keys(projectCards || {}).length, 0);
-    return {
-      uid,
-      alias: u.profile?.alias || "",
-      email: u.profile?.email || "",
-      projects,
-      cards,
-      usageBytes: u.usageBytes || 0,
-      createdAt: u.profile?.createdAt,
-    };
-  });
+  const uids = Object.keys((await Db.shallowGet("users", SECRET())) || {});
+  const rows = await Promise.all(
+    uids.map(async (uid) => {
+      const [profile, usageBytes] = await Promise.all([
+        Db.get(`users/${uid}/profile`, SECRET()),
+        Db.get(`users/${uid}/usageBytes`, SECRET()),
+      ]);
+      return {
+        uid,
+        alias: profile?.alias || "",
+        email: profile?.email || "",
+        usageBytes: usageBytes || 0,
+        createdAt: profile?.createdAt,
+      };
+    })
+  );
   $("#usersBody").innerHTML = rows
     .map(
       (r) => `<tr>
         <td>${esc(r.alias)}</td>
         <td>${esc(r.email)}</td>
-        <td>${r.projects}</td>
-        <td>${r.cards}</td>
-        <td>${(r.usageBytes / 1024 / 1024).toFixed(2)}MB / ${(STUDIO_APP_CONFIG.limits.maxUserBytes / 1024 / 1024).toFixed(0)}MB</td>
+        <td>${(r.usageBytes / 1024 / 1024).toFixed(2)}MB / ${(APP_CONFIG.limits.maxUserBytes / 1024 / 1024).toFixed(0)}MB</td>
         <td>${r.createdAt ? new Date(r.createdAt).toLocaleDateString() : ""}</td>
       </tr>`
     )
     .join("");
+}
+
+/* ---------------- Registration gate toggle ---------------- */
+async function loadSettings() {
+  const on = (await Db.get("config/registrationGate", SECRET())) === true;
+  renderGate(on);
+}
+
+function renderGate(on) {
+  $("#gateState").textContent = on
+    ? "Gate is CLOSED — only approved emails can sign up."
+    : "Gate is OPEN — anyone can sign up.";
+  const btn = $("#gateToggle");
+  btn.disabled = false;
+  btn.textContent = on ? "Open the gate" : "Close the gate";
+  btn.onclick = async () => {
+    btn.disabled = true;
+    await Db.set("config/registrationGate", SECRET(), !on);
+    renderGate(!on);
+  };
 }
