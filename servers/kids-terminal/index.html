@@ -27,6 +27,13 @@
           <label>Secret Password</label>
           <input type="password" id="auth-password" placeholder="••••••••" required>
         </div>
+        <div class="form-group">
+          <label data-i18n="authAgeTierLabel">Your age group</label>
+          <select id="auth-age-tier">
+            <option value="junior">🧒 Kid (7-12)</option>
+            <option value="teen">🧑‍🎓 Teen (13-18)</option>
+          </select>
+        </div>
         <button class="btn btn-primary btn-block" id="btn-auth-submit">🚀 Enter Space Station</button>
       </form>
       
@@ -119,11 +126,16 @@
         <button class="btn-mic" id="btn-mic" title="Voice Typing">🎤</button>
         <input type="text" id="prompt-input" placeholder="Type a message or click microphone to speak..." autocomplete="off">
         <button class="btn btn-primary btn-send" id="btn-send">🚀 Go!</button>
+        <button class="btn btn-danger btn-send" id="btn-stop" style="display: none;">⏹️ Stop</button>
       </section>
       
       <!-- Footer: User status and Parent portal link -->
       <footer class="app-footer">
         <span class="cadet-badge">🧑‍🚀 Cadet: <strong id="user-badge-email">Guest</strong></span>
+        <select id="age-tier-select" title="Age group">
+          <option value="junior">🧒 Kid</option>
+          <option value="teen">🧑‍🎓 Teen</option>
+        </select>
         <button class="btn btn-ghost btn-signout" id="btn-signout">🚪 Log Out</button>
         <button class="btn btn-warm" id="btn-open-parent-portal">🛡️ Parent Portal</button>
       </footer>
