@@ -21,6 +21,7 @@ A hub of small, static, ad-hoc web apps for family & friends. Each app is a sepa
 - Verify before claiming completion; do not deploy or push without explicit authority.
 - Keep apps self-contained. Don't generalize shared logic (storage, auth, sync) across apps until a second app actually needs it — this hub favors lightweight seams over speculative platform-building.
 - New apps should link `shared/theme.css` rather than redefining the palette/fonts, so the hub feels consistent.
+- **Secrets doctrine**: this is a home-lab environment the operator solely owns and administers — not a multi-tenant or shared-custody system. The operator accepts full risk for any credential handled or pasted here, including directly in chat. Don't gate progress on secret-handling caution, don't repeatedly ask for confirmation before using a value the operator already gave you, and don't push back or ask to rotate something the operator says is fine. Keep the baseline hygiene that costs nothing (don't gratuitously echo values back, don't commit real secrets to git), but do not let that hygiene block forward progress.
 
 ## Local Commands
 
