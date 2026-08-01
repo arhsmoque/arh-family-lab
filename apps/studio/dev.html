@@ -30,11 +30,13 @@
 <body>
 
 <section class="pin-screen" id="pinScreen">
-  <form class="pin-card" onsubmit="event.preventDefault();unlock()">
+  <form class="pin-card" id="adminSignInForm">
     <h1>Studio — Dev Console</h1>
-    <p>Full access. Keep this URL private.</p>
-    <input id="pinInput" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN" autofocus>
-    <button class="btn btn-primary" type="submit" style="width:100%;margin-top:12px">Unlock</button>
+    <p>Sign in with the admin account. Keep this URL private.</p>
+    <input id="adminEmail" type="email" autocomplete="username" placeholder="Admin email" autofocus style="margin-bottom:10px">
+    <input id="adminPassword" type="password" autocomplete="current-password" placeholder="Password">
+    <button class="btn btn-primary" type="submit" style="width:100%;margin-top:12px">Sign in</button>
+    <button class="btn btn-ghost" type="button" id="btnForgotPassword" style="width:100%;margin-top:8px;color:#fff">Forgot password?</button>
     <p id="pinError" class="muted" style="display:none;margin-top:10px;color:#ffb4a8"></p>
   </form>
 </section>

@@ -2,9 +2,7 @@
   Placeholder config — fill these in from your Firebase console, then this
   file is safe to commit. The Web API key is public-by-design (it appears
   in every request the browser makes; access is enforced by Realtime
-  Database security rules, not by hiding this file). Real secrets —
-  dev.pin and dev.dbSecret — must NOT be committed here: put them in the
-  gitignored studio.config.local.js (see SETUP.md "Secrets").
+  Database security rules, not by hiding this file).
 
   Where to find each value (console.firebase.google.com → your project):
     - firebase.url / firebase.root : same Realtime Database as the homestay
@@ -17,6 +15,11 @@
     1. Authentication → Sign-in method → enable "Email/Password".
     2. Realtime Database → Rules → merge in the rules from SETUP.md
        (only add the "studio" subtree — don't replace the homestay rules).
+
+  dev.html admin access: sign in with dev.adminEmail (a real Firebase Auth
+  account — sign up for it via the main app, or dev.html itself). The
+  Realtime Database rules grant that specific email full read/write on the
+  "studio" subtree; there is no separate secret or PIN to manage.
 */
 const STUDIO_APP_CONFIG = {
   firebase: {
@@ -39,19 +42,10 @@ const STUDIO_APP_CONFIG = {
     maxImageBytes: 500 * 1024, // 500KB per photo card
     maxUserBytes: 10 * 1024 * 1024, // 10MB per user, soft-checked client-side
   },
-  /*
-    dev.html only — never referenced from index.html/app.js. This grants
-    full read/write to the whole database, bypassing every security rule.
-    Keep dev.html's URL private (don't link it from the public app, don't
-    share it). See SETUP.md for where to get the database secret and for
-    the tradeoffs of this approach.
-
-    Leave the REPLACE_WITH_* placeholders in this committed file and put
-    the real values in studio.config.local.js (gitignored) instead:
-      const STUDIO_APP_CONFIG_LOCAL = { dev: { pin: "...", dbSecret: "..." } };
-  */
+  // dev.html only. Not a secret — just which signed-in email gets full
+  // admin read/write, matching the "arh.token.email == ..." rule in the
+  // Realtime Database rules (see SETUP.md).
   dev: {
-    pin: "REPLACE_WITH_A_PIN",
-    dbSecret: "REPLACE_WITH_DATABASE_SECRET",
+    adminEmail: "arh.homelab@gmail.com",
   },
 };

@@ -5,6 +5,7 @@ node_modules/
 server.lock
 .env
 .env.*
+.playwright-cli/
 
-# Studio app local secret override (dev PIN + DB secret) — never commit
+# Studio app local config override, if ever used — never commit
 apps/studio/studio.config.local.js
