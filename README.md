@@ -13,7 +13,7 @@ Family apps live under `apps/<name>/`:
 
 Server-backed apps live under `servers/<name>/` and only run on the home PC — they are not part of the static deploy.
 
-- **[Agy Cadet](servers/kids-terminal/)** — a playful kids workspace: speak to Agy, run space math games, and interactive stories. Requires a local Node/Express server — launch it with `run-kids-terminal.bat` from the repo root, then open `http://localhost:3000/servers/kids-terminal/`.
+- **[Agy Cadet](servers/kids-terminal/)** — a playful kids workspace: speak to Agy, run space math games, and interactive stories. Requires a local Node/Express server — launch it with `run-kids-terminal.bat` from the repo root, then open `http://localhost:3000/servers/kids-terminal/`. First run: copy `servers/kids-terminal/.env.example` to `.env` and fill in the Firebase key (or `infisical export --env=dev --path=/arh-family-lab/kids-terminal --format=dotenv > .env`). The AI backend is switchable without touching code — Settings → AI Backend Provider, type `claude`/`codex`/`kimi`/`mock`/etc.; add new ones under `engine.providers` in `config.json`.
 
 ## Design previews
 
