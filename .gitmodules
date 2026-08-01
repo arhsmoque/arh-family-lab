@@ -1,0 +1,3 @@
+[submodule "apps/kids-grades-garden"]
+	path = apps/kids-grades-garden
+	url = https://github.com/arhsmoque/arh-kids-grades-garden.git
