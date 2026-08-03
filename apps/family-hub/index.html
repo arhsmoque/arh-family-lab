@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Family Hub — Rumah Hilmi</title>
+  
+  <!-- Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css">
+  
+  <!-- PWA Manifest & iOS Mobile Capabilities -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+  <!-- Sticky App Header -->
+  <header class="app-header">
+    <div class="brand-group">
+      <h1>🏡 Family Hub</h1>
+    </div>
+    
+    <div class="header-actions">
+      <!-- Sync Status Badge -->
+      <div class="status-badge" id="syncBadge">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor"></span>
+        <span id="syncStatusText">Saved just now</span>
+      </div>
+      
+      <!-- Language Toggle -->
+      <button class="btn-icon" id="btnLangToggle" title="Toggle Language">EN</button>
+
+      <!-- Parent Mode Toggle -->
+      <button class="btn-icon" id="btnUnlockParent" title="Unlock Parent Mode">🔒</button>
+    </div>
+  </header>
+
+  <!-- Main Dynamic View Container -->
+  <main class="app-viewport" id="viewContainer">
+    <!-- Rendered dynamically by app.js -->
+  </main>
+
+  <!-- Sticky Bottom Navigation Bar (iPad Kiosk Optimized) -->
+  <nav class="app-nav">
+    <div class="nav-item active" data-tab="today">
+      <span class="nav-icon">☀️</span>
+      <span>Today</span>
+    </div>
+    <div class="nav-item" data-tab="family">
+      <span class="nav-icon">👨‍👩‍👧‍👦</span>
+      <span>Family</span>
+    </div>
+    <div class="nav-item" data-tab="calendar">
+      <span class="nav-icon">📅</span>
+      <span>Calendar</span>
+    </div>
+    <div class="nav-item" data-tab="parent">
+      <span class="nav-icon">🔐</span>
+      <span>Parent</span>
+    </div>
+  </nav>
+
+  <!-- Parent PIN Lock Modal Overlay -->
+  <div class="modal-overlay" id="pinModal">
+    <div class="pin-modal">
+      <h3>Parent Access</h3>
+      <p>Enter 4-digit Parent PIN (Default: 1234)</p>
+      
+      <div class="pin-display">
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+      </div>
+      
+      <div class="pin-keypad">
+        <button class="pin-key" data-val="1">1</button>
+        <button class="pin-key" data-val="2">2</button>
+        <button class="pin-key" data-val="3">3</button>
+        <button class="pin-key" data-val="4">4</button>
+        <button class="pin-key" data-val="5">5</button>
+        <button class="pin-key" data-val="6">6</button>
+        <button class="pin-key" data-val="7">7</button>
+        <button class="pin-key" data-val="8">8</button>
+        <button class="pin-key" data-val="9">9</button>
+        <button class="pin-key" data-val="clear">C</button>
+        <button class="pin-key" data-val="0">0</button>
+        <button class="pin-key" data-val="back">⌫</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="family.config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

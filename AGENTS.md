@@ -4,7 +4,7 @@ A hub of small, static, ad-hoc web apps for family & friends. Each app is a sepa
 
 ## Layout
 
-- `apps/` — family static apps (no build step): `apps/presentation/` (Deckmate — school presentation builder), `apps/studio/` (personal workspace, Firebase-backed).
+- `apps/` — family static apps (no build step): `apps/family-hub/` (Family Hub — shared household iPad dashboard), `apps/presentation/` (Deckmate — school presentation builder), `apps/studio/` (personal workspace, Firebase-backed).
 - `servers/` — local server-backed apps, home PC only, not part of the static deploy: `servers/kids-terminal/` (Agy Cadet — Node/Express, launch via `run-kids-terminal.bat`).
 - `clinical/` — clinical/professional artifacts linked from `clinical.html`: `cpr-komuniti-v0`, `cpr-scenario-lab-v1`, `ecc-cpg-dato-keramat`, `ecc-react-lab`, `ecc-tooth-lab`, `ecc-realistic-tooth-lab`, `ecc-tooth-lab-mouth-map`, `presentation-design-studio`.
 - `previews/` — isolated design mocks for review (e.g. `previews/deckmate-studio/`).
