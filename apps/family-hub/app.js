@@ -2,55 +2,33 @@
 (function () {
   'use strict';
 
-  // State Management
+  // Services & State
+  const store = window.FamilyHubStore;
+  const security = window.FamilyHubSecurity;
+  const rest = window.FamilyHubRest;
+  const audio = window.FamilyHubAudio;
+
   const state = {
     activeTab: 'today',
     selectedMemberId: null,
     pinInput: '',
-    parentModeUnlocked: false,
-    autoLockTimer: null,
-    config: window.FamilyHubConfig || {},
     lang: localStorage.getItem('familyHub_lang') || 'en'
   };
 
   // DOM Elements
   const el = {
+    body: document.body,
     viewContainer: document.getElementById('viewContainer'),
     syncBadge: document.getElementById('syncBadge'),
     syncStatusText: document.getElementById('syncStatusText'),
     pinModal: document.getElementById('pinModal'),
+    themeModal: document.getElementById('themeModal'),
     pinDots: document.querySelectorAll('.pin-dot'),
     btnUnlock: document.getElementById('btnUnlockParent'),
+    btnThemeToggle: document.getElementById('btnThemeToggle'),
     btnLangToggle: document.getElementById('btnLangToggle'),
     navItems: document.querySelectorAll('.nav-item')
   };
-
-  // Sound Synth Generator (Web Audio API)
-  function playCompletionChime() {
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
-      osc.frequency.exponentialRampToValueAtTime(659.25, ctx.currentTime + 0.15); // E5
-      osc.frequency.exponentialRampToValueAtTime(783.99, ctx.currentTime + 0.3); // G5
-      
-      gain.gain.setValueAtTime(0.2, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
-      
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      
-      osc.start();
-      osc.stop(ctx.currentTime + 0.35);
-    } catch (e) {
-      // Audio not permitted without user gesture
-    }
-  }
 
   // Language Dictionary
   const i18n = {
@@ -66,36 +44,41 @@
       savedNow: "Saved just now",
       enterPin: "Enter Parent PIN",
       pinPrompt: "Protected actions require parent PIN unlock.",
-      locked: "Locked",
-      unlocked: "Parent Mode Active"
+      selectTheme: "Select Visual Profile Theme"
     },
     bm: {
       today: "Hari Ini",
       family: "Profil Keluarga",
       calendar: "Kalendar",
       parent: "Mod Ibu Bapa",
-      nextEvent: "ACTIVITI SETERUSNYA",
+      nextEvent: "AKTIVITI SETERUSNYA",
       familyStatus: "AHLI KELUARGA",
       todayTasks: "TUGASAN HARI INI",
       checklists: "SENARAI SEMAK KELUAR RUMAH",
       savedNow: "Disimpan sebentar tadi",
       enterPin: "Masukkan PIN Ibu Bapa",
       pinPrompt: "Tindakan dilindungi memerlukan PIN ibu bapa.",
-      locked: "Terkunci",
-      unlocked: "Mod Ibu Bapa Aktif"
+      selectTheme: "Pilih Tema Profil Visual"
     }
   };
 
   function t(key) {
-    return i18n[state.lang][key] || key;
+    return (i18n[state.lang] && i18n[state.lang][key]) ? i18n[state.lang][key] : key;
   }
 
-  // Render Functions
+  // Theme Manager
+  function applyTheme(themeId) {
+    const activeTheme = themeId || store.getState().household.activeTheme || 'warm';
+    el.body.setAttribute('data-theme', activeTheme);
+  }
+
+  // Render Views
   function renderTodayView() {
-    const members = state.config.members || [];
-    const tasks = state.config.tasks || [];
-    const checklists = state.config.checklists || [];
-    const events = state.config.events || [];
+    const currentState = store.getState();
+    const members = currentState.members || [];
+    const tasks = currentState.tasks || [];
+    const checklists = currentState.checklists || [];
+    const events = currentState.events || [];
     const nextEvent = events[0] || { title: "School Departure", time: "7:15 AM" };
 
     const selectedMember = members.find(m => m.id === state.selectedMemberId);
@@ -169,7 +152,7 @@
               <div style="margin-bottom:16px">
                 <div style="font-weight:700;font-size:15px;margin-bottom:8px">${cl.icon} ${cl.title}</div>
                 ${cl.items.map(item => `
-                  <div class="checklist-row" data-checklist-item="${item.id}">
+                  <div class="checklist-row" data-checklist-id="${cl.id}" data-item-id="${item.id}">
                     <input type="checkbox" ${item.checked ? 'checked' : ''} style="width:20px;height:20px;cursor:pointer">
                     <span style="font-size:14px;${item.checked ? 'text-decoration:line-through;color:var(--color-text-muted)' : ''}">${item.text}</span>
                   </div>
@@ -185,12 +168,15 @@
   }
 
   function renderFamilyView() {
-    const members = state.config.members || [];
+    const currentState = store.getState();
+    const members = currentState.members || [];
+    const isUnlocked = security.isUnlocked();
+
     el.viewContainer.innerHTML = `
       <div class="card">
         <div class="card-header">
           <span class="card-title">👨‍👩‍👧‍👦 ${t('family')}</span>
-          ${state.parentModeUnlocked ? '<button class="btn-icon" style="font-size:14px;padding:4px 12px;height:auto">+ Add Member</button>' : ''}
+          ${isUnlocked ? '<button class="btn-icon" id="btnAddMember" style="font-size:14px;padding:4px 12px;height:auto">+ Add Member</button>' : ''}
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:16px">
           ${members.map(m => `
@@ -203,10 +189,22 @@
         </div>
       </div>
     `;
+
+    const btnAdd = document.getElementById('btnAddMember');
+    if (btnAdd) {
+      btnAdd.addEventListener('click', () => {
+        const name = prompt('Enter member name:');
+        if (name) {
+          store.addMember({ name });
+          renderFamilyView();
+        }
+      });
+    }
   }
 
   function renderCalendarView() {
-    const events = state.config.events || [];
+    const currentState = store.getState();
+    const events = currentState.events || [];
     el.viewContainer.innerHTML = `
       <div class="card">
         <div class="card-header">
@@ -231,6 +229,7 @@
     // Member chip selection
     document.querySelectorAll('.member-chip').forEach(chip => {
       chip.addEventListener('click', () => {
+        audio.playClick();
         const id = chip.getAttribute('data-member-id');
         state.selectedMemberId = (state.selectedMemberId === id) ? null : id;
         renderTodayView();
@@ -240,6 +239,7 @@
     const btnClear = document.getElementById('btnClearFilter');
     if (btnClear) {
       btnClear.addEventListener('click', () => {
+        audio.playClick();
         state.selectedMemberId = null;
         renderTodayView();
       });
@@ -249,27 +249,34 @@
     document.querySelectorAll('.task-item').forEach(item => {
       item.addEventListener('click', () => {
         const taskId = item.getAttribute('data-task-id');
-        const task = state.config.tasks.find(t => t.id === taskId);
-        if (task) {
-          task.completed = !task.completed;
-          if (task.completed) {
-            playCompletionChime();
-          }
-          triggerSaveStatus();
-          renderTodayView();
+        const task = store.toggleTask(taskId);
+        if (task && task.completed) {
+          audio.playSuccessChime();
+        } else {
+          audio.playClick();
         }
+        rest.syncData({ tasks: store.getState().tasks });
+        renderTodayView();
       });
     });
-  }
 
-  function triggerSaveStatus() {
-    el.syncStatusText.textContent = t('savedNow');
-    el.syncBadge.style.opacity = '1';
+    // Checklist item toggle
+    document.querySelectorAll('.checklist-row').forEach(row => {
+      row.addEventListener('click', () => {
+        const checklistId = row.getAttribute('data-checklist-id');
+        const itemId = row.getAttribute('data-item-id');
+        store.toggleChecklistItem(checklistId, itemId);
+        audio.playClick();
+        rest.syncData({ checklists: store.getState().checklists });
+        renderTodayView();
+      });
+    });
   }
 
   // Navigation Logic
   el.navItems.forEach(item => {
     item.addEventListener('click', () => {
+      audio.playClick();
       const tab = item.getAttribute('data-tab');
       state.activeTab = tab;
       
@@ -305,7 +312,8 @@
   }
 
   document.querySelectorAll('.pin-key').forEach(key => {
-    key.addEventListener('click', () => {
+    key.addEventListener('click', async () => {
+      audio.playClick();
       const val = key.getAttribute('data-val');
       if (val === 'clear') {
         state.pinInput = '';
@@ -314,31 +322,45 @@
       } else if (state.pinInput.length < 4) {
         state.pinInput += val;
         if (state.pinInput.length === 4) {
-          verifyPin();
+          const targetHash = store.getState().household.parentPinHash;
+          const isOk = await security.verifyPin(state.pinInput, targetHash);
+          if (isOk) {
+            closePinModal();
+            alert('Parent Mode Unlocked!');
+            renderFamilyView();
+          } else {
+            alert('Incorrect PIN. Try 1234');
+            state.pinInput = '';
+          }
         }
       }
       updatePinDots();
     });
   });
 
-  function verifyPin() {
-    // Default PIN: 1234
-    if (state.pinInput === '1234') {
-      state.parentModeUnlocked = true;
-      closePinModal();
-      alert('Parent Mode Unlocked!');
-      renderFamilyView();
-    } else {
-      alert('Incorrect PIN. Try 1234');
-      state.pinInput = '';
-      updatePinDots();
-    }
+  el.btnUnlock.addEventListener('click', openPinModal);
+
+  // Theme Picker Modal
+  if (el.btnThemeToggle) {
+    el.btnThemeToggle.addEventListener('click', () => {
+      audio.playClick();
+      if (el.themeModal) el.themeModal.classList.add('active');
+    });
   }
 
-  el.btnUnlock.addEventListener('click', openPinModal);
+  document.querySelectorAll('.theme-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const themeId = card.getAttribute('data-theme-id');
+      store.setTheme(themeId);
+      applyTheme(themeId);
+      audio.playClick();
+      if (el.themeModal) el.themeModal.classList.remove('active');
+    });
+  });
 
   // Language Toggle
   el.btnLangToggle.addEventListener('click', () => {
+    audio.playClick();
     state.lang = state.lang === 'en' ? 'bm' : 'en';
     localStorage.setItem('familyHub_lang', state.lang);
     el.btnLangToggle.textContent = state.lang.toUpperCase();
@@ -347,7 +369,23 @@
     else if (state.activeTab === 'calendar') renderCalendarView();
   });
 
-  // Initialize
+  // Sync Status Listeners
+  store.subscribe((event, status) => {
+    if (event === 'syncStatus') {
+      if (status === 'saved') {
+        el.syncStatusText.textContent = t('savedNow');
+        el.syncBadge.className = 'status-badge';
+      } else if (status === 'offline') {
+        el.syncStatusText.textContent = 'Offline';
+        el.syncBadge.className = 'status-badge offline';
+      } else if (status === 'saving' || status === 'syncing') {
+        el.syncStatusText.textContent = 'Saving...';
+      }
+    }
+  });
+
+  // Initialize App
+  applyTheme();
   el.btnLangToggle.textContent = state.lang.toUpperCase();
   renderTodayView();
 

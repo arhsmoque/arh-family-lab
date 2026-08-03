@@ -1,25 +1,42 @@
-/* Family Hub Stylesheet */
+/* Family Hub Touch-First Stylesheet with Preset Visual Themes */
 @import "../../shared/theme.css";
 
 :root {
-  --font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Playfair Display', Georgia, serif;
-  
-  --color-bg: #F8FAFC;
+  /* Default Warm Theme Tokens */
+  --color-primary: #D97706;
+  --color-primary-light: #FEF3C7;
+  --color-bg: #FFFBEB;
   --color-surface: #FFFFFF;
   --color-card: #FFFFFF;
-  --color-border: #E2E8F0;
-  
-  --color-text-main: #0F172A;
+  --color-border: #FDE68A;
+  --color-text-main: #1E293B;
   --color-text-muted: #64748B;
   
-  --color-primary: #2563EB;
-  --color-primary-light: #EFF6FF;
   --color-success: #10B981;
   --color-success-light: #ECFDF5;
   --color-warning: #F59E0B;
   --color-warning-light: #FFFBEB;
   --color-danger: #EF4444;
+
+  /* Typography Scale (visual-design-foundations.md) */
+  --font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  
+  --font-size-xs: 0.75rem;   /* 12px */
+  --font-size-sm: 0.875rem;  /* 14px */
+  --font-size-base: 1rem;    /* 16px */
+  --font-size-lg: 1.125rem;  /* 18px */
+  --font-size-xl: 1.25rem;   /* 20px */
+  --font-size-2xl: 1.5rem;   /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+
+  /* Spacing Scale (8-point grid) */
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem;  /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem;    /* 16px */
+  --space-6: 1.5rem;  /* 24px */
+  --space-8: 2rem;    /* 32px */
   
   --touch-min-adult: 48px;
   --touch-min-child: 64px;
@@ -28,8 +45,53 @@
   --radius-full: 9999px;
   
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Theme Override Data Attributes */
+[data-theme="warm"] {
+  --color-primary: #D97706;
+  --color-primary-light: #FEF3C7;
+  --color-bg: #FFFBEB;
+  --color-surface: #FFFFFF;
+  --color-card: #FFFFFF;
+  --color-border: #FDE68A;
+  --color-text-main: #1E293B;
+  --color-text-muted: #64748B;
+}
+
+[data-theme="playful"] {
+  --color-primary: #2563EB;
+  --color-primary-light: #EFF6FF;
+  --color-bg: #F0F9FF;
+  --color-surface: #FFFFFF;
+  --color-card: #FFFFFF;
+  --color-border: #BAE6FD;
+  --color-text-main: #0F172A;
+  --color-text-muted: #475569;
+}
+
+[data-theme="dark"] {
+  --color-primary: #38BDF8;
+  --color-primary-light: #0C4A6E;
+  --color-bg: #0F172A;
+  --color-surface: #1E293B;
+  --color-card: #1E293B;
+  --color-border: #334155;
+  --color-text-main: #F8FAFC;
+  --color-text-muted: #94A3B8;
+}
+
+[data-theme="nordic"] {
+  --color-primary: #059669;
+  --color-primary-light: #ECFDF5;
+  --color-bg: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-card: #FFFFFF;
+  --color-border: #E5E7EB;
+  --color-text-main: #111827;
+  --color-text-muted: #6B7280;
 }
 
 * {
@@ -47,34 +109,36 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Header & Status Bar */
 header.app-header {
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
-  padding: 16px 24px;
+  padding: var(--space-4) var(--space-6);
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: var(--shadow-sm);
 }
 
 .brand-group h1 {
   font-family: var(--font-display);
-  font-size: 24px;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
   color: var(--color-primary);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .status-badge {
@@ -83,7 +147,7 @@ header.app-header {
   gap: 6px;
   padding: 6px 12px;
   border-radius: var(--radius-full);
-  font-size: 13px;
+  font-size: var(--font-size-xs);
   font-weight: 600;
   background: var(--color-success-light);
   color: var(--color-success);
@@ -102,6 +166,7 @@ header.app-header {
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
   background: var(--color-surface);
+  color: var(--color-text-main);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -112,7 +177,7 @@ header.app-header {
 
 .btn-icon:active {
   transform: scale(0.95);
-  background: #F1F5F9;
+  background: var(--color-primary-light);
 }
 
 /* Main Container */
@@ -120,7 +185,7 @@ main.app-viewport {
   max-width: 1024px;
   width: 100%;
   margin: 0 auto;
-  padding: 24px;
+  padding: var(--space-6);
   flex: 1;
 }
 
@@ -128,7 +193,7 @@ main.app-viewport {
 .grid-dashboard {
   display: grid;
   grid-template-columns: 1fr 340px;
-  gap: 24px;
+  gap: var(--space-6);
 }
 
 @media (max-width: 840px) {
@@ -142,31 +207,31 @@ main.app-viewport {
   background: var(--color-card);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border);
-  padding: 20px;
+  padding: var(--space-5, 20px);
   box-shadow: var(--shadow-sm);
-  margin-bottom: 20px;
+  margin-bottom: var(--space-5, 20px);
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-4);
 }
 
 .card-title {
-  font-size: 18px;
+  font-size: var(--font-size-lg);
   font-weight: 700;
   color: var(--color-text-main);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 /* Member Avatars Row */
 .members-row {
   display: flex;
-  gap: 12px;
+  gap: var(--space-3);
   overflow-x: auto;
   padding-bottom: 4px;
 }
@@ -177,10 +242,11 @@ main.app-viewport {
   border-radius: var(--radius-lg);
   border: 2px solid var(--color-border);
   background: var(--color-surface);
-  padding: 8px 14px;
+  color: var(--color-text-main);
+  padding: var(--space-2) var(--space-3);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-2);
   cursor: pointer;
   transition: all 0.15s ease;
   user-select: none;
@@ -198,11 +264,11 @@ main.app-viewport {
 
 .member-info .name {
   font-weight: 700;
-  font-size: 15px;
+  font-size: var(--font-size-sm);
 }
 
 .member-info .meta {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
 }
 
@@ -212,11 +278,11 @@ main.app-viewport {
   background: var(--color-surface);
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: 12px 16px;
-  margin-bottom: 10px;
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-3);
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: var(--space-3);
   cursor: pointer;
   transition: transform 0.1s ease, border-color 0.15s ease, background 0.15s ease;
   user-select: none;
@@ -235,7 +301,7 @@ main.app-viewport {
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  border: 2px solid #CBD5E1;
+  border: 2px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -255,7 +321,7 @@ main.app-viewport {
 
 .task-title {
   font-weight: 600;
-  font-size: 16px;
+  font-size: var(--font-size-base);
 }
 
 .task-item.completed .task-title {
@@ -264,13 +330,13 @@ main.app-viewport {
 }
 
 .task-tag {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   font-weight: 700;
   padding: 2px 8px;
   border-radius: 4px;
   text-transform: uppercase;
-  background: #E2E8F0;
-  color: var(--color-text-muted);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
 }
 
 /* Checklist Item */
@@ -282,9 +348,9 @@ main.app-viewport {
   min-height: var(--touch-min-adult);
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid #F1F5F9;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-border);
   cursor: pointer;
 }
 
@@ -296,7 +362,7 @@ main.app-viewport {
 nav.app-nav {
   background: var(--color-surface);
   border-top: 1px solid var(--color-border);
-  padding: 8px 16px;
+  padding: var(--space-2) var(--space-4);
   display: flex;
   justify-content: space-around;
   position: sticky;
@@ -312,7 +378,7 @@ nav.app-nav {
   gap: 4px;
   color: var(--color-text-muted);
   text-decoration: none;
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   font-weight: 600;
   padding: 6px 16px;
   border-radius: var(--radius-md);
@@ -329,7 +395,7 @@ nav.app-nav {
   font-size: 20px;
 }
 
-/* Parent PIN Modal */
+/* Modals */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -354,22 +420,24 @@ nav.app-nav {
 
 .pin-modal {
   background: var(--color-surface);
+  color: var(--color-text-main);
   border-radius: var(--radius-lg);
   padding: 32px;
-  max-width: 360px;
+  max-width: 380px;
   width: 90%;
   text-align: center;
   box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border);
 }
 
 .pin-modal h3 {
-  font-size: 20px;
+  font-size: var(--font-size-xl);
   margin-bottom: 8px;
 }
 
 .pin-modal p {
   color: var(--color-text-muted);
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   margin-bottom: 20px;
 }
 
@@ -404,6 +472,7 @@ nav.app-nav {
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
   background: var(--color-surface);
+  color: var(--color-text-main);
   font-size: 22px;
   font-weight: 700;
   cursor: pointer;
@@ -417,4 +486,28 @@ nav.app-nav {
   transform: scale(0.94);
   background: var(--color-primary-light);
   color: var(--color-primary);
+}
+
+/* Theme Picker Cards */
+.theme-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.theme-card {
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.15s ease;
+}
+
+.theme-card:active, .theme-card.active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
 }
