@@ -25,12 +25,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Build Studio local config from secrets
+      - name: Build app local configs from secrets
         env:
           FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           FIREBASE_URL: ${{ secrets.FIREBASE_URL }}
+          FIREBASE_ROOT_FAMILY_HUB: ${{ secrets.FIREBASE_ROOT_FAMILY_HUB }}
           FIREBASE_ROOT_STUDIO: ${{ secrets.FIREBASE_ROOT_STUDIO }}
-        run: node scripts/build-studio-config.mjs
+        run: |
+          node scripts/build-family-hub-config.mjs
+          node scripts/build-studio-config.mjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
