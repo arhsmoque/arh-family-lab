@@ -1,0 +1,9 @@
+schema_version: 1
+versions:
+  scaffold: 0.1.0
+  capacitor_core: 8.4.2
+  capacitor_cli: 8.4.2
+  domain_schema: 1
+  operation_schema: 1
+  bridge_schema: 1
+compatibility_rule: app_bridge_and_data_schema_must_be_checked_before_release

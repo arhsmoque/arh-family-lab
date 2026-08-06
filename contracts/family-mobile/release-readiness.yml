@@ -1,0 +1,22 @@
+schema_version: 1
+gates:
+  identity:
+    - final_application_id_confirmed
+    - app_name_confirmed
+    - icons_and_launch_assets_complete
+  security:
+    - no_service_credentials_in_bundle
+    - parent_reauthorisation_tested
+    - token_storage_reviewed
+  privacy:
+    - notification_preview_classified
+    - widget_snapshot_contains_no_protected_data
+    - Apple_privacy_manifest_reviewed
+  offline:
+    - restart_with_pending_queue_tested
+    - delete_tombstone_tested
+    - conflict_recovery_tested
+  distribution:
+    - Android_signing_configured
+    - iOS_signing_configured
+    - store_accounts_confirmed

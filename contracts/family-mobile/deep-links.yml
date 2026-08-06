@@ -1,0 +1,14 @@
+schema_version: 1
+scheme: familylab
+routes:
+  - familylab://today
+  - familylab://member/{memberId}
+  - familylab://task/{taskId}
+  - familylab://checklist/{checklistId}
+  - familylab://parent/attention
+required_checks:
+  - authenticated_session
+  - household_membership
+  - current_object_state
+  - authority
+fallback: familylab://today

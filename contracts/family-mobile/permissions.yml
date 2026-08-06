@@ -1,0 +1,13 @@
+schema_version: 1
+permissions:
+  notifications:
+    request_trigger: user_creates_first_timed_routine
+    pre_prompt_required: true
+    denial_keeps_core_usable: true
+  biometrics:
+    request_trigger: parent_enables_fast_unlock
+    purpose: protected_action_reauthorisation
+    denial_keeps_PIN_fallback: true
+  calendar:
+    request_trigger: explicit_add_to_device_calendar_action
+    denial_keeps_internal_calendar: true

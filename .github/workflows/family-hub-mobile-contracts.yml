@@ -1,0 +1,34 @@
+name: Family Hub mobile contracts
+
+on:
+  pull_request:
+    paths:
+      - 'apps/family-hub/mobile/**'
+      - 'apps/family-hub/README.md'
+      - 'packages/family-*/**'
+      - 'packages/platform-contracts/**'
+      - 'contracts/family-mobile/**'
+      - 'docs/family-mobile/**'
+      - 'scripts/bootstrap-family-mobile.*'
+      - '.github/workflows/family-hub-mobile-contracts.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/family-hub/mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned scaffold dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - run: npm run build:web
+      - run: npm run validate
+      - run: npm test
