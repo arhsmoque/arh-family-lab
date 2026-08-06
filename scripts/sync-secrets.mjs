@@ -31,6 +31,27 @@ const DRY_RUN = process.argv.includes("--dry-run");
 // MSYS_NO_PATHCONV=1 is set. Infisical expects literal paths like /arh-family-lab.
 const INFISICAL_ENV = { ...process.env, MSYS_NO_PATHCONV: "1" };
 
+async function getInfisicalAccessToken() {
+  if (process.env.INFISICAL_TOKEN) {
+    return process.env.INFISICAL_TOKEN;
+  }
+  const clientId = process.env.INFISICAL_CLIENT_ID;
+  const clientSecret = process.env.INFISICAL_CLIENT_SECRET;
+  if (!clientId || !clientSecret) {
+    return undefined;
+  }
+  const res = await fetch("https://app.infisical.com/api/v1/auth/universal-auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ clientId, clientSecret }),
+  });
+  if (!res.ok) {
+    throw new Error(`Infisical Universal Auth login failed: ${res.status} ${await res.text()}`);
+  }
+  const data = await res.json();
+  return data.accessToken;
+}
+
 function log(...args) {
   console.log("[sync-secrets]", ...args);
 }
@@ -53,7 +74,7 @@ function run(cmd, args, env = process.env, input) {
   return result;
 }
 
-function infisicalSecrets(folderPath) {
+function infisicalSecrets(folderPath, token) {
   const args = [
     "secrets",
     `--projectId=${PROJECT_ID}`,
@@ -62,8 +83,8 @@ function infisicalSecrets(folderPath) {
     "--output=json",
     "--silent",
   ];
-  if (process.env.INFISICAL_TOKEN) {
-    args.push(`--token=${process.env.INFISICAL_TOKEN}`);
+  if (token) {
+    args.push(`--token=${token}`);
   }
   const result = run("infisical", args, INFISICAL_ENV);
 
@@ -131,17 +152,30 @@ function setCloudflareSecrets(pairs) {
   }
 }
 
-function main() {
+async function main() {
   log(DRY_RUN ? "starting (dry-run)" : "starting");
 
   // ---------------------------------------------------------------------------
-  // 1. Read Infisical
+  // 1. Authenticate to Infisical
   // ---------------------------------------------------------------------------
-  const rootSecrets = infisicalSecrets("/");
-  const sharedSecrets = infisicalSecrets("/arh-family-lab");
-  const familyHubSecrets = infisicalSecrets("/arh-family-lab/family-hub");
-  const kidsTerminalSecrets = infisicalSecrets("/arh-family-lab/kids-terminal");
-  const studioSecrets = infisicalSecrets("/arh-family-lab/studio");
+  const token = await getInfisicalAccessToken();
+  if (!token) {
+    fail(
+      "No Infisical credentials. Set one of:\n" +
+        "  - INFISICAL_TOKEN (service token or access token)\n" +
+        "  - INFISICAL_CLIENT_ID + INFISICAL_CLIENT_SECRET (machine identity)"
+    );
+    return;
+  }
+
+  // ---------------------------------------------------------------------------
+  // 2. Read Infisical
+  // ---------------------------------------------------------------------------
+  const rootSecrets = infisicalSecrets("/", token);
+  const sharedSecrets = infisicalSecrets("/arh-family-lab", token);
+  const familyHubSecrets = infisicalSecrets("/arh-family-lab/family-hub", token);
+  const kidsTerminalSecrets = infisicalSecrets("/arh-family-lab/kids-terminal", token);
+  const studioSecrets = infisicalSecrets("/arh-family-lab/studio", token);
 
   const githubPat = getSecret(rootSecrets, "GITHUB_PAT");
 
@@ -239,4 +273,7 @@ function main() {
   log(DRY_RUN ? "dry-run complete" : "complete");
 }
 
-main();
+main().catch((err) => {
+  console.error("[sync-secrets] FATAL", err.message);
+  process.exit(1);
+});

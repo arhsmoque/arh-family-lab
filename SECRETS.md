@@ -141,7 +141,7 @@ Cloudflare Pages production secrets are populated by `scripts/sync-secrets.mjs` 
 3. The workflow reads from Infisical using `INFISICAL_TOKEN` and writes to GitHub / Cloudflare.
 4. Pushes to `main` auto-deploy both GitHub Pages and Cloudflare Pages.
 
-Required GitHub secret for the cloud path: `INFISICAL_TOKEN`.
+Required GitHub secrets for the cloud path: `INFISICAL_CLIENT_ID` and `INFISICAL_CLIENT_SECRET` (Infisical Machine Identity).
 
 ---
 

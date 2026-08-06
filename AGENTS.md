@@ -32,7 +32,7 @@ A hub of small, static, ad-hoc web apps for family & friends. Each app is a sepa
   - `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` — Cloudflare deploy
   - `FIREBASE_API_KEY`, `FIREBASE_URL`, `FIREBASE_ROOT_FAMILY_HUB`, `FIREBASE_ROOT_STUDIO`, `FIREBASE_ROOT_KIDS_TERMINAL` — runtime config
   - `GH_PAT` — cross-repo workflows (optional)
-  - `INFISICAL_TOKEN` — only needed for the `Sync secrets from Infisical` workflow dispatch
+  - `INFISICAL_CLIENT_ID`, `INFISICAL_CLIENT_SECRET` — only needed for the `Sync secrets from Infisical` workflow dispatch
 - Workflows:
   - `.github/workflows/pages.yml` → GitHub Pages
   - `.github/workflows/deploy-cloudflare-pages.yml` → Cloudflare Pages
