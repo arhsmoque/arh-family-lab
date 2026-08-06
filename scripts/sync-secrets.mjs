@@ -54,18 +54,18 @@ function run(cmd, args, env = process.env, input) {
 }
 
 function infisicalSecrets(folderPath) {
-  const result = run(
-    "infisical",
-    [
-      "secrets",
-      `--projectId=${PROJECT_ID}`,
-      "--env=dev",
-      `--path=${folderPath}`,
-      "--output=json",
-      "--silent",
-    ],
-    INFISICAL_ENV
-  );
+  const args = [
+    "secrets",
+    `--projectId=${PROJECT_ID}`,
+    "--env=dev",
+    `--path=${folderPath}`,
+    "--output=json",
+    "--silent",
+  ];
+  if (process.env.INFISICAL_TOKEN) {
+    args.push(`--token=${process.env.INFISICAL_TOKEN}`);
+  }
+  const result = run("infisical", args, INFISICAL_ENV);
 
   if (result.status !== 0) {
     // An empty folder can return a non-zero status or "null".

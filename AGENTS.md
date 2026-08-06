@@ -26,14 +26,22 @@ A hub of small, static, ad-hoc web apps for family & friends. Each app is a sepa
 ## Secrets & Deployment
 
 - Source of truth for secrets is Infisical project `90b0e7ef-3f72-4ddb-b888-055e90e13dfa`.
-- Sync Infisical → GitHub / Cloudflare Pages with:
+- Push to `main` auto-deploys to both **GitHub Pages** and **Cloudflare Pages** via GitHub Actions.
+- Cloud agents can edit, push, and deploy without local tools. The only local-only step is rotating secrets via Infisical.
+- Required GitHub secrets:
+  - `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` — Cloudflare deploy
+  - `FIREBASE_API_KEY`, `FIREBASE_URL`, `FIREBASE_ROOT_FAMILY_HUB`, `FIREBASE_ROOT_STUDIO`, `FIREBASE_ROOT_KIDS_TERMINAL` — runtime config
+  - `GH_PAT` — cross-repo workflows (optional)
+  - `INFISICAL_TOKEN` — only needed for the `Sync secrets from Infisical` workflow dispatch
+- Workflows:
+  - `.github/workflows/pages.yml` → GitHub Pages
+  - `.github/workflows/deploy-cloudflare-pages.yml` → Cloudflare Pages
+  - `.github/workflows/sync-secrets.yml` → manual Infisical → GitHub/Cloudflare sync
+- Local sync (when you have Infisical CLI):
   ```bash
   node scripts/sync-secrets.mjs --dry-run   # preview
   node scripts/sync-secrets.mjs              # apply
   ```
-- Current GitHub secrets: `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`, `FIREBASE_API_KEY`, `FIREBASE_URL`, `FIREBASE_ROOT_FAMILY_HUB`, `FIREBASE_ROOT_STUDIO`, `FIREBASE_ROOT_KIDS_TERMINAL`, `GH_PAT`.
-- Current Cloudflare Pages secrets: `FIREBASE_API_KEY`, `FIREBASE_URL`, `FIREBASE_ROOT_FAMILY_HUB`, `FIREBASE_ROOT_STUDIO`, `FIREBASE_ROOT_KIDS_TERMINAL`.
-- GitHub Pages deploys run `scripts/build-studio-config.mjs` to inject Firebase config into `apps/studio/studio.config.local.js` (gitignored) from repository secrets.
 - See `SECRETS.md` for the full runbook.
 
 ## Family Hub boundaries

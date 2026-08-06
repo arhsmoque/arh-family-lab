@@ -125,12 +125,23 @@ Cloudflare Pages production secrets are populated by `scripts/sync-secrets.mjs` 
 
 ## 7. Rotation Runbook
 
+### From a local machine (with Infisical CLI)
+
 1. Update the value in Infisical first.
 2. Run `node scripts/sync-secrets.mjs --dry-run` to preview.
 3. Run `node scripts/sync-secrets.mjs` to apply.
 4. Re-run GitHub Actions / redeploy Cloudflare Pages.
 5. Update any local `.config.local.js` files by re-running the Infisical export.
 6. Never commit the new value.
+
+### From GitHub Actions (cloud agent)
+
+1. Update the value in Infisical.
+2. Go to **Actions → Sync secrets from Infisical → Run workflow**.
+3. The workflow reads from Infisical using `INFISICAL_TOKEN` and writes to GitHub / Cloudflare.
+4. Pushes to `main` auto-deploy both GitHub Pages and Cloudflare Pages.
+
+Required GitHub secret for the cloud path: `INFISICAL_TOKEN`.
 
 ---
 
