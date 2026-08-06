@@ -5,7 +5,7 @@
  * Source of truth: Infisical project 90b0e7ef-3f72-4ddb-b888-055e90e13dfa
  * Targets:
  *   - GitHub repository secrets for arhsmoque/arh-family-lab
- *   - Cloudflare Pages secrets for project arh-family-lab
+ *   - Cloudflare Pages project secrets for project arh-family-lab
  *
  * Run manually after rotating a secret, or as a workflow_dispatch job.
  * Never logs secret values — only key names and status.
@@ -21,15 +21,22 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PROJECT_ID = "90b0e7ef-3f72-4ddb-b888-055e90e13dfa";
+const INFISICAL_API = "https://app.infisical.com/api/v3/secrets/raw";
+const UNIVERSAL_AUTH_URL = "https://app.infisical.com/api/v1/auth/universal-auth/login";
 const REPO = "arhsmoque/arh-family-lab";
 const CF_PAGES_PROJECT = "arh-family-lab";
 const CF_ACCOUNT_ID = "dc3bfa957bdf216b7cc45214455aaa72";
 
 const DRY_RUN = process.argv.includes("--dry-run");
 
-// In Git Bash, absolute Unix paths are converted to Windows paths unless
-// MSYS_NO_PATHCONV=1 is set. Infisical expects literal paths like /arh-family-lab.
-const INFISICAL_ENV = { ...process.env, MSYS_NO_PATHCONV: "1" };
+function log(...args) {
+  console.log("[sync-secrets]", ...args);
+}
+
+function fail(...args) {
+  console.error("[sync-secrets] ERROR", ...args);
+  process.exitCode = 1;
+}
 
 async function getInfisicalAccessToken() {
   if (process.env.INFISICAL_TOKEN) {
@@ -40,7 +47,7 @@ async function getInfisicalAccessToken() {
   if (!clientId || !clientSecret) {
     return undefined;
   }
-  const res = await fetch("https://app.infisical.com/api/v1/auth/universal-auth/login", {
+  const res = await fetch(UNIVERSAL_AUTH_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ clientId, clientSecret }),
@@ -52,13 +59,25 @@ async function getInfisicalAccessToken() {
   return data.accessToken;
 }
 
-function log(...args) {
-  console.log("[sync-secrets]", ...args);
+async function fetchInfisicalSecrets(token, folderPath) {
+  const params = new URLSearchParams({
+    workspaceId: PROJECT_ID,
+    environment: "dev",
+    secretPath: folderPath,
+  });
+  const res = await fetch(`${INFISICAL_API}?${params.toString()}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) {
+    throw new Error(`Infisical API error for ${folderPath}: ${res.status} ${await res.text()}`);
+  }
+  const data = await res.json();
+  return Array.isArray(data.secrets) ? data.secrets : [];
 }
 
-function fail(...args) {
-  console.error("[sync-secrets] ERROR", ...args);
-  process.exitCode = 1;
+function getSecret(secrets, key) {
+  const found = secrets.find((s) => s.secretKey === key);
+  return found ? found.secretValue : undefined;
 }
 
 function run(cmd, args, env = process.env, input) {
@@ -74,49 +93,11 @@ function run(cmd, args, env = process.env, input) {
   return result;
 }
 
-function infisicalSecrets(folderPath, token) {
-  const args = [
-    "secrets",
-    `--projectId=${PROJECT_ID}`,
-    "--env=dev",
-    `--path=${folderPath}`,
-    "--output=json",
-    "--silent",
-  ];
-  if (token) {
-    args.push(`--token=${token}`);
-  }
-  const result = run("infisical", args, INFISICAL_ENV);
-
-  if (result.status !== 0) {
-    // An empty folder can return a non-zero status or "null".
-    const stderr = (result.stderr || "").trim();
-    if (stderr && !stderr.toLowerCase().includes("no secrets")) {
-      throw new Error(`infisical secrets ${folderPath} exited ${result.status}: ${stderr}`);
-    }
-  }
-
-  const stdout = (result.stdout || "").trim();
-  if (!stdout || stdout === "null") return [];
-  try {
-    const parsed = JSON.parse(stdout);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (err) {
-    throw new Error(`infisical secrets ${folderPath} returned invalid JSON: ${err.message}`);
-  }
-}
-
-function getSecret(secrets, key) {
-  const found = secrets.find((s) => s.secretKey === key);
-  return found ? found.secretValue : undefined;
-}
-
 function setGitHubSecret(key, value) {
   if (DRY_RUN) {
     log("[dry-run] would set GitHub secret", key);
     return;
   }
-  // `gh secret set KEY --body value` is the simplest cross-platform form.
   const result = run("gh", ["secret", "set", key, "--repo", REPO, "--body", value]);
   if (result.status !== 0) {
     throw new Error(`gh secret set ${key} failed: ${(result.stderr || "").trim()}`);
@@ -171,17 +152,14 @@ async function main() {
   // ---------------------------------------------------------------------------
   // 2. Read Infisical
   // ---------------------------------------------------------------------------
-  const rootSecrets = infisicalSecrets("/", token);
-  const sharedSecrets = infisicalSecrets("/arh-family-lab", token);
-  const familyHubSecrets = infisicalSecrets("/arh-family-lab/family-hub", token);
-  const kidsTerminalSecrets = infisicalSecrets("/arh-family-lab/kids-terminal", token);
-  const studioSecrets = infisicalSecrets("/arh-family-lab/studio", token);
+  const rootSecrets = await fetchInfisicalSecrets(token, "/");
+  const sharedSecrets = await fetchInfisicalSecrets(token, "/arh-family-lab");
+  const familyHubSecrets = await fetchInfisicalSecrets(token, "/arh-family-lab/family-hub");
+  const kidsTerminalSecrets = await fetchInfisicalSecrets(token, "/arh-family-lab/kids-terminal");
+  const studioSecrets = await fetchInfisicalSecrets(token, "/arh-family-lab/studio");
 
   const githubPat = getSecret(rootSecrets, "GITHUB_PAT");
 
-  // Firebase API key and URL are logically shared across apps (same Firebase
-  // project / database). They are stored in each app folder in Infisical, so we
-  // read them from family-hub and validate that kids-terminal matches.
   const firebaseApiKey =
     getSecret(sharedSecrets, "FIREBASE_API_KEY") || getSecret(familyHubSecrets, "FIREBASE_API_KEY");
   const firebaseUrl =
@@ -197,7 +175,7 @@ async function main() {
   const rootStudio = getSecret(studioSecrets, "FIREBASE_ROOT") || "studio";
 
   // ---------------------------------------------------------------------------
-  // 2. Validate
+  // 3. Validate
   // ---------------------------------------------------------------------------
   const missing = [];
   if (!githubPat) missing.push("GITHUB_PAT at /");
@@ -232,10 +210,8 @@ async function main() {
   }
 
   // ---------------------------------------------------------------------------
-  // 3. GitHub secrets
+  // 4. GitHub secrets
   // ---------------------------------------------------------------------------
-  // GitHub forbids secret names that start with GITHUB_, so the Infisical key
-  // GITHUB_PAT is mapped to GH_PAT in the GitHub repository.
   const githubPairs = [
     ["FIREBASE_API_KEY", firebaseApiKey],
     ["FIREBASE_URL", firebaseUrl],
@@ -254,7 +230,7 @@ async function main() {
   }
 
   // ---------------------------------------------------------------------------
-  // 4. Cloudflare Pages secrets (no GH_PAT — Pages runtime does not need it)
+  // 5. Cloudflare Pages secrets (no GH_PAT — Pages runtime does not need it)
   // ---------------------------------------------------------------------------
   const cfPairs = [
     ["FIREBASE_API_KEY", firebaseApiKey],
