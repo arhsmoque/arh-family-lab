@@ -6,9 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
@@ -16,9 +14,6 @@ concurrency:
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -37,15 +32,13 @@ jobs:
       - name: Prepare deploy bundle
         run: |
           mkdir -p dist
-          # Copy the static surface of the site, mirroring repo root paths.
           cp -r index.html clinical.html AGENTS.md README.md SECRETS.md shared apps previews clinical dist/
-          # Drop heavy downloads that bloat the Pages artifact; the landing links stay.
           find dist/clinical -type d -name downloads -exec rm -rf {} +
-          # Disable Jekyll (not used, but avoids any surprises).
           touch dist/.nojekyll
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: 'dist'
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          force_orphan: true
