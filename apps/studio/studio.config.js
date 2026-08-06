@@ -27,7 +27,10 @@ const STUDIO_APP_CONFIG = {
     root: "studio",
   },
   auth: {
-    apiKey: "AIzaSyD7PzpBG9fk3BGM96vYOyKDaaOe3FDFnnY",
+    // Placeholder — the real key is injected at deploy/build time via
+    // apps/studio/studio.config.local.js (gitignored), generated from
+    // GitHub/Cloudflare secrets by scripts/build-studio-config.mjs.
+    apiKey: "REPLACE_WITH_FIREBASE_API_KEY",
   },
   security: {
     // Registration gate. false = OPEN: anyone can sign up and get a
