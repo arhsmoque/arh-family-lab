@@ -1,5 +1,5 @@
 // Family Hub — basic service worker for offline shell caching
-const CACHE_NAME = 'family-hub-v2';
+const CACHE_NAME = 'family-hub-v1';
 const ASSETS = [
   '/apps/family-hub/',
   '/apps/family-hub/index.html',
