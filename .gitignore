@@ -9,3 +9,6 @@ server.lock
 
 # Studio app local config override, if ever used — never commit
 apps/studio/studio.config.local.js
+
+# Family Hub local config override — generated from infisical
+apps/family-hub/family.config.local.js

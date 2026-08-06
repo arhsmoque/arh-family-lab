@@ -2,7 +2,6 @@
 @import "../../shared/theme.css";
 
 :root {
-  /* Default Warm Theme Tokens */
   --color-primary: #D97706;
   --color-primary-light: #FEF3C7;
   --color-bg: #FFFBEB;
@@ -11,45 +10,42 @@
   --color-border: #FDE68A;
   --color-text-main: #1E293B;
   --color-text-muted: #64748B;
-  
   --color-success: #10B981;
   --color-success-light: #ECFDF5;
   --color-warning: #F59E0B;
   --color-warning-light: #FFFBEB;
   --color-danger: #EF4444;
+  --color-danger-light: #FEF2F2;
 
-  /* Typography Scale (visual-design-foundations.md) */
   --font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: 'Playfair Display', Georgia, serif;
-  
-  --font-size-xs: 0.75rem;   /* 12px */
-  --font-size-sm: 0.875rem;  /* 14px */
-  --font-size-base: 1rem;    /* 16px */
-  --font-size-lg: 1.125rem;  /* 18px */
-  --font-size-xl: 1.25rem;   /* 20px */
-  --font-size-2xl: 1.5rem;   /* 24px */
-  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
 
-  /* Spacing Scale (8-point grid) */
-  --space-1: 0.25rem; /* 4px */
-  --space-2: 0.5rem;  /* 8px */
-  --space-3: 0.75rem; /* 12px */
-  --space-4: 1rem;    /* 16px */
-  --space-6: 1.5rem;  /* 24px */
-  --space-8: 2rem;    /* 32px */
-  
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+
   --touch-min-adult: 48px;
   --touch-min-child: 64px;
   --radius-lg: 16px;
   --radius-md: 12px;
   --radius-full: 9999px;
-  
+
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-/* Theme Override Data Attributes */
 [data-theme="warm"] {
   --color-primary: #D97706;
   --color-primary-light: #FEF3C7;
@@ -94,12 +90,7 @@
   --color-text-muted: #6B7280;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
 body {
   font-family: var(--font-family);
@@ -112,7 +103,6 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Header & Status Bar */
 header.app-header {
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
@@ -154,10 +144,24 @@ header.app-header {
   border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
+.status-badge .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
 .status-badge.offline {
   background: var(--color-warning-light);
   color: var(--color-warning);
   border-color: rgba(245, 158, 11, 0.2);
+}
+
+.status-badge.syncing {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  border-color: rgba(217, 119, 6, 0.2);
 }
 
 .btn-icon {
@@ -175,12 +179,8 @@ header.app-header {
   transition: transform 0.1s ease, background-color 0.15s ease;
 }
 
-.btn-icon:active {
-  transform: scale(0.95);
-  background: var(--color-primary-light);
-}
+.btn-icon:active { transform: scale(0.95); background: var(--color-primary-light); }
 
-/* Main Container */
 main.app-viewport {
   max-width: 1024px;
   width: 100%;
@@ -189,7 +189,6 @@ main.app-viewport {
   flex: 1;
 }
 
-/* Grid & Layouts */
 .grid-dashboard {
   display: grid;
   grid-template-columns: 1fr 340px;
@@ -197,19 +196,18 @@ main.app-viewport {
 }
 
 @media (max-width: 840px) {
-  .grid-dashboard {
-    grid-template-columns: 1fr;
-  }
+  .grid-dashboard { grid-template-columns: 1fr; }
+  header.app-header { padding: var(--space-3) var(--space-4); }
+  main.app-viewport { padding: var(--space-4); }
 }
 
-/* Cards */
 .card {
   background: var(--color-card);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border);
-  padding: var(--space-5, 20px);
+  padding: var(--space-5);
   box-shadow: var(--shadow-sm);
-  margin-bottom: var(--space-5, 20px);
+  margin-bottom: var(--space-5);
 }
 
 .card-header {
@@ -228,7 +226,18 @@ main.app-viewport {
   gap: var(--space-2);
 }
 
-/* Member Avatars Row */
+.card-kicker {
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  color: var(--color-primary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+}
+
+.muted { color: var(--color-text-muted); }
+.empty-state { padding: var(--space-4) 0; }
+
 .members-row {
   display: flex;
   gap: var(--space-3);
@@ -258,21 +267,10 @@ main.app-viewport {
   box-shadow: var(--shadow-md);
 }
 
-.member-avatar {
-  font-size: 28px;
-}
+.member-avatar { font-size: 28px; }
+.member-info .name { font-weight: 700; font-size: var(--font-size-sm); }
+.member-info .meta { font-size: var(--font-size-xs); color: var(--color-text-muted); }
 
-.member-info .name {
-  font-weight: 700;
-  font-size: var(--font-size-sm);
-}
-
-.member-info .meta {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
-}
-
-/* Task Item (3-Tap Child Friendly) */
 .task-item {
   min-height: var(--touch-min-child);
   background: var(--color-surface);
@@ -288,14 +286,8 @@ main.app-viewport {
   user-select: none;
 }
 
-.task-item:active {
-  transform: scale(0.98);
-}
-
-.task-item.completed {
-  background: var(--color-success-light);
-  border-color: rgba(16, 185, 129, 0.4);
-}
+.task-item:active { transform: scale(0.98); }
+.task-item.completed { background: var(--color-success-light); border-color: rgba(16, 185, 129, 0.4); }
 
 .task-checkbox {
   width: 32px;
@@ -310,25 +302,10 @@ main.app-viewport {
   transition: all 0.15s ease;
 }
 
-.task-item.completed .task-checkbox {
-  background: var(--color-success);
-  border-color: var(--color-success);
-}
-
-.task-content {
-  flex: 1;
-}
-
-.task-title {
-  font-weight: 600;
-  font-size: var(--font-size-base);
-}
-
-.task-item.completed .task-title {
-  text-decoration: line-through;
-  color: var(--color-text-muted);
-}
-
+.task-item.completed .task-checkbox { background: var(--color-success); border-color: var(--color-success); }
+.task-content { flex: 1; }
+.task-title { font-weight: 600; font-size: var(--font-size-base); }
+.task-item.completed .task-title { text-decoration: line-through; color: var(--color-text-muted); }
 .task-tag {
   font-size: var(--font-size-xs);
   font-weight: 700;
@@ -339,10 +316,10 @@ main.app-viewport {
   color: var(--color-primary);
 }
 
-/* Checklist Item */
-.checklist-card {
-  border-left: 4px solid var(--color-primary);
-}
+.checklist-card { border-left: 4px solid var(--color-primary); }
+.checklist-block { margin-bottom: var(--space-4); }
+.checklist-block:last-child { margin-bottom: 0; }
+.checklist-title { font-weight: 700; font-size: var(--font-size-base); margin-bottom: var(--space-2); }
 
 .checklist-row {
   min-height: var(--touch-min-adult);
@@ -354,11 +331,10 @@ main.app-viewport {
   cursor: pointer;
 }
 
-.checklist-row:last-child {
-  border-bottom: none;
-}
+.checklist-row:last-child { border-bottom: none; }
+.checklist-row input[type="checkbox"] { width: 22px; height: 22px; cursor: pointer; }
+.checklist-row .struck { text-decoration: line-through; color: var(--color-text-muted); }
 
-/* Navigation Bar (Bottom Sticky for iPad) */
 nav.app-nav {
   background: var(--color-surface);
   border-top: 1px solid var(--color-border);
@@ -386,22 +362,12 @@ nav.app-nav {
   transition: color 0.15s ease, background 0.15s ease;
 }
 
-.nav-item.active {
-  color: var(--color-primary);
-  background: var(--color-primary-light);
-}
+.nav-item.active { color: var(--color-primary); background: var(--color-primary-light); }
+.nav-icon { font-size: 20px; }
 
-.nav-icon {
-  font-size: 20px;
-}
-
-/* Modals */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(15, 23, 42, 0.6);
   backdrop-filter: blur(4px);
   display: flex;
@@ -413,10 +379,7 @@ nav.app-nav {
   transition: opacity 0.2s ease;
 }
 
-.modal-overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
 
 .pin-modal {
   background: var(--color-surface);
@@ -430,16 +393,8 @@ nav.app-nav {
   border: 1px solid var(--color-border);
 }
 
-.pin-modal h3 {
-  font-size: var(--font-size-xl);
-  margin-bottom: 8px;
-}
-
-.pin-modal p {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-  margin-bottom: 20px;
-}
+.pin-modal h3 { font-size: var(--font-size-xl); margin-bottom: 8px; }
+.pin-modal p { color: var(--color-text-muted); font-size: var(--font-size-sm); margin-bottom: 20px; }
 
 .pin-display {
   display: flex;
@@ -447,6 +402,8 @@ nav.app-nav {
   gap: 12px;
   margin-bottom: 24px;
 }
+
+.pin-display.large .pin-dot { width: 24px; height: 24px; }
 
 .pin-dot {
   width: 16px;
@@ -456,10 +413,7 @@ nav.app-nav {
   background: transparent;
 }
 
-.pin-dot.filled {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-}
+.pin-dot.filled { background: var(--color-primary); border-color: var(--color-primary); }
 
 .pin-keypad {
   display: grid;
@@ -482,13 +436,8 @@ nav.app-nav {
   transition: transform 0.1s ease, background 0.1s ease;
 }
 
-.pin-key:active {
-  transform: scale(0.94);
-  background: var(--color-primary-light);
-  color: var(--color-primary);
-}
+.pin-key:active { transform: scale(0.94); background: var(--color-primary-light); color: var(--color-primary); }
 
-/* Theme Picker Cards */
 .theme-picker-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -505,9 +454,181 @@ nav.app-nav {
   align-items: center;
   gap: 10px;
   transition: all 0.15s ease;
+  text-align: left;
 }
 
-.theme-card:active, .theme-card.active {
-  border-color: var(--color-primary);
+.theme-card span { font-size: 24px; }
+.theme-card div div { font-weight: 700; font-size: 14px; }
+.theme-card div small { font-size: 11px; color: var(--color-text-muted); }
+.theme-card:active, .theme-card.active { border-color: var(--color-primary); background: var(--color-primary-light); }
+
+/* Forms & auth */
+.centered-card {
+  max-width: 420px;
+  margin: 10vh auto 0;
+  text-align: center;
+}
+
+.centered-card h2 { font-family: var(--font-display); color: var(--color-primary); margin-bottom: var(--space-2); }
+.centered-card p { color: var(--color-text-muted); margin-bottom: var(--space-6); }
+
+.form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  text-align: left;
+}
+
+.form-stack label {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.form-stack input[type="email"],
+.form-stack input[type="password"],
+.form-stack input[type="text"] {
+  min-height: var(--touch-min-adult);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-base);
+  background: var(--color-surface);
+  color: var(--color-text-main);
+}
+
+.form-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.btn-primary, .btn-secondary, .btn-danger, .btn-text {
+  min-height: var(--touch-min-adult);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+  flex: 1;
+}
+
+.btn-primary:active { transform: scale(0.98); filter: brightness(0.95); }
+
+.btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-text-main);
+  border-color: var(--color-border);
+}
+
+.btn-secondary:active { background: var(--color-primary-light); }
+
+.btn-danger {
+  background: var(--color-danger-light);
+  color: var(--color-danger);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.btn-text {
+  background: transparent;
+  color: var(--color-primary);
+  padding: var(--space-2) var(--space-3);
+  min-height: auto;
+  font-size: var(--font-size-sm);
+}
+
+.btn-small {
+  min-height: 36px;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+.form-error {
+  color: var(--color-danger);
+  font-size: var(--font-size-sm);
+  min-height: 20px;
+  margin-top: var(--space-3);
+}
+
+/* Family grid */
+.family-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-4);
+}
+
+.family-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-4);
+  text-align: center;
+  position: relative;
+}
+
+.family-avatar { font-size: 48px; margin-bottom: var(--space-2); }
+.family-card h3 { font-size: var(--font-size-lg); margin-bottom: 4px; }
+.family-card .capitalize { text-transform: capitalize; }
+.family-card .btn-delete {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  opacity: 0.6;
+}
+
+/* Events list */
+.events-list { display: flex; flex-direction: column; gap: var(--space-3); }
+.event-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.event-card { border-left: 4px solid var(--color-primary); }
+
+/* Settings */
+.settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.insight-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.insight-list li {
+  padding: var(--space-3);
   background: var(--color-primary-light);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+}
+
+.setting-label {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  margin-top: var(--space-2);
+}
+
+.setting-select {
+  min-height: var(--touch-min-adult);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-base);
+  background: var(--color-surface);
+  color: var(--color-text-main);
 }

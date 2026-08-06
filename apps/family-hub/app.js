@@ -1,119 +1,346 @@
-// Family Hub Main Controller Application
+// Family Hub — main application controller
 (function () {
   'use strict';
 
-  // Services & State
   const store = window.FamilyHubStore;
+  const auth = window.FamilyHubAuth;
   const security = window.FamilyHubSecurity;
-  const rest = window.FamilyHubRest;
+  const audit = window.FamilyHubAudit;
   const audio = window.FamilyHubAudio;
 
   const state = {
     activeTab: 'today',
     selectedMemberId: null,
     pinInput: '',
-    lang: localStorage.getItem('familyHub_lang') || 'en'
+    parentUnlocked: false,
+    lang: localStorage.getItem('familyHub_lang') || 'en',
+    idleTimer: null,
+    lockTimer: null,
+    session: null
   };
 
-  // DOM Elements
-  const el = {
-    body: document.body,
-    viewContainer: document.getElementById('viewContainer'),
-    syncBadge: document.getElementById('syncBadge'),
-    syncStatusText: document.getElementById('syncStatusText'),
-    pinModal: document.getElementById('pinModal'),
-    themeModal: document.getElementById('themeModal'),
-    pinDots: document.querySelectorAll('.pin-dot'),
-    btnUnlock: document.getElementById('btnUnlockParent'),
-    btnThemeToggle: document.getElementById('btnThemeToggle'),
-    btnLangToggle: document.getElementById('btnLangToggle'),
-    navItems: document.querySelectorAll('.nav-item')
-  };
-
-  // Language Dictionary
   const i18n = {
     en: {
-      today: "Today",
-      family: "Family Profiles",
-      calendar: "Calendar",
-      parent: "Parent Mode",
-      nextEvent: "NEXT ACTIVITY",
-      familyStatus: "FAMILY MEMBERS",
+      today: 'Today',
+      family: 'Family',
+      calendar: 'Calendar',
+      parent: 'Parent',
+      setup: 'Set up this household',
+      signIn: 'Sign in',
+      signUp: 'Create account',
+      email: 'Email',
+      password: 'Password',
+      nextEvent: 'NEXT ACTIVITY',
+      familyStatus: 'FAMILY MEMBERS',
       todayTasks: "TODAY'S TASKS",
-      checklists: "LEAVING HOME CHECKLISTS",
-      savedNow: "Saved just now",
-      enterPin: "Enter Parent PIN",
-      pinPrompt: "Protected actions require parent PIN unlock.",
-      selectTheme: "Select Visual Profile Theme"
+      checklists: 'LEAVING HOME CHECKLISTS',
+      savedNow: 'Saved just now',
+      saving: 'Saving...',
+      offline: 'Offline',
+      unlocking: 'Unlock',
+      pinPrompt: 'Enter parent PIN',
+      pinSetupPrompt: 'Set a 4-digit parent PIN',
+      addMember: 'Add member',
+      addTask: 'Add task',
+      addChecklist: 'Add checklist',
+      addEvent: 'Add event',
+      settings: 'Settings',
+      signOut: 'Sign out',
+      exportData: 'Export data',
+      clearData: 'Clear local data',
+      noTasks: 'No remaining tasks for today!',
+      noEvents: 'No upcoming events.',
+      welcome: 'Welcome to Family Hub',
+      welcomeSub: 'Keep family plans, child tasks and leaving-home checklists together.',
+      householdName: 'Household name',
+      continue: 'Continue',
+      cancel: 'Cancel',
+      delete: 'Delete',
+      edit: 'Edit',
+      member: 'Member',
+      role: 'Role',
+      child: 'Child',
+      adult: 'Adult',
+      owner: 'Owner',
+      insights: 'Household Insights'
     },
     bm: {
-      today: "Hari Ini",
-      family: "Profil Keluarga",
-      calendar: "Kalendar",
-      parent: "Mod Ibu Bapa",
-      nextEvent: "AKTIVITI SETERUSNYA",
-      familyStatus: "AHLI KELUARGA",
-      todayTasks: "TUGASAN HARI INI",
-      checklists: "SENARAI SEMAK KELUAR RUMAH",
-      savedNow: "Disimpan sebentar tadi",
-      enterPin: "Masukkan PIN Ibu Bapa",
-      pinPrompt: "Tindakan dilindungi memerlukan PIN ibu bapa.",
-      selectTheme: "Pilih Tema Profil Visual"
+      today: 'Hari Ini',
+      family: 'Keluarga',
+      calendar: 'Kalendar',
+      parent: 'Ibu Bapa',
+      setup: 'Sediakan isi rumah ini',
+      signIn: 'Log masuk',
+      signUp: 'Cipta akaun',
+      email: 'Emel',
+      password: 'Kata laluan',
+      nextEvent: 'AKTIVITI SETERUSNYA',
+      familyStatus: 'AHLI KELUARGA',
+      todayTasks: 'TUGASAN HARI INI',
+      checklists: 'SENARAI SEMAK KELUAR RUMAH',
+      savedNow: 'Disimpan sebentar tadi',
+      saving: 'Menyimpan...',
+      offline: 'Luar talian',
+      unlocking: 'Buka kunci',
+      pinPrompt: 'Masukkan PIN ibu bapa',
+      pinSetupPrompt: 'Tetapkan PIN 4 digit ibu bapa',
+      addMember: 'Tambah ahli',
+      addTask: 'Tambah tugasan',
+      addChecklist: 'Tambah senarai semak',
+      addEvent: 'Tambah acara',
+      settings: 'Tetapan',
+      signOut: 'Log keluar',
+      exportData: 'Eksport data',
+      clearData: 'Padam data tempatan',
+      noTasks: 'Tiada tugasan yang tinggal untuk hari ini!',
+      noEvents: 'Tiada acara akan datang.',
+      welcome: 'Selamat datang ke Family Hub',
+      welcomeSub: 'Simpan pelan keluarga, tugasan kanak-kanak dan senarai semak keluar rumah di satu tempat.',
+      householdName: 'Nama isi rumah',
+      continue: 'Teruskan',
+      cancel: 'Batal',
+      delete: 'Padam',
+      edit: 'Sunting',
+      member: 'Ahli',
+      role: 'Peranan',
+      child: 'Kanak-kanak',
+      adult: 'Dewasa',
+      owner: 'Pemilik',
+      insights: 'Pencerahan Isi Rumah'
     }
   };
 
   function t(key) {
-    return (i18n[state.lang] && i18n[state.lang][key]) ? i18n[state.lang][key] : key;
+    return (i18n[state.lang] && i18n[state.lang][key]) || i18n.en[key] || key;
   }
 
-  // Theme Manager
-  function applyTheme(themeId) {
-    const activeTheme = themeId || store.getState().household.activeTheme || 'warm';
-    el.body.setAttribute('data-theme', activeTheme);
+  // DOM refs
+  const el = {
+    body: document.body,
+    view: document.getElementById('viewContainer'),
+    nav: document.querySelectorAll('.nav-item'),
+    syncBadge: document.getElementById('syncBadge'),
+    syncText: document.getElementById('syncStatusText'),
+    pinModal: document.getElementById('pinModal'),
+    pinTitle: document.getElementById('pinTitle'),
+    pinSubtitle: document.getElementById('pinSubtitle'),
+    pinDots: document.querySelectorAll('.pin-dot'),
+    btnUnlock: document.getElementById('btnUnlockParent'),
+    btnTheme: document.getElementById('btnThemeToggle'),
+    btnLang: document.getElementById('btnLangToggle'),
+    headerActions: document.querySelector('.header-actions')
+  };
+
+  // ---------- Service worker ----------
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js').catch(err => {
+      console.warn('Service worker registration failed:', err);
+    });
   }
 
-  // Render Views
+  // ---------- Boot ----------
+  async function boot() {
+    applyTheme();
+    updateLangButton();
+
+    if (!auth.isConfigured()) {
+      renderNotConfigured();
+      return;
+    }
+
+    const session = await auth.currentSession();
+    if (!session) {
+      renderAuth();
+      return;
+    }
+
+    await store.init(session);
+    state.session = session;
+
+    if (!store.hasHousehold()) {
+      renderHouseholdSetup();
+      return;
+    }
+
+    if (!security.hasPin()) {
+      renderPinSetup();
+      return;
+    }
+
+    startIdleTimers();
+    renderTodayView();
+    audit.log('session_start', 'system', { sessionId: session.uid.slice(0, 8) + Date.now().toString(36) });
+  }
+
+  // ---------- Rendering ----------
+  function renderNotConfigured() {
+    el.view.innerHTML = `
+      <div class="card centered-card">
+        <h2>⚙️ Family Hub not configured</h2>
+        <p>Firebase is not set up yet. Ask the operator to run the steps in <code>SETUP.md</code>.</p>
+        <p>For local development, generate <code>family.config.local.js</code> from infisical.</p>
+      </div>
+    `;
+    hideNav();
+  }
+
+  function renderAuth() {
+    el.view.innerHTML = `
+      <div class="card centered-card auth-card">
+        <h2>${t('welcome')}</h2>
+        <p>${t('welcomeSub')}</p>
+        <form id="authForm" class="form-stack">
+          <label>${t('email')}</label>
+          <input type="email" id="authEmail" required placeholder="owner@example.com">
+          <label>${t('password')}</label>
+          <input type="password" id="authPassword" required placeholder="••••••••">
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">${t('signIn')}</button>
+            <button type="button" class="btn-secondary" id="authSignUp">${t('signUp')}</button>
+          </div>
+        </form>
+        <p id="authError" class="form-error"></p>
+      </div>
+    `;
+    hideNav();
+
+    document.getElementById('authForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('authEmail').value.trim();
+      const password = document.getElementById('authPassword').value;
+      const errorEl = document.getElementById('authError');
+      try {
+        const session = await auth.signIn(email, password);
+        await store.init(session);
+        state.session = session;
+        routeAfterAuth();
+      } catch (err) {
+        errorEl.textContent = friendlyAuthError(err.message);
+      }
+    });
+
+    document.getElementById('authSignUp').addEventListener('click', async () => {
+      const email = document.getElementById('authEmail').value.trim();
+      const password = document.getElementById('authPassword').value;
+      const errorEl = document.getElementById('authError');
+      if (!email || password.length < 6) {
+        errorEl.textContent = 'Password must be at least 6 characters.';
+        return;
+      }
+      try {
+        const session = await auth.signUp(email, password);
+        await store.init(session);
+        state.session = session;
+        routeAfterAuth();
+      } catch (err) {
+        errorEl.textContent = friendlyAuthError(err.message);
+      }
+    });
+  }
+
+  function friendlyAuthError(msg) {
+    if (msg.includes('INVALID_LOGIN_CREDENTIALS')) return 'Email or password is incorrect.';
+    if (msg.includes('EMAIL_EXISTS')) return 'This email already has an account. Try signing in.';
+    if (msg.includes('TOO_MANY_ATTEMPTS')) return 'Too many attempts. Please wait a moment.';
+    return msg;
+  }
+
+  function routeAfterAuth() {
+    if (!store.hasHousehold()) {
+      renderHouseholdSetup();
+    } else if (!security.hasPin()) {
+      renderPinSetup();
+    } else {
+      showNav();
+      startIdleTimers();
+      renderTodayView();
+    }
+  }
+
+  function renderHouseholdSetup() {
+    el.view.innerHTML = `
+      <div class="card centered-card">
+        <h2>🏡 ${t('setup')}</h2>
+        <p>Let's create your household dashboard.</p>
+        <div class="form-stack">
+          <label>${t('householdName')}</label>
+          <input type="text" id="householdName" value="Rumah Hilmi" required>
+          <button class="btn-primary" id="btnCreateHousehold">${t('continue')}</button>
+        </div>
+      </div>
+    `;
+    hideNav();
+
+    document.getElementById('btnCreateHousehold').addEventListener('click', () => {
+      const name = document.getElementById('householdName').value.trim();
+      if (!name) return;
+      store.createHousehold(name, state.session);
+      renderPinSetup();
+    });
+  }
+
+  function renderPinSetup() {
+    el.view.innerHTML = `
+      <div class="card centered-card">
+        <h2>🔐 ${t('pinSetupPrompt')}</h2>
+        <p>This PIN unlocks parent mode on this device.</p>
+        <div class="pin-display large">
+          <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+        </div>
+        <div class="pin-keypad">${pinKeys()}</div>
+        <p id="pinError" class="form-error"></p>
+      </div>
+    `;
+    hideNav();
+    bindPinInput('setup');
+  }
+
+  function pinKeys() {
+    const keys = ['1','2','3','4','5','6','7','8','9','clear','0','back'];
+    return keys.map(k => `<button class="pin-key" data-val="${k}">${k === 'clear' ? 'C' : k === 'back' ? '⌫' : k}</button>`).join('');
+  }
+
   function renderTodayView() {
-    const currentState = store.getState();
-    const members = currentState.members || [];
-    const tasks = currentState.tasks || [];
-    const checklists = currentState.checklists || [];
-    const events = currentState.events || [];
-    const nextEvent = events[0] || { title: "School Departure", time: "7:15 AM" };
+    const st = store.getState();
+    const members = Object.values(st.members).sort((a, b) => a.order - b.order);
+    const tasks = Object.values(st.tasks);
+    const checklists = Object.values(st.checklists);
+    const events = Object.values(st.events).sort((a, b) => (a.time || '').localeCompare(b.time || ''));
+
+    const now = new Date();
+    const nextEvent = events.find(e => (e.date || '') >= now.toISOString().slice(0, 10)) || events[0];
 
     const selectedMember = members.find(m => m.id === state.selectedMemberId);
-    const filteredTasks = selectedMember 
+    const filteredTasks = selectedMember
       ? tasks.filter(t => t.memberId === selectedMember.id)
       : tasks;
 
-    el.viewContainer.innerHTML = `
+    el.view.innerHTML = `
       <div class="grid-dashboard">
-        <!-- Main Column -->
         <div class="main-column">
-          <!-- Next Event Card -->
-          <div class="card" style="border-left: 4px solid var(--color-primary)">
-            <p style="font-size:12px;font-weight:800;color:var(--color-primary);letter-spacing:0.1em;margin-bottom:6px">${t('nextEvent')}</p>
-            <h2 style="font-size:22px;font-weight:700">${nextEvent.title}</h2>
-            <p style="color:var(--color-text-muted);font-size:14px;margin-top:4px">⏰ ${nextEvent.time} • ${nextEvent.member || 'All'}</p>
-          </div>
+          ${nextEvent ? `
+            <div class="card event-card">
+              <p class="card-kicker">${t('nextEvent')}</p>
+              <h2>${nextEvent.title}</h2>
+              <p class="muted">⏰ ${nextEvent.time} • ${nextEvent.member}</p>
+            </div>
+          ` : ''}
 
-          <!-- Family Members Avatars -->
           <div class="card">
             <div class="card-header">
               <span class="card-title">👨‍👩‍👧‍👦 ${t('familyStatus')}</span>
-              ${state.selectedMemberId ? `<button class="btn-icon" id="btnClearFilter" style="font-size:12px;padding:4px 10px;height:auto">Show All</button>` : ''}
+              ${state.selectedMemberId ? `<button class="btn-text" id="btnClearFilter">Show all</button>` : ''}
             </div>
             <div class="members-row">
               ${members.map(m => {
-                const memberTasks = tasks.filter(tk => tk.memberId === m.id);
-                const pendingCount = memberTasks.filter(tk => !tk.completed).length;
-                const isSelected = state.selectedMemberId === m.id;
+                const pending = tasks.filter(t => t.memberId === m.id && !t.completed).length;
+                const active = state.selectedMemberId === m.id;
                 return `
-                  <div class="member-chip ${isSelected ? 'active' : ''}" data-member-id="${m.id}">
+                  <div class="member-chip ${active ? 'active' : ''}" data-member-id="${m.id}">
                     <span class="member-avatar">${m.avatar}</span>
                     <div class="member-info">
                       <div class="name">${m.name}</div>
-                      <div class="meta">${pendingCount === 0 ? '✓ Done' : pendingCount + ' tasks'}</div>
+                      <div class="meta">${pending === 0 ? '✓ Done' : pending + ' tasks'}</div>
                     </div>
                   </div>
                 `;
@@ -121,40 +348,38 @@
             </div>
           </div>
 
-          <!-- Tasks Card (3-Tap Child Interactive) -->
           <div class="card">
             <div class="card-header">
               <span class="card-title">📋 ${t('todayTasks')} ${selectedMember ? '— ' + selectedMember.name : ''}</span>
             </div>
             <div class="tasks-list">
-              ${filteredTasks.length === 0 ? '<p style="color:var(--color-text-muted);padding:12px 0">No remaining tasks for today! 🎉</p>' : ''}
-              ${filteredTasks.map(tk => `
-                <div class="task-item ${tk.completed ? 'completed' : ''}" data-task-id="${tk.id}">
-                  <div class="task-checkbox">${tk.completed ? '✓' : ''}</div>
+              ${filteredTasks.length === 0 ? `<p class="muted empty-state">${t('noTasks')} 🎉</p>` : ''}
+              ${filteredTasks.map(t => `
+                <div class="task-item ${t.completed ? 'completed' : ''}" data-task-id="${t.id}">
+                  <div class="task-checkbox">${t.completed ? '✓' : ''}</div>
                   <div class="task-content">
-                    <div class="task-title">${tk.title}</div>
+                    <div class="task-title">${t.title}</div>
                   </div>
-                  <span class="task-tag">${tk.category}</span>
+                  <span class="task-tag">${t.category}</span>
                 </div>
               `).join('')}
             </div>
           </div>
         </div>
 
-        <!-- Sidebar Column -->
         <div class="sidebar-column">
-          <!-- Leaving Home Checklists -->
           <div class="card checklist-card">
             <div class="card-header">
               <span class="card-title">🎒 ${t('checklists')}</span>
             </div>
+            ${checklists.length === 0 ? `<p class="muted empty-state">No checklists yet.</p>` : ''}
             ${checklists.map(cl => `
-              <div style="margin-bottom:16px">
-                <div style="font-weight:700;font-size:15px;margin-bottom:8px">${cl.icon} ${cl.title}</div>
-                ${cl.items.map(item => `
+              <div class="checklist-block">
+                <div class="checklist-title">${cl.icon} ${cl.title}</div>
+                ${Object.values(cl.items || {}).map(item => `
                   <div class="checklist-row" data-checklist-id="${cl.id}" data-item-id="${item.id}">
-                    <input type="checkbox" ${item.checked ? 'checked' : ''} style="width:20px;height:20px;cursor:pointer">
-                    <span style="font-size:14px;${item.checked ? 'text-decoration:line-through;color:var(--color-text-muted)' : ''}">${item.text}</span>
+                    <input type="checkbox" ${item.checked ? 'checked' : ''}>
+                    <span class="${item.checked ? 'struck' : ''}">${item.text}</span>
                   </div>
                 `).join('')}
               </div>
@@ -164,58 +389,67 @@
       </div>
     `;
 
-    attachEvents();
+    attachTodayEvents();
   }
 
   function renderFamilyView() {
-    const currentState = store.getState();
-    const members = currentState.members || [];
-    const isUnlocked = security.isUnlocked();
+    const st = store.getState();
+    const members = Object.values(st.members).sort((a, b) => a.order - b.order);
 
-    el.viewContainer.innerHTML = `
+    el.view.innerHTML = `
       <div class="card">
         <div class="card-header">
           <span class="card-title">👨‍👩‍👧‍👦 ${t('family')}</span>
-          ${isUnlocked ? '<button class="btn-icon" id="btnAddMember" style="font-size:14px;padding:4px 12px;height:auto">+ Add Member</button>' : ''}
+          <button class="btn-primary btn-small" id="btnAddMember">+ ${t('addMember')}</button>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:16px">
+        <div class="family-grid">
           ${members.map(m => `
-            <div class="card" style="text-align:center;margin-bottom:0">
-              <div style="font-size:48px;margin-bottom:8px">${m.avatar}</div>
-              <h3 style="font-size:18px">${m.name}</h3>
-              <p style="color:var(--color-text-muted);font-size:13px;text-transform:capitalize">${m.role}</p>
+            <div class="family-card" data-member-id="${m.id}">
+              <div class="family-avatar">${m.avatar}</div>
+              <h3>${m.name}</h3>
+              <p class="muted capitalize">${t(m.role)}</p>
+              <button class="btn-text btn-delete" data-action="delete-member" data-id="${m.id}">🗑</button>
             </div>
           `).join('')}
         </div>
       </div>
     `;
 
-    const btnAdd = document.getElementById('btnAddMember');
-    if (btnAdd) {
-      btnAdd.addEventListener('click', () => {
-        const name = prompt('Enter member name:');
-        if (name) {
-          store.addMember({ name });
-          renderFamilyView();
-        }
+    document.getElementById('btnAddMember').addEventListener('click', () => {
+      const name = prompt(t('addMember') + ' name:');
+      if (!name) return;
+      const avatar = prompt('Avatar emoji (e.g. 👦):') || '👤';
+      const role = confirm('Is this an adult? (Cancel = child)') ? 'adult' : 'child';
+      store.addMember({ name, avatar, role });
+      renderFamilyView();
+    });
+
+    document.querySelectorAll('[data-action="delete-member"]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        if (confirm('Remove this member?')) store.removeMember(id);
+        renderFamilyView();
       });
-    }
+    });
   }
 
   function renderCalendarView() {
-    const currentState = store.getState();
-    const events = currentState.events || [];
-    el.viewContainer.innerHTML = `
+    const st = store.getState();
+    const events = Object.values(st.events).sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+
+    el.view.innerHTML = `
       <div class="card">
         <div class="card-header">
           <span class="card-title">📅 ${t('calendar')}</span>
+          <button class="btn-primary btn-small" id="btnAddEvent">+ ${t('addEvent')}</button>
         </div>
-        <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="events-list">
+          ${events.length === 0 ? `<p class="muted empty-state">${t('noEvents')}</p>` : ''}
           ${events.map(e => `
-            <div style="padding:12px;border:1px solid var(--color-border);border-radius:var(--radius-md);display:flex;justify-content:space-between;align-items:center">
+            <div class="event-row">
               <div>
-                <strong style="font-size:16px">${e.title}</strong>
-                <p style="color:var(--color-text-muted);font-size:13px">⏰ ${e.time} • ${e.member}</p>
+                <strong>${e.title}</strong>
+                <p class="muted">${e.date} • ${e.time} • ${e.member}</p>
               </div>
               <span class="task-tag">${e.badge}</span>
             </div>
@@ -223,170 +457,418 @@
         </div>
       </div>
     `;
+
+    document.getElementById('btnAddEvent').addEventListener('click', () => {
+      const title = prompt('Event title:');
+      if (!title) return;
+      const time = prompt('Time (e.g. 7:15 AM):') || '12:00 PM';
+      const member = prompt('Who is this for?') || 'All';
+      store.addEvent({ title, time, member });
+      renderCalendarView();
+    });
   }
 
-  function attachEvents() {
-    // Member chip selection
+  function renderParentView() {
+    const st = store.getState();
+    const insights = audit.getInsights(7);
+
+    el.view.innerHTML = `
+      <div class="grid-dashboard">
+        <div class="main-column">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">🔐 ${t('settings')}</span>
+            </div>
+            <div class="settings-list">
+              <button class="btn-secondary" id="btnAddTask">+ ${t('addTask')}</button>
+              <button class="btn-secondary" id="btnAddChecklist">+ ${t('addChecklist')}</button>
+              <button class="btn-secondary" id="btnChangePin">Change PIN</button>
+              <label class="setting-label">Auto-lock after inactivity</label>
+              <select class="setting-select" id="selAutoLock">
+                <option value="60" ${st.config.autoLockSeconds === 60 ? 'selected' : ''}>1 minute</option>
+                <option value="120" ${st.config.autoLockSeconds === 120 ? 'selected' : ''}>2 minutes</option>
+                <option value="300" ${st.config.autoLockSeconds === 300 ? 'selected' : ''}>5 minutes</option>
+              </select>
+              <button class="btn-secondary" id="btnExport">${t('exportData')}</button>
+              <button class="btn-danger" id="btnSignOut">${t('signOut')}</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">📊 ${t('insights')}</span>
+            </div>
+            <ul class="insight-list">
+              ${insights.pinFailureCount > 0 ? `<li>⚠️ ${insights.pinFailureCount} failed PIN attempts this week</li>` : ''}
+              <li>✅ ${Object.keys(st.tasks).filter(id => st.tasks[id].completed).length} tasks completed</li>
+              <li>📝 ${Object.keys(st.tasks).length} total tasks</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('btnAddTask').addEventListener('click', () => {
+      const members = Object.values(store.getState().members);
+      if (members.length === 0) { alert('Add a family member first.'); return; }
+      const title = prompt('Task title:');
+      if (!title) return;
+      const memberNames = members.map((m, i) => `${i + 1}. ${m.name}`).join('\n');
+      const choice = prompt(`Assign to:\n${memberNames}\n(enter number):`);
+      const member = members[Number(choice) - 1];
+      if (!member) return;
+      store.addTask({ memberId: member.id, title });
+      alert('Task added.');
+    });
+
+    document.getElementById('btnAddChecklist').addEventListener('click', () => {
+      const title = prompt('Checklist title:');
+      if (!title) return;
+      const raw = prompt('Items, one per line:');
+      const items = (raw || '').split('\n').filter(Boolean).map(text => ({ text }));
+      store.addChecklist({ title, icon: '🎒', items });
+      alert('Checklist added.');
+    });
+
+    document.getElementById('btnExport').addEventListener('click', () => {
+      const blob = new Blob([audit.exportJson()], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `family-hub-log-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('btnChangePin').addEventListener('click', async () => {
+      const current = prompt('Enter current PIN:');
+      if (current === null) return;
+      const ok = await security.verifyPin(current);
+      if (!ok) { alert('Incorrect PIN.'); return; }
+      const next = prompt('Enter new 4-digit PIN:');
+      if (!next || !/^[0-9]{4,8}$/.test(next)) { alert('PIN must be 4–8 digits.'); return; }
+      const confirm = prompt('Confirm new PIN:');
+      if (next !== confirm) { alert('PINs do not match.'); return; }
+      await security.setPin(next);
+      alert('PIN changed.');
+      audit.log('pin_changed', 'parent', {});
+    });
+
+    document.getElementById('selAutoLock').addEventListener('change', (e) => {
+      store.setAutoLock(Number(e.target.value));
+      startIdleTimers();
+      audit.log('auto_lock_changed', 'parent', { seconds: Number(e.target.value) });
+    });
+
+    document.getElementById('btnSignOut').addEventListener('click', () => {
+      if (confirm('Sign out? You will need your email and password to sign back in.')) {
+        auth.signOut();
+        store.signOut();
+        state.parentUnlocked = false;
+        stopIdleTimers();
+        renderAuth();
+      }
+    });
+  }
+
+  // ---------- Events ----------
+  function attachTodayEvents() {
     document.querySelectorAll('.member-chip').forEach(chip => {
       chip.addEventListener('click', () => {
         audio.playClick();
         const id = chip.getAttribute('data-member-id');
-        state.selectedMemberId = (state.selectedMemberId === id) ? null : id;
+        state.selectedMemberId = state.selectedMemberId === id ? null : id;
+        audit.log('member_selected', 'child', { memberId: id });
         renderTodayView();
       });
     });
 
-    const btnClear = document.getElementById('btnClearFilter');
-    if (btnClear) {
-      btnClear.addEventListener('click', () => {
+    const clearBtn = document.getElementById('btnClearFilter');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
         audio.playClick();
         state.selectedMemberId = null;
         renderTodayView();
       });
     }
 
-    // Task toggle (3-tap child action)
     document.querySelectorAll('.task-item').forEach(item => {
       item.addEventListener('click', () => {
         const taskId = item.getAttribute('data-task-id');
         const task = store.toggleTask(taskId);
-        if (task && task.completed) {
-          audio.playSuccessChime();
-        } else {
-          audio.playClick();
-        }
-        rest.syncData({ tasks: store.getState().tasks });
+        if (task && task.completed) audio.playSuccessChime();
+        else audio.playClick();
         renderTodayView();
       });
     });
 
-    // Checklist item toggle
     document.querySelectorAll('.checklist-row').forEach(row => {
       row.addEventListener('click', () => {
         const checklistId = row.getAttribute('data-checklist-id');
         const itemId = row.getAttribute('data-item-id');
         store.toggleChecklistItem(checklistId, itemId);
         audio.playClick();
-        rest.syncData({ checklists: store.getState().checklists });
         renderTodayView();
       });
     });
   }
 
-  // Navigation Logic
-  el.navItems.forEach(item => {
-    item.addEventListener('click', () => {
-      audio.playClick();
-      const tab = item.getAttribute('data-tab');
-      state.activeTab = tab;
-      
-      el.navItems.forEach(n => n.classList.remove('active'));
-      item.classList.add('active');
+  // ---------- PIN modal ----------
+  let pinMode = 'unlock'; // 'unlock' | 'setup'
+  let pinBuffer = '';
 
-      if (tab === 'today') renderTodayView();
-      else if (tab === 'family') renderFamilyView();
-      else if (tab === 'calendar') renderCalendarView();
-      else if (tab === 'parent') openPinModal();
-    });
-  });
-
-  // PIN Modal Logic
-  function openPinModal() {
-    state.pinInput = '';
+  function openPinModal(mode = 'unlock') {
+    pinMode = mode;
+    pinBuffer = '';
+    el.pinTitle.textContent = mode === 'setup' ? t('pinSetupPrompt') : t('pinPrompt');
+    el.pinSubtitle.textContent = mode === 'setup' ? 'Enter twice to confirm.' : '';
     updatePinDots();
     el.pinModal.classList.add('active');
   }
 
   function closePinModal() {
     el.pinModal.classList.remove('active');
+    pinBuffer = '';
+    updatePinDots();
   }
 
   function updatePinDots() {
-    el.pinDots.forEach((dot, index) => {
-      if (index < state.pinInput.length) {
-        dot.classList.add('filled');
-      } else {
-        dot.classList.remove('filled');
-      }
+    el.pinDots.forEach((dot, i) => {
+      dot.classList.toggle('filled', i < pinBuffer.length);
     });
   }
 
-  document.querySelectorAll('.pin-key').forEach(key => {
-    key.addEventListener('click', async () => {
-      audio.playClick();
-      const val = key.getAttribute('data-val');
-      if (val === 'clear') {
-        state.pinInput = '';
-      } else if (val === 'back') {
-        state.pinInput = state.pinInput.slice(0, -1);
-      } else if (state.pinInput.length < 4) {
-        state.pinInput += val;
-        if (state.pinInput.length === 4) {
-          const targetHash = store.getState().household.parentPinHash;
-          const isOk = await security.verifyPin(state.pinInput, targetHash);
-          if (isOk) {
-            closePinModal();
-            alert('Parent Mode Unlocked!');
-            renderFamilyView();
-          } else {
-            alert('Incorrect PIN. Try 1234');
-            state.pinInput = '';
-          }
-        }
+  let setupPinFirst = '';
+
+  function bindPinInput(mode) {
+    pinMode = mode;
+    pinBuffer = '';
+    setupPinFirst = '';
+    const dots = document.querySelectorAll('#viewContainer .pin-dot');
+    const errorEl = document.getElementById('pinError');
+
+    function updateLocalDots() {
+      dots.forEach((dot, i) => dot.classList.toggle('filled', i < pinBuffer.length));
+    }
+
+    function onKey(val) {
+      if (val === 'clear') pinBuffer = '';
+      else if (val === 'back') pinBuffer = pinBuffer.slice(0, -1);
+      else if (pinBuffer.length < 4) pinBuffer += val;
+
+      updateLocalDots();
+
+      if (pinBuffer.length === 4) {
+        handlePinComplete(pinBuffer, errorEl);
       }
+    }
+
+    document.querySelectorAll('#viewContainer .pin-key').forEach(key => {
+      key.addEventListener('click', () => onKey(key.getAttribute('data-val')));
+    });
+  }
+
+  async function handlePinComplete(pin, errorEl) {
+    if (pinMode === 'setup') {
+      if (!setupPinFirst) {
+        setupPinFirst = pin;
+        pinBuffer = '';
+        updatePinDots();
+        if (errorEl) errorEl.textContent = 'Enter again to confirm.';
+        return;
+      }
+      if (setupPinFirst !== pin) {
+        setupPinFirst = '';
+        pinBuffer = '';
+        updatePinDots();
+        if (errorEl) errorEl.textContent = 'PINs did not match. Try again.';
+        return;
+      }
+      await security.setPin(pin);
+      closePinModal();
+      showNav();
+      startIdleTimers();
+      renderTodayView();
+      return;
+    }
+
+    try {
+      const ok = await security.verifyPin(pin);
+      if (ok) {
+        state.parentUnlocked = true;
+        closePinModal();
+        renderParentView();
+        state.activeTab = 'parent';
+        updateNav();
+      } else {
+        pinBuffer = '';
+        updatePinDots();
+        audit.log('pin_failed', 'child', {});
+        if (errorEl) errorEl.textContent = 'Incorrect PIN.';
+      }
+    } catch (err) {
+      pinBuffer = '';
       updatePinDots();
+      if (errorEl) errorEl.textContent = err.message;
+    }
+  }
+
+  // Header PIN unlock
+  el.btnUnlock.addEventListener('click', () => {
+    openPinModal('unlock');
+  });
+
+  // Modal PIN keys (header modal)
+  document.querySelectorAll('#pinModal .pin-key').forEach(key => {
+    key.addEventListener('click', () => {
+      const val = key.getAttribute('data-val');
+      if (val === 'clear') pinBuffer = '';
+      else if (val === 'back') pinBuffer = pinBuffer.slice(0, -1);
+      else if (pinBuffer.length < 4) pinBuffer += val;
+      updatePinDots();
+      if (pinBuffer.length === 4) {
+        handlePinComplete(pinBuffer, document.getElementById('pinModalError'));
+      }
     });
   });
 
-  el.btnUnlock.addEventListener('click', openPinModal);
-
-  // Theme Picker Modal
-  if (el.btnThemeToggle) {
-    el.btnThemeToggle.addEventListener('click', () => {
+  // ---------- Navigation ----------
+  el.nav.forEach(item => {
+    item.addEventListener('click', () => {
       audio.playClick();
-      if (el.themeModal) el.themeModal.classList.add('active');
+      const tab = item.getAttribute('data-tab');
+
+      if (tab === 'parent') {
+        if (state.parentUnlocked) {
+          state.activeTab = 'parent';
+          renderParentView();
+        } else {
+          openPinModal('unlock');
+          return;
+        }
+      } else {
+        state.activeTab = tab;
+        if (tab === 'today') renderTodayView();
+        else if (tab === 'family') renderFamilyView();
+        else if (tab === 'calendar') renderCalendarView();
+      }
+      updateNav();
     });
+  });
+
+  function updateNav() {
+    el.nav.forEach(n => n.classList.remove('active'));
+    document.querySelector(`.nav-item[data-tab="${state.activeTab}"]`)?.classList.add('active');
   }
+
+  function showNav() {
+    document.querySelector('.app-nav').style.display = '';
+  }
+
+  function hideNav() {
+    document.querySelector('.app-nav').style.display = 'none';
+  }
+
+  // ---------- Theme / Lang ----------
+  function applyTheme() {
+    const st = store.getState();
+    const themeId = (st && st.config && st.config.activeTheme) || window.FAMILY_HUB_CONFIG?.defaults?.theme || 'warm';
+    el.body.setAttribute('data-theme', themeId);
+  }
+
+  function updateLangButton() {
+    el.btnLang.textContent = state.lang.toUpperCase();
+  }
+
+  el.btnLang.addEventListener('click', () => {
+    audio.playClick();
+    state.lang = state.lang === 'en' ? 'bm' : 'en';
+    localStorage.setItem('familyHub_lang', state.lang);
+    store.setLang(state.lang);
+    updateLangButton();
+    if (state.activeTab === 'today') renderTodayView();
+    else if (state.activeTab === 'family') renderFamilyView();
+    else if (state.activeTab === 'calendar') renderCalendarView();
+    else if (state.activeTab === 'parent') renderParentView();
+  });
+
+  // Theme picker
+  const themeModal = document.getElementById('themeModal');
+  el.btnTheme.addEventListener('click', () => {
+    audio.playClick();
+    themeModal.classList.add('active');
+  });
 
   document.querySelectorAll('.theme-card').forEach(card => {
     card.addEventListener('click', () => {
       const themeId = card.getAttribute('data-theme-id');
       store.setTheme(themeId);
-      applyTheme(themeId);
+      applyTheme();
       audio.playClick();
-      if (el.themeModal) el.themeModal.classList.remove('active');
+      themeModal.classList.remove('active');
     });
   });
 
-  // Language Toggle
-  el.btnLangToggle.addEventListener('click', () => {
-    audio.playClick();
-    state.lang = state.lang === 'en' ? 'bm' : 'en';
-    localStorage.setItem('familyHub_lang', state.lang);
-    el.btnLangToggle.textContent = state.lang.toUpperCase();
-    if (state.activeTab === 'today') renderTodayView();
-    else if (state.activeTab === 'family') renderFamilyView();
-    else if (state.activeTab === 'calendar') renderCalendarView();
-  });
+  // ---------- Idle / Auto-lock ----------
+  function startIdleTimers() {
+    stopIdleTimers();
+    const lockSeconds = (store.getState().config && store.getState().config.autoLockSeconds) || 120;
+    const returnSeconds = window.FAMILY_HUB_CONFIG?.defaults?.idleReturnSeconds || 60;
 
-  // Sync Status Listeners
-  store.subscribe((event, status) => {
+    const reset = () => {
+      clearTimeout(state.idleTimer);
+      clearTimeout(state.lockTimer);
+      state.idleTimer = setTimeout(returnToToday, returnSeconds * 1000);
+      state.lockTimer = setTimeout(lockParent, lockSeconds * 1000);
+    };
+
+    ['click', 'touchstart', 'keydown'].forEach(evt => {
+      document.addEventListener(evt, reset, { passive: true });
+    });
+
+    reset();
+  }
+
+  function stopIdleTimers() {
+    clearTimeout(state.idleTimer);
+    clearTimeout(state.lockTimer);
+  }
+
+  function returnToToday() {
+    if (state.activeTab !== 'today') {
+      state.activeTab = 'today';
+      renderTodayView();
+      updateNav();
+    }
+  }
+
+  function lockParent() {
+    if (state.parentUnlocked) {
+      state.parentUnlocked = false;
+      audit.log('parent_locked', 'system', {});
+      returnToToday();
+      updateNav();
+    }
+  }
+
+  // ---------- Sync status ----------
+  store.subscribe((event, data) => {
     if (event === 'syncStatus') {
-      if (status === 'saved') {
-        el.syncStatusText.textContent = t('savedNow');
+      if (data === 'saved') {
+        el.syncText.textContent = t('savedNow');
         el.syncBadge.className = 'status-badge';
-      } else if (status === 'offline') {
-        el.syncStatusText.textContent = 'Offline';
+      } else if (data === 'offline') {
+        el.syncText.textContent = t('offline');
         el.syncBadge.className = 'status-badge offline';
-      } else if (status === 'saving' || status === 'syncing') {
-        el.syncStatusText.textContent = 'Saving...';
+      } else if (data === 'syncing' || data === 'saving') {
+        el.syncText.textContent = t('saving');
+        el.syncBadge.className = 'status-badge syncing';
       }
+    } else if (event === 'change') {
+      applyTheme();
     }
   });
 
-  // Initialize App
-  applyTheme();
-  el.btnLangToggle.textContent = state.lang.toUpperCase();
-  renderTodayView();
-
+  // ---------- Boot ----------
+  boot();
 })();
