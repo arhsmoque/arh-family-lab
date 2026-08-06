@@ -28,9 +28,15 @@ jobs:
         run: |
           node scripts/build-family-hub-config.mjs
           node scripts/build-studio-config.mjs
+      - name: Prepare deploy bundle
+        run: |
+          mkdir -p dist
+          cp -r index.html clinical.html AGENTS.md README.md SECRETS.md shared apps previews clinical dist/
+          find dist/clinical -type d -name downloads -exec rm -rf {} +
+          touch dist/.nojekyll
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy . --project-name=arh-family-lab --branch=main
+          command: pages deploy dist --project-name=arh-family-lab --branch=main

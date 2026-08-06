@@ -34,9 +34,18 @@ jobs:
         run: |
           node scripts/build-family-hub-config.mjs
           node scripts/build-studio-config.mjs
+      - name: Prepare deploy bundle
+        run: |
+          mkdir -p dist
+          # Copy the static surface of the site, mirroring repo root paths.
+          cp -r index.html clinical.html AGENTS.md README.md SECRETS.md shared apps previews clinical dist/
+          # Drop heavy downloads that bloat the Pages artifact; the landing links stay.
+          find dist/clinical -type d -name downloads -exec rm -rf {} +
+          # Disable Jekyll (not used, but avoids any surprises).
+          touch dist/.nojekyll
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: 'dist'
       - id: deployment
         uses: actions/deploy-pages@v4
