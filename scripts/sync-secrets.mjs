@@ -165,6 +165,9 @@ async function main() {
   const firebaseUrl =
     getSecret(sharedSecrets, "FIREBASE_URL") || getSecret(familyHubSecrets, "FIREBASE_URL");
 
+  const cloudflareApiToken = getSecret(sharedSecrets, "CLOUDFLARE_API_TOKEN");
+  const cloudflareAccountId = getSecret(sharedSecrets, "CLOUDFLARE_ACCOUNT_ID");
+
   const apiKeyFamilyHub = getSecret(familyHubSecrets, "FIREBASE_API_KEY");
   const apiKeyKidsTerminal = getSecret(kidsTerminalSecrets, "FIREBASE_API_KEY");
   const urlFamilyHub = getSecret(familyHubSecrets, "FIREBASE_URL");
@@ -183,6 +186,8 @@ async function main() {
   if (!firebaseUrl) missing.push("FIREBASE_URL");
   if (!rootFamilyHub) missing.push("FIREBASE_ROOT at /arh-family-lab/family-hub");
   if (!rootKidsTerminal) missing.push("FIREBASE_ROOT at /arh-family-lab/kids-terminal");
+  if (!cloudflareApiToken) missing.push("CLOUDFLARE_API_TOKEN at /arh-family-lab");
+  if (!cloudflareAccountId) missing.push("CLOUDFLARE_ACCOUNT_ID at /arh-family-lab");
   if (!CF_ACCOUNT_ID) missing.push("CLOUDFLARE_ACCOUNT_ID env var");
 
   if (missing.length > 0) {
@@ -220,6 +225,8 @@ async function main() {
     ["FIREBASE_ROOT_KIDS_TERMINAL", rootKidsTerminal],
     ["FIREBASE_ROOT_STUDIO", rootStudio],
     ["GH_PAT", githubPat],
+    ["CLOUDFLARE_API_TOKEN", cloudflareApiToken],
+    ["CLOUDFLARE_ACCOUNT_ID", cloudflareAccountId],
   ];
 
   for (const [key, value] of githubPairs) {

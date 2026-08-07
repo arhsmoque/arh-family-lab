@@ -25,6 +25,9 @@ With the plugin architecture and Cloudflare Pages deployment, workflows need Fir
   GITHUB_PAT                          cross-repo / fleet workflows
 /arh-family-lab
   FIREBASE_API_KEY                    shared Firebase web API key
+  FIREBASE_URL                        shared Firebase Realtime Database URL
+  CLOUDFLARE_API_TOKEN                Cloudflare API token for Pages/Workers deploys
+  CLOUDFLARE_ACCOUNT_ID               Cloudflare account ID
 /arh-family-lab/family-hub
   FIREBASE_API_KEY
   FIREBASE_URL
@@ -59,8 +62,8 @@ These are per-device or per-server runtime configuration, not CI/CD secrets.
 | `FIREBASE_ROOT` | `/arh-family-lab/studio` | `FIREBASE_ROOT_STUDIO` | `FIREBASE_ROOT_STUDIO` | `studio` DB root |
 | `FIREBASE_ROOT` | `/arh-family-lab/kids-terminal` | `FIREBASE_ROOT_KIDS_TERMINAL` | `FIREBASE_ROOT_KIDS_TERMINAL` | `kids-terminal` DB root |
 | `GITHUB_PAT` | `/` (root) | `GH_PAT`¹ | ❌ | Cross-repo / fleet workflows |
-| `CLOUDFLARE_API_TOKEN` | not in Infisical | ✅ already set | N/A | Cloudflare API access |
-| `CLOUDFLARE_ACCOUNT_ID` | not in Infisical | ✅ already set | N/A | Cloudflare account |
+| `CLOUDFLARE_API_TOKEN` | `/arh-family-lab` | `CLOUDFLARE_API_TOKEN` | N/A | Cloudflare API access |
+| `CLOUDFLARE_ACCOUNT_ID` | `/arh-family-lab` | `CLOUDFLARE_ACCOUNT_ID` | N/A | Cloudflare account |
 
 ¹ GitHub forbids repository secret names that start with `GITHUB_`, so the Infisical key `GITHUB_PAT` is mapped to `GH_PAT` in GitHub.
 
@@ -147,5 +150,5 @@ Required GitHub secrets for the cloud path: `INFISICAL_CLIENT_ID` and `INFISICAL
 
 ## 8. Known Gaps
 
-- `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are not yet synced from Infisical. Add them to the Infisical `/arh-family-lab` folder and extend `scripts/sync-secrets.mjs` to write them to GitHub secrets (and optionally Cloudflare Pages secrets) for a single source of truth.
+- `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are now stored in Infisical under `/arh-family-lab` and synced to GitHub secrets by `scripts/sync-secrets.mjs`. They are not written to Cloudflare Pages secrets because Pages reads them from the GitHub Actions workflow.
 - The legacy `scripts/apply-studio-secrets.mjs` (which patches `studio.config.js` from `STUDIO_DEV_PIN` / `STUDIO_DB_SECRET`) is kept for compatibility but should be retired once Studio consumes the new `FIREBASE_*` secrets.
