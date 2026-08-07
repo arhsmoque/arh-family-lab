@@ -1,0 +1,7 @@
+{
+  "name": "presentation",
+  "title": "Deckmate",
+  "entry": "./app.js",
+  "plugins": ["ui"],
+  "configKey": null
+}
