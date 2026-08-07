@@ -347,7 +347,16 @@
 
   <!-- JS Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-  <script src="firebase-rest.js"></script>
-  <script src="app.js"></script>
+  <script type="module" src="shared-bridge.mjs"></script>
+  <script>
+    import('./shared-bridge.mjs').then(() => {
+      const s = document.createElement('script');
+      s.src = 'app.js';
+      document.body.appendChild(s);
+    }).catch(err => {
+      console.error('Failed to load Kids Terminal shared runtime bridge:', err);
+      document.body.innerHTML = '<div style="padding:2rem;text-align:center"><h2>Kids Terminal failed to load</h2><p>' + err.message + '</p></div>';
+    });
+  </script>
 </body>
 </html>
