@@ -24,7 +24,12 @@ const ASSETS = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(ASSETS))
+      .then(cache => Promise.all(
+        ASSETS.map(url => fetch(url, { cache: 'no-store' })
+          .then(response => cache.put(url, response))
+          .catch(err => console.warn('[SW] Failed to cache', url, err))
+        )
+      ))
       .then(() => self.skipWaiting())
   );
 });

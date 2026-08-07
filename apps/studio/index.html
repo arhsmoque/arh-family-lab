@@ -111,9 +111,9 @@
   </div>
 </div>
 
-<script src="studio.config.js"></script>
+<script src="studio.config.js?v=__BUILD_ID__"></script>
 <!-- Optional gitignored secret override; a 404 here is harmless (it just doesn't define STUDIO_APP_CONFIG_LOCAL). -->
-<script src="studio.config.local.js"></script>
+<script src="studio.config.local.js?v=__BUILD_ID__"></script>
 <script type="module" src="shared-bridge.mjs"></script>
 <script>
   // Load app.js only after the shared-runtime bridge has set up window.Auth/Db.

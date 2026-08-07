@@ -79,7 +79,30 @@ function removeClinicalDownloads(dir) {
 }
 removeClinicalDownloads(path.join(dist, "clinical"));
 
+// Stamp a build id into deploy-time placeholders so config assets and
+// cache-busting query strings are refreshed on every push.
+const buildId = process.env.GITHUB_SHA || Date.now().toString(36);
+const placeholder = /__BUILD_ID__/g;
+const textExtensions = new Set([".html", ".js", ".css", ".json", ".mjs"]);
+
+function stampBuildId(dir) {
+  if (!fs.existsSync(dir)) return;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      stampBuildId(p);
+    } else if (textExtensions.has(path.extname(p))) {
+      let content = fs.readFileSync(p, "utf8");
+      if (placeholder.test(content)) {
+        content = content.replace(placeholder, buildId);
+        fs.writeFileSync(p, content, "utf8");
+      }
+    }
+  }
+}
+stampBuildId(dist);
+
 // Tell GitHub Pages not to run Jekyll.
 fs.writeFileSync(path.join(dist, ".nojekyll"), "");
 
-console.log("[prepare-deploy-bundle] dist/ ready");
+console.log("[prepare-deploy-bundle] dist/ ready (build id: " + buildId + ")");

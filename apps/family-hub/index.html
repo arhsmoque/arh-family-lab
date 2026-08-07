@@ -92,6 +92,20 @@
     </div>
   </div>
 
+  <!-- Generic form/confirm modal (replaces native prompt()/confirm()) -->
+  <div class="modal-overlay" id="formModal">
+    <div class="pin-modal form-modal">
+      <h3 id="formModalTitle"></h3>
+      <p id="formModalSubtitle"></p>
+      <div id="formModalBody" class="form-stack"></div>
+      <p id="formModalError" class="form-error"></p>
+      <div class="form-actions">
+        <button class="btn-secondary" id="formModalCancel" type="button">Cancel</button>
+        <button class="btn-primary" id="formModalConfirm" type="button">OK</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Local override must load first so family.config.js can merge it. -->
   <script src="family.config.local.js"></script>
   <script src="family.config.js"></script>

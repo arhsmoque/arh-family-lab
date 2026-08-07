@@ -557,6 +557,25 @@ nav.app-nav {
   margin-top: var(--space-3);
 }
 
+.form-modal { text-align: left; }
+.form-modal .form-actions { justify-content: flex-end; margin-top: var(--space-4); }
+.form-modal .form-stack input,
+.form-modal .form-stack select,
+.form-modal .form-stack textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+.form-modal .form-stack textarea {
+  min-height: 100px;
+  resize: vertical;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-base);
+  background: var(--color-surface);
+  color: var(--color-text-main);
+}
+
 /* Family grid */
 .family-grid {
   display: grid;

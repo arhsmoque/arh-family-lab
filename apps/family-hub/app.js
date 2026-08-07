@@ -132,6 +132,94 @@
     return (i18n[state.lang] && i18n[state.lang][key]) || i18n.en[key] || key;
   }
 
+  // Generic modal that replaces native prompt()/confirm().
+  // fields: [{ key, label, type, value?, placeholder?, options?[{value,label}]}]
+  // validate: async (values) => error string or undefined
+  // Returns a promise resolving to values object, or null when cancelled.
+  function openFormModal({ title, subtitle, fields = [], confirmText, cancelText, validate }) {
+    return new Promise((resolve) => {
+      const modal = document.getElementById('formModal');
+      const titleEl = document.getElementById('formModalTitle');
+      const subtitleEl = document.getElementById('formModalSubtitle');
+      const body = document.getElementById('formModalBody');
+      const errorEl = document.getElementById('formModalError');
+      const confirmBtn = document.getElementById('formModalConfirm');
+      const cancelBtn = document.getElementById('formModalCancel');
+
+      titleEl.textContent = title;
+      subtitleEl.textContent = subtitle || '';
+      subtitleEl.style.display = subtitle ? 'block' : 'none';
+      body.innerHTML = '';
+      errorEl.textContent = '';
+      confirmBtn.textContent = confirmText || 'OK';
+      if (cancelText === null) {
+        cancelBtn.style.display = 'none';
+      } else {
+        cancelBtn.style.display = '';
+        cancelBtn.textContent = cancelText || t('cancel') || 'Cancel';
+      }
+
+      const inputs = [];
+      fields.forEach((f) => {
+        const label = document.createElement('label');
+        label.textContent = f.label;
+        let input;
+        if (f.type === 'select') {
+          input = document.createElement('select');
+          (f.options || []).forEach((opt) => {
+            const option = document.createElement('option');
+            option.value = opt.value;
+            option.textContent = opt.label;
+            input.appendChild(option);
+          });
+        } else if (f.type === 'textarea') {
+          input = document.createElement('textarea');
+          input.placeholder = f.placeholder || '';
+        } else {
+          input = document.createElement('input');
+          input.type = f.type || 'text';
+          input.placeholder = f.placeholder || '';
+        }
+        input.value = f.value !== undefined ? f.value : '';
+        body.appendChild(label);
+        body.appendChild(input);
+        inputs.push({ key: f.key, input });
+      });
+
+      function cleanup() {
+        confirmBtn.onclick = null;
+        cancelBtn.onclick = null;
+        modal.classList.remove('active');
+      }
+
+      confirmBtn.onclick = async () => {
+        const values = {};
+        inputs.forEach((i) => { values[i.key] = i.input.value; });
+        if (validate) {
+          const err = await validate(values);
+          if (err) {
+            errorEl.textContent = err;
+            return;
+          }
+        }
+        cleanup();
+        resolve(values);
+      };
+
+      cancelBtn.onclick = () => {
+        cleanup();
+        resolve(null);
+      };
+
+      modal.classList.add('active');
+      if (inputs[0]) inputs[0].input.focus();
+    });
+  }
+
+  function openConfirmModal({ title, subtitle, confirmText, cancelText }) {
+    return openFormModal({ title, subtitle, confirmText, cancelText, fields: [] });
+  }
+
   // DOM refs
   const el = {
     body: document.body,
@@ -525,19 +613,29 @@
       </div>
     `;
 
-    document.getElementById('btnAddMember').addEventListener('click', () => {
-      const name = prompt(t('addMember') + ' name:');
-      if (!name) return;
-      const avatar = prompt('Avatar emoji (e.g. 👦):') || '👤';
-      const role = confirm('Is this an adult? (Cancel = child)') ? 'adult' : 'child';
-      store.addMember({ name, avatar, role });
+    document.getElementById('btnAddMember').addEventListener('click', async () => {
+      const values = await openFormModal({
+        title: t('addMember'),
+        fields: [
+          { key: 'name', label: t('member') + ' name', type: 'text', placeholder: 'e.g. Aisyah' },
+          { key: 'avatar', label: 'Avatar emoji', type: 'text', value: '👤', placeholder: 'e.g. 👦' },
+          { key: 'role', label: t('role'), type: 'select', value: 'child', options: [
+            { value: 'child', label: t('child') },
+            { value: 'adult', label: t('adult') }
+          ] }
+        ],
+        confirmText: t('addMember')
+      });
+      if (!values || !values.name) return;
+      store.addMember({ name: values.name, avatar: values.avatar || '👤', role: values.role });
       renderFamilyView();
     });
 
     document.querySelectorAll('[data-action="delete-member"]').forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', async () => {
         const id = btn.getAttribute('data-id');
-        if (confirm('Remove this member?')) store.removeMember(id);
+        const ok = await openConfirmModal({ title: 'Remove member?', subtitle: 'This cannot be undone.', confirmText: t('delete') });
+        if (ok) store.removeMember(id);
         renderFamilyView();
       });
     });
@@ -568,12 +666,18 @@
       </div>
     `;
 
-    document.getElementById('btnAddEvent').addEventListener('click', () => {
-      const title = prompt('Event title:');
-      if (!title) return;
-      const time = prompt('Time (e.g. 7:15 AM):') || '12:00 PM';
-      const member = prompt('Who is this for?') || 'All';
-      store.addEvent({ title, time, member });
+    document.getElementById('btnAddEvent').addEventListener('click', async () => {
+      const values = await openFormModal({
+        title: t('addEvent'),
+        fields: [
+          { key: 'title', label: 'Event title', type: 'text', placeholder: 'e.g. Swimming lesson' },
+          { key: 'time', label: 'Time', type: 'text', value: '12:00 PM', placeholder: 'e.g. 7:15 AM' },
+          { key: 'member', label: 'Who is this for?', type: 'text', value: 'All', placeholder: 'Name or All' }
+        ],
+        confirmText: t('addEvent')
+      });
+      if (!values || !values.title) return;
+      store.addEvent({ title: values.title, time: values.time || '12:00 PM', member: values.member || 'All' });
       renderCalendarView();
     });
   }
@@ -618,26 +722,38 @@
       </div>
     `;
 
-    document.getElementById('btnAddTask').addEventListener('click', () => {
+    document.getElementById('btnAddTask').addEventListener('click', async () => {
       const members = Object.values(store.getState().members);
-      if (members.length === 0) { alert('Add a family member first.'); return; }
-      const title = prompt('Task title:');
-      if (!title) return;
-      const memberNames = members.map((m, i) => `${i + 1}. ${m.name}`).join('\n');
-      const choice = prompt(`Assign to:\n${memberNames}\n(enter number):`);
-      const member = members[Number(choice) - 1];
-      if (!member) return;
-      store.addTask({ memberId: member.id, title });
-      alert('Task added.');
+      if (members.length === 0) {
+        await openConfirmModal({ title: 'No family members', subtitle: 'Add a family member first.' });
+        return;
+      }
+      const values = await openFormModal({
+        title: t('addTask'),
+        fields: [
+          { key: 'title', label: 'Task title', type: 'text', placeholder: 'e.g. Pack school bag' },
+          { key: 'memberId', label: t('member'), type: 'select', value: members[0]?.id || '', options: members.map((m) => ({ value: m.id, label: m.name })) }
+        ],
+        confirmText: t('addTask')
+      });
+      if (!values || !values.title) return;
+      store.addTask({ memberId: values.memberId, title: values.title });
+      await openConfirmModal({ title: 'Task added', confirmText: 'OK', cancelText: null });
     });
 
-    document.getElementById('btnAddChecklist').addEventListener('click', () => {
-      const title = prompt('Checklist title:');
-      if (!title) return;
-      const raw = prompt('Items, one per line:');
-      const items = (raw || '').split('\n').filter(Boolean).map(text => ({ text }));
-      store.addChecklist({ title, icon: '🎒', items });
-      alert('Checklist added.');
+    document.getElementById('btnAddChecklist').addEventListener('click', async () => {
+      const values = await openFormModal({
+        title: t('addChecklist'),
+        fields: [
+          { key: 'title', label: 'Checklist title', type: 'text', placeholder: 'e.g. Leaving home' },
+          { key: 'items', label: 'Items, one per line', type: 'textarea', placeholder: 'Shoes\nBag\nWater bottle' }
+        ],
+        confirmText: t('addChecklist')
+      });
+      if (!values || !values.title) return;
+      const items = (values.items || '').split('\n').filter(Boolean).map(text => ({ text }));
+      store.addChecklist({ title: values.title, icon: '🎒', items });
+      await openConfirmModal({ title: 'Checklist added', confirmText: 'OK', cancelText: null });
     });
 
     document.getElementById('btnExport').addEventListener('click', () => {
@@ -651,16 +767,25 @@
     });
 
     document.getElementById('btnChangePin').addEventListener('click', async () => {
-      const current = prompt('Enter current PIN:');
-      if (current === null) return;
-      const ok = await security.verifyPin(current);
-      if (!ok) { alert('Incorrect PIN.'); return; }
-      const next = prompt('Enter new 4-digit PIN:');
-      if (!next || !/^[0-9]{4,8}$/.test(next)) { alert('PIN must be 4–8 digits.'); return; }
-      const confirm = prompt('Confirm new PIN:');
-      if (next !== confirm) { alert('PINs do not match.'); return; }
-      await security.setPin(next);
-      alert('PIN changed.');
+      const values = await openFormModal({
+        title: 'Change PIN',
+        subtitle: 'Enter your current PIN, then set a new 4–8 digit PIN.',
+        fields: [
+          { key: 'current', label: 'Current PIN', type: 'password', placeholder: '••••' },
+          { key: 'next', label: 'New PIN', type: 'password', placeholder: '4–8 digits' },
+          { key: 'confirm', label: 'Confirm new PIN', type: 'password', placeholder: 'Repeat new PIN' }
+        ],
+        confirmText: 'Change PIN',
+        validate: async (vals) => {
+          const ok = await security.verifyPin(vals.current);
+          if (!ok) return 'Incorrect current PIN.';
+          if (!vals.next || !/^[0-9]{4,8}$/.test(vals.next)) return 'PIN must be 4–8 digits.';
+          if (vals.next !== vals.confirm) return 'PINs do not match.';
+        }
+      });
+      if (!values) return;
+      await security.setPin(values.next);
+      await openConfirmModal({ title: 'PIN changed', confirmText: 'OK', cancelText: null });
       audit.log('pin_changed', 'parent', {});
     });
 
@@ -670,8 +795,13 @@
       audit.log('auto_lock_changed', 'parent', { seconds: Number(e.target.value) });
     });
 
-    document.getElementById('btnSignOut').addEventListener('click', () => {
-      if (confirm('Sign out? You will need your email and password to sign back in.')) {
+    document.getElementById('btnSignOut').addEventListener('click', async () => {
+      const ok = await openConfirmModal({
+        title: 'Sign out?',
+        subtitle: 'You will need your email and password to sign back in.',
+        confirmText: t('signOut')
+      });
+      if (ok) {
         auth.signOut();
         store.signOut();
         state.parentUnlocked = false;
