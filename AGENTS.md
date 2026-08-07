@@ -56,7 +56,8 @@ A hub of small, static, ad-hoc web apps for family & friends. Each app is a sepa
 ## Local Commands
 
 ```
-python3 -m http.server 4173
+# Static server (use uv, never python3)
+uv run --with http.server python -m http.server 4173
 ```
 
 No build step is required.

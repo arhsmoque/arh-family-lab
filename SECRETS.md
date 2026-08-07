@@ -76,7 +76,7 @@ node scripts/sync-secrets.mjs              # apply
 ```
 
 The script:
-1. Reads selected secrets from Infisical CLI (`infisical secrets --path=...`).
+1. Authenticates to Infisical using `INFISICAL_TOKEN` (local convenience) or `INFISICAL_CLIENT_ID` + `INFISICAL_CLIENT_SECRET` (cloud Machine Identity), then reads secrets via the Infisical HTTP API.
 2. Validates that shared `FIREBASE_API_KEY` / `FIREBASE_URL` are identical across apps.
 3. Derives app-specific `FIREBASE_ROOT_*` values.
 4. Writes GitHub secrets via `gh secret set`.
@@ -84,9 +84,9 @@ The script:
 6. Never logs secret values; only logs key names and success/failure.
 
 Prerequisites:
-- `infisical` logged in and able to read project `90b0e7ef-3f72-4ddb-b888-055e90e13dfa`
+- Infisical access to project `90b0e7ef-3f72-4ddb-b888-055e90e13dfa`
 - `gh` authenticated to `arhsmoque/arh-family-lab`
-- `wrangler` authenticated to Cloudflare account `dc3bfa957bdf216b7cc45214455aaa72`
+- `wrangler` authenticated to the Cloudflare account (account ID read from `CLOUDFLARE_ACCOUNT_ID` env var)
 
 ---
 
@@ -138,14 +138,14 @@ Cloudflare Pages production secrets are populated by `scripts/sync-secrets.mjs` 
 
 1. Update the value in Infisical.
 2. Go to **Actions → Sync secrets from Infisical → Run workflow**.
-3. The workflow reads from Infisical using `INFISICAL_TOKEN` and writes to GitHub / Cloudflare.
+3. The workflow authenticates to Infisical with the Machine Identity (`INFISICAL_CLIENT_ID` + `INFISICAL_CLIENT_SECRET`) and writes to GitHub / Cloudflare.
 4. Pushes to `main` auto-deploy both GitHub Pages and Cloudflare Pages.
 
-Required GitHub secrets for the cloud path: `INFISICAL_CLIENT_ID` and `INFISICAL_CLIENT_SECRET` (Infisical Machine Identity).
+Required GitHub secrets for the cloud path: `INFISICAL_CLIENT_ID` and `INFISICAL_CLIENT_SECRET`. `INFISICAL_TOKEN` is supported only for local runs; the cloud workflow does not use it.
 
 ---
 
 ## 8. Known Gaps
 
-- `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are currently stored only in GitHub secrets, not in Infisical. If you want Infisical to be the complete source of truth, add them to the Infisical root (or `/arh-family-lab`) and extend `scripts/sync-secrets.mjs` to sync them.
+- `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are not yet synced from Infisical. Add them to the Infisical `/arh-family-lab` folder and extend `scripts/sync-secrets.mjs` to write them to GitHub secrets (and optionally Cloudflare Pages secrets) for a single source of truth.
 - The legacy `scripts/apply-studio-secrets.mjs` (which patches `studio.config.js` from `STUDIO_DEV_PIN` / `STUDIO_DB_SECRET`) is kept for compatibility but should be retired once Studio consumes the new `FIREBASE_*` secrets.

@@ -1,4 +1,6 @@
-// Family Hub — basic service worker for offline shell caching
+// Family Hub — offline shell cache
+// CACHE_NAME is replaced at deploy time by CI (e.g. family-hub-<sha>) so every
+// push invalidates the previous cache and the PWA auto-updates.
 const CACHE_NAME = 'family-hub-v1';
 const ASSETS = [
   '/apps/family-hub/',
@@ -19,7 +21,9 @@ const ASSETS = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting())
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(ASSETS))
+      .then(() => self.skipWaiting())
   );
 });
 
@@ -34,7 +38,7 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const { request } = event;
 
-  // Never cache Firebase API calls
+  // Never cache Firebase / Google API calls
   if (request.url.includes('firebasedatabase.app') ||
       request.url.includes('googleapis.com') ||
       request.url.includes('googleusercontent.com')) {
@@ -59,4 +63,11 @@ self.addEventListener('fetch', event => {
       });
     })
   );
+});
+
+// Allow the page to ask for an immediate update check.
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });

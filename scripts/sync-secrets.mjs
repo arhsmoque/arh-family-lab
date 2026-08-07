@@ -25,7 +25,7 @@ const INFISICAL_API = "https://app.infisical.com/api/v3/secrets/raw";
 const UNIVERSAL_AUTH_URL = "https://app.infisical.com/api/v1/auth/universal-auth/login";
 const REPO = "arhsmoque/arh-family-lab";
 const CF_PAGES_PROJECT = "arh-family-lab";
-const CF_ACCOUNT_ID = "dc3bfa957bdf216b7cc45214455aaa72";
+const CF_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID || "";
 
 const DRY_RUN = process.argv.includes("--dry-run");
 
@@ -183,6 +183,7 @@ async function main() {
   if (!firebaseUrl) missing.push("FIREBASE_URL");
   if (!rootFamilyHub) missing.push("FIREBASE_ROOT at /arh-family-lab/family-hub");
   if (!rootKidsTerminal) missing.push("FIREBASE_ROOT at /arh-family-lab/kids-terminal");
+  if (!CF_ACCOUNT_ID) missing.push("CLOUDFLARE_ACCOUNT_ID env var");
 
   if (missing.length > 0) {
     fail("missing source secrets:", missing.join("; "));

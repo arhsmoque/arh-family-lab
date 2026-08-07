@@ -2,10 +2,13 @@
 .wrangler/
 node_modules/
 *.lock
+!pnpm-lock.yaml
 server.lock
 .env
 .env.*
 .playwright-cli/
+test-results/
+playwright-report/
 
 # Studio app local config override, if ever used — never commit
 apps/studio/studio.config.local.js

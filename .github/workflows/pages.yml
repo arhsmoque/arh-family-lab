@@ -31,13 +31,10 @@ jobs:
           node scripts/build-studio-config.mjs
       - name: Prepare deploy bundle
         run: |
-          mkdir -p dist
-          cp -r index.html clinical.html AGENTS.md README.md SECRETS.md shared apps previews clinical dist/
-          find dist/clinical -type d -name downloads -exec rm -rf {} +
+          node scripts/prepare-deploy-bundle.mjs
           # Bump the Family Hub service worker cache name per deploy so every
-          # push invalidates the old cache and the app auto-updates.
+          # push invalidates the old cache and the PWA auto-updates.
           sed -i "s/const CACHE_NAME = 'family-hub-v1';/const CACHE_NAME = 'family-hub-${{ github.sha }}';/" dist/apps/family-hub/service-worker.js
-          touch dist/.nojekyll
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

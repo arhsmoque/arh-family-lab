@@ -19,6 +19,24 @@
     session: null
   };
 
+  // Surface fatal errors so the app never silently stops on a blank screen.
+  window.addEventListener('error', e => {
+    console.error('Unhandled error:', e.error);
+    if (el.view && !el.view.innerHTML.trim()) {
+      el.view.innerHTML = `
+        <div class="card centered-card">
+          <h2>😕 Something went wrong</h2>
+          <p>${e.message || 'An unexpected error occurred.'}</p>
+          <button class="btn-primary" onclick="location.reload()">Reload</button>
+        </div>
+      `;
+      hideNav();
+    }
+  });
+  window.addEventListener('unhandledrejection', e => {
+    console.error('Unhandled rejection:', e.reason);
+  });
+
   const i18n = {
     en: {
       today: 'Today',
@@ -132,9 +150,44 @@
   };
 
   // ---------- Service worker ----------
+  let swUpdateReady = false;
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js').catch(err => {
-      console.warn('Service worker registration failed:', err);
+    navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' })
+      .then(reg => {
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              swUpdateReady = true;
+              showUpdateToast();
+            }
+          });
+        });
+      })
+      .catch(err => {
+        console.warn('Service worker registration failed:', err);
+      });
+
+    // Reload once when a new service worker takes control.
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (refreshing) return;
+      refreshing = true;
+      window.location.reload();
+    });
+  }
+
+  function showUpdateToast() {
+    const toast = document.createElement('div');
+    toast.className = 'update-toast';
+    toast.innerHTML = `<span>New version available.</span><button id="swUpdateBtn">Update</button>`;
+    document.body.appendChild(toast);
+    document.getElementById('swUpdateBtn').addEventListener('click', () => {
+      navigator.serviceWorker.getRegistration().then(reg => {
+        if (reg && reg.waiting) {
+          reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+        }
+      });
     });
   }
 
@@ -174,14 +227,71 @@
 
   // ---------- Rendering ----------
   function renderNotConfigured() {
+    const isDeployed = /github\.io|pages\.dev|localhost|127\.0\.0\.1/.test(location.host);
+    const isLocal = /localhost|127\.0\.0\.1/.test(location.host);
     el.view.innerHTML = `
       <div class="card centered-card">
         <h2>⚙️ Family Hub not configured</h2>
-        <p>Firebase is not set up yet. Ask the operator to run the steps in <code>SETUP.md</code>.</p>
-        <p>For local development, generate <code>family.config.local.js</code> from infisical.</p>
+        <p>Firebase is not set up yet.</p>
+        ${isLocal ? `
+          <p>For local development, generate <code>family.config.local.js</code> from Infisical:</p>
+          <pre><code>MSYS_NO_PATHCONV=1 infisical export --projectId=90b0e7ef-3f72-4ddb-b888-055e90e13dfa --env=dev --path=/arh-family-lab/family-hub --format=dotenv > .env</code></pre>
+          <p>Then convert it to a JS file that assigns <code>FAMILY_HUB_CONFIG_LOCAL</code>. See <code>SETUP.md</code> for details.</p>
+        ` : `
+          <p>This deployed build is missing its Firebase configuration. This usually means the last deployment did not finish, or your browser is holding on to an older cached version.</p>
+          <div class="form-actions" style="justify-content:center;margin-top:var(--space-5)">
+            <button id="btnCheckUpdate" class="btn-primary">Check for update</button>
+            <button id="btnUnregisterSw" class="btn-secondary">Clear cached app</button>
+          </div>
+        `}
+        <p style="margin-top:var(--space-5);font-size:var(--font-size-sm);color:var(--color-text-muted)">
+          If this keeps happening, ask the operator to check the GitHub Actions deploy status and the Infisical/GitHub secrets.
+        </p>
       </div>
     `;
     hideNav();
+
+    if (!isLocal) {
+      const btnUpdate = document.getElementById('btnCheckUpdate');
+      if (btnUpdate) {
+        btnUpdate.addEventListener('click', () => {
+          btnUpdate.disabled = true;
+          btnUpdate.textContent = 'Checking...';
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistration().then(reg => {
+              if (reg) {
+                reg.update().then(() => {
+                  if (swUpdateReady) {
+                    // The update toast already appeared; clicking it will reload.
+                  } else {
+                    btnUpdate.textContent = 'No update found';
+                    setTimeout(() => { btnUpdate.disabled = false; btnUpdate.textContent = 'Check for update'; }, 2000);
+                  }
+                });
+              } else {
+                window.location.reload();
+              }
+            });
+          } else {
+            window.location.reload();
+          }
+        });
+      }
+      const btnClear = document.getElementById('btnUnregisterSw');
+      if (btnClear) {
+        btnClear.addEventListener('click', async () => {
+          if ('serviceWorker' in navigator) {
+            const regs = await navigator.serviceWorker.getRegistrations();
+            await Promise.all(regs.map(r => r.unregister()));
+          }
+          if ('caches' in window) {
+            const keys = await caches.keys();
+            await Promise.all(keys.map(k => caches.delete(k)));
+          }
+          window.location.reload(true);
+        });
+      }
+    }
   }
 
   function renderAuth() {

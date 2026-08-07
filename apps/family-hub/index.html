@@ -92,8 +92,9 @@
     </div>
   </div>
 
-  <script src="family.config.js"></script>
+  <!-- Local override must load first so family.config.js can merge it. -->
   <script src="family.config.local.js"></script>
+  <script src="family.config.js"></script>
   <script src="core/audio-fx.js"></script>
   <script src="core/audit-log.js"></script>
   <script src="core/auth.js"></script>

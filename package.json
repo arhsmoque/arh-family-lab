@@ -1,0 +1,15 @@
+{
+  "name": "arh-family-lab",
+  "version": "1.0.0",
+  "description": "A hub of small static web apps for family & friends",
+  "private": true,
+  "packageManager": "pnpm@9.15.0",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "serve": "uv run python -m http.server 4173"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.45.0"
+  }
+}
