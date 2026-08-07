@@ -1,5 +1,9 @@
 import { test, expect } from '@playwright/test';
 import crypto from 'node:crypto';
+import { spawn } from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
+import { setTimeout as sleep } from 'node:timers/promises';
 
 /**
  * Flow-of-events rehearsals for the Family Lab apps.
@@ -169,5 +173,72 @@ test.describe('Studio', () => {
     await expect(page.locator('#view-landing')).toBeVisible();
     await expect(page.locator('#landingAlias')).toContainText('studio');
     await expect(page.locator('#view-landing')).toContainText('Your projects');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Kids Terminal — cadet prompt + visual widget flow
+// ---------------------------------------------------------------------------
+
+async function startKidsServer() {
+  const cwd = path.resolve('servers', 'kids-terminal');
+  // Clear any stale lock so the server can start.
+  try { fs.unlinkSync(path.join(cwd, 'server.lock')); } catch {}
+
+  const proc = spawn('node', ['server.js'], {
+    cwd,
+    env: {
+      ...process.env,
+      AGY_MOCK_MODE: '1',
+      AGY_TEST_MODE: '1',
+      SERVER_PORT: '3000',
+    },
+  });
+
+  proc.stdout.on('data', (data) => console.log('[kids-server]', data.toString().trim()));
+  proc.stderr.on('data', (data) => console.error('[kids-server]', data.toString().trim()));
+
+  for (let i = 0; i < 30; i++) {
+    try {
+      const res = await fetch('http://localhost:3000/api/config');
+      if (res.ok) return proc;
+    } catch {
+      /* not ready yet */
+    }
+    await sleep(500);
+  }
+  throw new Error('Kids Terminal server did not start in time');
+}
+
+test.describe('Kids Terminal', () => {
+  test.describe.configure({ mode: 'serial' });
+  let server;
+
+  test.beforeAll(async () => {
+    server = await startKidsServer();
+  });
+
+  test.afterAll(() => {
+    if (server) server.kill();
+  });
+
+  test('cadet asks for a story and sees a visual widget', async ({ page }) => {
+    await page.goto('http://localhost:3000/servers/kids-terminal/');
+    await page.waitForLoadState('networkidle');
+
+    // Sign in with a cached session so the cadet can use the terminal.
+    await page.evaluate(({ session }) => {
+      localStorage.setItem('agy-terminal-session-v1', JSON.stringify(session));
+    }, { session: makeSession('cadet@family.lab') });
+    await page.reload();
+
+    await expect(page.locator('#main-layout')).toBeVisible();
+    await expect(page.locator('#mascot-bubble-title')).toContainText('Hello Cadet!');
+
+    await page.locator('#prompt-input').fill('tell me a story');
+    await page.locator('#btn-send').click();
+
+    // Mock mode returns a canned story scene; the visual board should render it.
+    await expect(page.locator('#visual-board .story-text')).toContainText('Magic Castle', { timeout: 10000 });
   });
 });

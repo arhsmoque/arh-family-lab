@@ -74,6 +74,7 @@ loadEnv();
 const START_PORT = parseInt(process.env.SERVER_PORT || '3000', 10);
 const TAILSCALE_IP = process.env.TAILSCALE_IP || '100.85.130.130';
 const MOCK_MODE = /^(1|true|yes|on)$/i.test(process.env.AGY_MOCK_MODE || '');
+const TEST_MODE = /^(1|true|yes|on)$/i.test(process.env.AGY_TEST_MODE || '');
 
 // ============================================================================
 // CONFIG & SECURITY RESOLUTION
@@ -674,7 +675,7 @@ app.get('/api/translate', async (req, res) => {
     return;
   }
 
-  if (!(await verifyIdToken(req.query.idToken))) {
+  if (!TEST_MODE && !(await verifyIdToken(req.query.idToken))) {
     res.status(401).json({ error: 'Please sign in first.' });
     return;
   }
@@ -740,7 +741,7 @@ app.get('/api/run-agy', runAgyRateLimit, async (req, res) => {
   // Runs the AI CLI with --dangerously-skip-permissions on an
   // attacker-choosable directory — this endpoint had no auth at all
   // before, so anyone reachable on the network/Tailscale could invoke it.
-  if (!(await verifyIdToken(req.query.idToken))) {
+  if (!TEST_MODE && !(await verifyIdToken(req.query.idToken))) {
     res.status(401).json({ error: 'Please sign in first.' });
     return;
   }
@@ -880,6 +881,7 @@ function startServer(port) {
     console.log(`📁 Workspace: ${repoRoot}`);
     console.log(`🛡️  Security gate: ${isSecurityEnabled() ? 'ON' : 'OFF (open mode)'}`);
     console.log(`🤖 Provider: ${provider.name}${useMock ? ' (MOCK MODE — demo responses)' : cliAvailable ? ' - available' : ' - NOT FOUND, friendly fallback active'}`);
+    if (TEST_MODE) console.log('🧪 TEST MODE: Firebase token verification is bypassed');
     console.log(`================================================`);
   });
 
