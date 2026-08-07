@@ -114,7 +114,17 @@
 <script src="studio.config.js"></script>
 <!-- Optional gitignored secret override; a 404 here is harmless (it just doesn't define STUDIO_APP_CONFIG_LOCAL). -->
 <script src="studio.config.local.js"></script>
-<script src="firebase-rest.js"></script>
-<script src="app.js"></script>
+<script type="module" src="shared-bridge.mjs"></script>
+<script>
+  // Load app.js only after the shared-runtime bridge has set up window.Auth/Db.
+  import('./shared-bridge.mjs').then(() => {
+    const s = document.createElement('script');
+    s.src = 'app.js';
+    document.body.appendChild(s);
+  }).catch(err => {
+    console.error('Failed to load Studio shared runtime bridge:', err);
+    document.body.innerHTML = '<div style="padding:2rem;text-align:center"><h2>Studio failed to load</h2><p>' + err.message + '</p></div>';
+  });
+</script>
 </body>
 </html>

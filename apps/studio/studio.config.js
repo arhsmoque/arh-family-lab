@@ -21,7 +21,7 @@
   Realtime Database rules grant that specific email full read/write on the
   "studio" subtree; there is no separate secret or PIN to manage.
 */
-const STUDIO_APP_CONFIG = {
+window.STUDIO_APP_CONFIG = {
   firebase: {
     url: "https://arh-firebase-db-default-rtdb.asia-southeast1.firebasedatabase.app",
     root: "studio",
