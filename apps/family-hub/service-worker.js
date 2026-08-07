@@ -9,13 +9,15 @@ const ASSETS = [
   '/apps/family-hub/app.js',
   '/apps/family-hub/family.config.js',
   '/apps/family-hub/family.config.local.js',
+  '/apps/family-hub/shared-bridge.mjs',
   '/apps/family-hub/core/audio-fx.js',
   '/apps/family-hub/core/audit-log.js',
-  '/apps/family-hub/core/auth.js',
-  '/apps/family-hub/core/db.js',
   '/apps/family-hub/core/pin-security.js',
   '/apps/family-hub/core/store.js',
   '/shared/theme.css',
+  '/shared/runtime/config.js',
+  '/shared/runtime/auth.js',
+  '/shared/runtime/db.js',
   'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap'
 ];
 

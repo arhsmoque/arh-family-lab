@@ -97,10 +97,19 @@
   <script src="family.config.js"></script>
   <script src="core/audio-fx.js"></script>
   <script src="core/audit-log.js"></script>
-  <script src="core/auth.js"></script>
-  <script src="core/db.js"></script>
-  <script src="core/pin-security.js"></script>
-  <script src="core/store.js"></script>
-  <script src="app.js"></script>
+  <!-- Shared runtime bridge replaces legacy core/auth.js + core/db.js. -->
+  <script type="module" src="shared-bridge.mjs"></script>
+  <script>
+    import('./shared-bridge.mjs').then(() => {
+      ['core/pin-security.js', 'core/store.js', 'app.js'].forEach(src => {
+        const s = document.createElement('script');
+        s.src = src;
+        document.body.appendChild(s);
+      });
+    }).catch(err => {
+      console.error('Failed to load Family Hub shared runtime bridge:', err);
+      document.body.innerHTML = '<div style="padding:2rem;text-align:center"><h2>Family Hub failed to load</h2><p>' + err.message + '</p></div>';
+    });
+  </script>
 </body>
 </html>
