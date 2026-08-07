@@ -474,12 +474,12 @@ btnAuthSubmit.addEventListener('click', async () => {
     }
     State.session = session;
 
-    // Cache session locally for PowerShell 1-week TTL auto-login
+    // Cache session locally for PowerShell 1-week TTL auto-login.
+    // The PIN is never cached here — it is verified server-side when the
+    // auto-login URL includes it.
     const username = email.split('@')[0].toLowerCase();
-    const userPin = State.config?.parent?.pin || "1234";
     const cacheData = {
-      username: username,
-      pin: userPin,
+      username,
       createdAt: Date.now(),
       firebaseSession: session
     };
@@ -645,19 +645,23 @@ const ThemeEngine = {
         if (cachedSessionRaw) {
           const cached = JSON.parse(cachedSessionRaw);
           const oneWeekMs = 7 * 24 * 60 * 60 * 1000;
-          let pinOk = pin === cached.pin;
-          if (securityOn()) {
-            const result = await verifyPinRemote(pin);
-            pinOk = result.ok;
-            if (pinOk) State.adminPin = pin;
-          }
-          if (Date.now() - cached.createdAt < oneWeekMs && pinOk) {
-            State.session = cached.firebaseSession;
-            // Write back to main session storage to re-verify token
-            localStorage.setItem("agy-terminal-session-v1", JSON.stringify(cached.firebaseSession));
-            await loadAuthenticatedSession();
-            DomRenderer.log(`[System] Signed in automatically (cached login).`, 'system');
-            return;
+          if (Date.now() - cached.createdAt >= oneWeekMs) {
+            // Expired cache — fall through to normal session recovery.
+          } else {
+            let pinOk = true;
+            if (securityOn()) {
+              const result = await verifyPinRemote(pin);
+              pinOk = result.ok;
+              if (pinOk) State.adminPin = pin;
+            }
+            if (pinOk) {
+              State.session = cached.firebaseSession;
+              // Write back to main session storage to re-verify token
+              localStorage.setItem("agy-terminal-session-v1", JSON.stringify(cached.firebaseSession));
+              await loadAuthenticatedSession();
+              DomRenderer.log(`[System] Signed in automatically (cached login).`, 'system');
+              return;
+            }
           }
         }
       }
@@ -1827,8 +1831,8 @@ function loadParentSettingsForm() {
   // Security gate toggle
   document.getElementById('set-security-enabled').value = securityOn() ? 'true' : 'false';
 
-  // Safeguards & Persona Presets — PIN is hidden when security is ON (blank = unchanged)
-  document.getElementById('set-parent-pin').value = securityOn() ? '' : (config.parent.pin || '1234');
+  // Safeguards & Persona Presets — PIN is never shown here (blank = unchanged)
+  document.getElementById('set-parent-pin').value = '';
   document.getElementById('set-socratic-mode').value = config.engine.socraticMode !== false ? 'true' : 'false';
   document.getElementById('set-persona').value = config.engine.persona || 'socratic_teacher';
   document.getElementById('set-provider').value = config.engine.provider || 'mock';
@@ -1916,16 +1920,6 @@ btnSaveSettings.addEventListener('click', async () => {
       await Db.set(`users/${State.session.uid}/settings`, State.session.idToken, settingsOverride);
       State.config = deepMerge(State.config, settingsOverride);
       alert(I18n.t('cadetSettingsSaved'));
-    }
-
-    // Update local alias cache PIN so pwsh commands continue matching their new PIN setting
-    if (settingsOverride.parent.pin) {
-      const cachedSessionRaw = localStorage.getItem(`agy-session-user-${username}`);
-      if (cachedSessionRaw) {
-        const cached = JSON.parse(cachedSessionRaw);
-        cached.pin = settingsOverride.parent.pin;
-        localStorage.setItem(`agy-session-user-${username}`, JSON.stringify(cached));
-      }
     }
 
     ThemeEngine.applyTheme(State.config.theme);

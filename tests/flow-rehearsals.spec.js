@@ -191,39 +191,51 @@ async function startKidsServer() {
       ...process.env,
       AGY_MOCK_MODE: '1',
       AGY_TEST_MODE: '1',
-      SERVER_PORT: '3000',
+      SERVER_PORT: '0',
     },
   });
 
-  proc.stdout.on('data', (data) => console.log('[kids-server]', data.toString().trim()));
-  proc.stderr.on('data', (data) => console.error('[kids-server]', data.toString().trim()));
+  const port = await new Promise((resolve, reject) => {
+    let output = '';
+    const timer = setTimeout(() => reject(new Error('Kids Terminal server did not start in time')), 15000);
 
-  for (let i = 0; i < 30; i++) {
-    try {
-      const res = await fetch('http://localhost:3000/api/config');
-      if (res.ok) return proc;
-    } catch {
-      /* not ready yet */
-    }
-    await sleep(500);
-  }
-  throw new Error('Kids Terminal server did not start in time');
+    const onData = (data) => {
+      const text = data.toString();
+      output += text;
+      console.log('[kids-server]', text.trim());
+      const match = output.match(/Local:\s+http:\/\/localhost:(\d+)\/servers\/kids-terminal\//);
+      if (match) {
+        clearTimeout(timer);
+        proc.stdout.off('data', onData);
+        resolve(parseInt(match[1], 10));
+      }
+    };
+
+    proc.stdout.on('data', onData);
+    proc.stderr.on('data', (data) => console.error('[kids-server]', data.toString().trim()));
+    proc.on('error', (err) => {
+      clearTimeout(timer);
+      reject(err);
+    });
+  });
+
+  return { proc, port, baseUrl: `http://localhost:${port}/servers/kids-terminal/` };
 }
 
 test.describe('Kids Terminal', () => {
   test.describe.configure({ mode: 'serial' });
-  let server;
+  let kids;
 
   test.beforeAll(async () => {
-    server = await startKidsServer();
+    kids = await startKidsServer();
   });
 
   test.afterAll(() => {
-    if (server) server.kill();
+    if (kids?.proc) kids.proc.kill();
   });
 
   test('cadet asks for a story and sees a visual widget', async ({ page }) => {
-    await page.goto('http://localhost:3000/servers/kids-terminal/');
+    await page.goto(kids.baseUrl);
     await page.waitForLoadState('networkidle');
 
     // Sign in with a cached session so the cadet can use the terminal.

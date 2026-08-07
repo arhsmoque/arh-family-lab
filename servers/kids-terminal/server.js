@@ -559,9 +559,9 @@ app.get('/api/config', configRateLimit, (req, res) => {
     config.cliAvailable = provider.name === 'mock' ? true : checkCliAvailable(provider.executable);
     config.mockMode = MOCK_MODE || provider.name === 'mock';
 
-    // When security is ON, never leak the parent PIN in plaintext — serve a boolean
-    if (securityOn) {
-      const pinSet = !!(process.env.PARENT_PIN || config.parent.pin);
+    // Never leak the parent PIN to the client. Verification happens via /api/verify-pin.
+    const pinSet = !!(process.env.PARENT_PIN || config.parent?.pin);
+    if (config.parent) {
       config.parent = { ...config.parent, pinSet };
       delete config.parent.pin;
     }
@@ -871,13 +871,14 @@ process.on('uncaughtException', (err) => {
 
 function startServer(port) {
   const server = app.listen(port, '0.0.0.0', () => {
+    const actualPort = server.address().port;
     const provider = resolveProvider();
     const useMock = MOCK_MODE || provider.name === 'mock';
     const cliAvailable = useMock ? false : checkCliAvailable(provider.executable);
     console.log(`================================================`);
     console.log(`🚀 Agy Cadet Space Station Server Running!`);
-    console.log(`🌐 Local: http://localhost:${port}/servers/kids-terminal/`);
-    console.log(`🔒 Tailscale: http://${TAILSCALE_IP}:${port}/servers/kids-terminal/`);
+    console.log(`🌐 Local: http://localhost:${actualPort}/servers/kids-terminal/`);
+    console.log(`🔒 Tailscale: http://${TAILSCALE_IP}:${actualPort}/servers/kids-terminal/`);
     console.log(`📁 Workspace: ${repoRoot}`);
     console.log(`🛡️  Security gate: ${isSecurityEnabled() ? 'ON' : 'OFF (open mode)'}`);
     console.log(`🤖 Provider: ${provider.name}${useMock ? ' (MOCK MODE — demo responses)' : cliAvailable ? ' - available' : ' - NOT FOUND, friendly fallback active'}`);
