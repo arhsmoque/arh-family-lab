@@ -710,4 +710,8 @@ function readFileAsDataUrl(file) {
   });
 }
 
-boot();
+export function mount({ manifest, plugins }) {
+  // Deckmate is currently local-only; the shared runtime is available here
+  // for future Firebase-backed deck sync. For now we just boot the existing app.
+  boot();
+}

@@ -1,7 +1,6 @@
 {
-  "name": "presentation",
-  "title": "Deckmate",
+  "name": "deckmate",
+  "plugins": ["config", "ui"],
   "entry": "./app.js",
-  "plugins": ["ui"],
-  "configKey": null
+  "configKey": "DECKMATE_CONFIG"
 }

@@ -31,9 +31,7 @@ async function loadPlugins(manifest) {
 }
 
 async function main() {
-  // Find the app folder from the current path, e.g. /apps/family-hub/
-  const appPath = window.location.pathname.replace(/\/$/, "").split("/").pop();
-  const manifestUrl = "./manifest.json";
+  const manifestUrl = new URL("manifest.json", window.location.href).href;
 
   let manifest;
   try {
@@ -47,7 +45,8 @@ async function main() {
 
   const plugins = await loadPlugins(manifest);
   const entry = manifest.entry || "./app.js";
-  const appModule = await import(entry);
+  const entryUrl = new URL(entry, manifestUrl).href;
+  const appModule = await import(entryUrl);
 
   if (typeof appModule.mount !== "function") {
     throw new Error(`App ${manifest.name} does not export a mount() function`);
