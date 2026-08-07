@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "status": "draft",
+  "contract_id": "",
+  "contract_sha256": "",
+  "approved_by": "",
+  "approved_at": "",
+  "permitted_adaptations": ["responsive_layout_adaptation", "real_content_length_accommodation"],
+  "reapproval_triggers": ["presentation_family_change", "semantic_palette_change", "typography_identity_change", "navigation_model_change", "major_component_treatment_change"],
+  "preview_artifacts": [],
+  "validation_receipt": "",
+  "known_limits": []
+}

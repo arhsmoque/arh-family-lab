@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "id": "clear-everyday-community-v1",
+  "label": "Clear Everyday",
+  "presentation_family": "clear_everyday",
+  "desired_feeling": "Direct, welcoming, practical, and easy to trust without looking institutional.",
+  "audience": {"digital_confidence": "low_to_mixed", "reading_comfort": "mixed", "age_mix": "mixed"},
+  "domain_adapters": ["community_and_public_facing_services"],
+  "direction": {"layout_rhythm": "direct_task_first_sections", "imagery_policy": "recognizable_local_context_never_replacing_facts", "motion_policy": "still_by_default", "forbidden_traits": ["institutional_dashboard", "hidden_eligibility", "digital_only_route", "unexplained_acronyms"]},
+  "tokens": {
+    "color": {
+      "canvas": "#F8F7F3", "surface": "#E9F0EE", "surface_raised": "#FFFFFF",
+      "text_primary": "#242A2C", "text_secondary": "#4F5C60", "action_primary": "#20545A",
+      "on_action_primary": "#FFFFFF", "accent": "#875011", "on_accent": "#FFFFFF",
+      "border": "#9AA9A9", "focus": "#603D91", "error": "#922B21", "on_error": "#FFFFFF"
+    },
+    "typography": {"display_stack": "system-ui, 'Segoe UI', sans-serif", "body_stack": "system-ui, 'Segoe UI', sans-serif", "base_px": 18, "line_height": 1.55},
+    "shape": {"control_radius_px": 6, "card_radius_px": 10},
+    "spacing": {"section_gap_px": 56}
+  },
+  "safety": {"wcag_target": "AA", "reduced_motion": true, "color_only_meaning": false, "focus_visible": true, "minimum_target_css_px": 48},
+  "required_states": ["first_screen", "navigation", "information_list", "detail", "primary_action", "form", "success", "validation_error", "empty", "missing_media", "loading", "offline_or_failure", "help_or_contact", "narrow_mobile", "desktop", "enlarged_text_reflow", "keyboard_focus", "reduced_motion", "long_or_translated_content"]
+}

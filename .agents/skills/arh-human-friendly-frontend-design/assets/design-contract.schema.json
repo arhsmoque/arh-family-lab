@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arh.local/schemas/human-friendly-design-contract.v1.json",
+  "title": "ARH Human-Friendly Design Contract v1",
+  "type": "object",
+  "required": ["schema_version", "id", "presentation_family", "audience", "direction", "tokens", "safety", "required_states"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "id": {"type": "string", "minLength": 1},
+    "label": {"type": "string"},
+    "presentation_family": {"enum": ["calm_domestic", "quiet_editorial", "clear_everyday", "local_crafted", "gentle_wellbeing", "lively_community"]},
+    "audience": {"type": "object"},
+    "domain_adapters": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "direction": {
+      "type": "object",
+      "required": ["layout_rhythm", "imagery_policy", "motion_policy", "forbidden_traits"],
+      "properties": {
+        "layout_rhythm": {"type": "string", "minLength": 1},
+        "imagery_policy": {"type": "string", "minLength": 1},
+        "motion_policy": {"type": "string", "minLength": 1},
+        "forbidden_traits": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      },
+      "additionalProperties": true
+    },
+    "tokens": {
+      "type": "object",
+      "required": ["color", "typography", "shape", "spacing"],
+      "properties": {
+        "color": {
+          "type": "object",
+          "required": ["canvas", "surface", "surface_raised", "text_primary", "text_secondary", "action_primary", "on_action_primary", "accent", "on_accent", "border", "focus", "error", "on_error"],
+          "propertyNames": {"pattern": "^[a-z][a-z0-9_]*$"},
+          "additionalProperties": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"}
+        },
+        "typography": {
+          "type": "object",
+          "required": ["display_stack", "body_stack", "base_px", "line_height"],
+          "properties": {
+            "display_stack": {"type": "string", "pattern": "^[A-Za-z0-9 ,.'\\\"-]+$"},
+            "body_stack": {"type": "string", "pattern": "^[A-Za-z0-9 ,.'\\\"-]+$"},
+            "base_px": {"type": "number", "minimum": 16, "maximum": 32},
+            "line_height": {"type": "number", "minimum": 1.2, "maximum": 2.0}
+          }
+        },
+        "shape": {
+          "type": "object",
+          "required": ["control_radius_px", "card_radius_px"],
+          "properties": {
+            "control_radius_px": {"type": "number", "minimum": 0, "maximum": 64},
+            "card_radius_px": {"type": "number", "minimum": 0, "maximum": 64}
+          }
+        },
+        "spacing": {
+          "type": "object",
+          "required": ["section_gap_px"],
+          "properties": {"section_gap_px": {"type": "number", "minimum": 16, "maximum": 192}}
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "required": ["wcag_target", "reduced_motion", "color_only_meaning", "focus_visible", "minimum_target_css_px"],
+      "properties": {
+        "wcag_target": {"const": "AA"},
+        "reduced_motion": {"const": true},
+        "color_only_meaning": {"const": false},
+        "focus_visible": {"const": true},
+        "minimum_target_css_px": {"type": "number", "minimum": 24}
+      }
+    },
+    "required_states": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+  },
+  "additionalProperties": true
+}

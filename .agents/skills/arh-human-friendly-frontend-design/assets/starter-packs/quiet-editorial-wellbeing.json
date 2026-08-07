@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "id": "quiet-editorial-wellbeing-v1",
+  "label": "Quiet Editorial",
+  "presentation_family": "quiet_editorial",
+  "desired_feeling": "Mature, spacious, humane, and calm without appearing clinical or luxurious.",
+  "audience": {"digital_confidence": "mixed", "reading_comfort": "mixed", "age_mix": "adults"},
+  "domain_adapters": ["wellbeing_and_support"],
+  "direction": {"layout_rhythm": "spacious_editorial_blocks", "imagery_policy": "quiet_human_documentary_with_clear_help", "motion_policy": "minimal_and_optional", "forbidden_traits": ["clinical_dashboard", "forced_positivity", "faint_text", "guilt_streaks"]},
+  "tokens": {
+    "color": {
+      "canvas": "#F7F4EE", "surface": "#ECEFEA", "surface_raised": "#FFFFFF",
+      "text_primary": "#292825", "text_secondary": "#5C5953", "action_primary": "#365846",
+      "on_action_primary": "#FFFFFF", "accent": "#8A4335", "on_accent": "#FFFFFF",
+      "border": "#A9A79F", "focus": "#63458A", "error": "#8E2F2A", "on_error": "#FFFFFF"
+    },
+    "typography": {"display_stack": "Georgia, 'Times New Roman', serif", "body_stack": "system-ui, 'Segoe UI', sans-serif", "base_px": 18, "line_height": 1.6},
+    "shape": {"control_radius_px": 8, "card_radius_px": 14},
+    "spacing": {"section_gap_px": 72}
+  },
+  "safety": {"wcag_target": "AA", "reduced_motion": true, "color_only_meaning": false, "focus_visible": true, "minimum_target_css_px": 44},
+  "required_states": ["first_screen", "navigation", "information_list", "detail", "primary_action", "form", "success", "validation_error", "empty", "missing_media", "loading", "offline_or_failure", "help_or_contact", "narrow_mobile", "desktop", "enlarged_text_reflow", "keyboard_focus", "reduced_motion", "long_or_translated_content"]
+}

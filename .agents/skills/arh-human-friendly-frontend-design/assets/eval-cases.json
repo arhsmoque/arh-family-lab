@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {"id": "family-journal", "should_trigger": true, "request": "Make this family learning journal warm and modern without becoming childish or competitive.", "expected_adapters": ["family_and_multigenerational", "education_and_learning"], "candidate_families": ["calm_domestic", "quiet_editorial"]},
+    {"id": "community-aid", "should_trigger": true, "request": "Make this neighbourhood aid form approachable for older Android phones and second-language readers.", "expected_adapters": ["community_and_public_facing_services"], "candidate_families": ["clear_everyday"]},
+    {"id": "local-food", "should_trigger": true, "request": "Give this home food business a trustworthy local feel without fake luxury or autoplay media.", "expected_adapters": ["food_and_local_commerce"], "candidate_families": ["local_crafted", "calm_domestic"]},
+    {"id": "wellbeing", "should_trigger": true, "request": "Make this wellbeing check-in calm and humane without looking clinical or using guilt streaks.", "expected_adapters": ["wellbeing_and_support"], "candidate_families": ["gentle_wellbeing", "quiet_editorial"]},
+    {"id": "education", "should_trigger": true, "request": "Design a clear learning task flow with saved drafts and non-punitive feedback.", "expected_adapters": ["education_and_learning"], "candidate_families": ["clear_everyday", "quiet_editorial"]},
+    {"id": "household", "should_trigger": true, "request": "Simplify this shared household utility while keeping ownership, stale status, undo, and offline recovery visible.", "expected_adapters": ["household_and_family_utilities"], "candidate_families": ["clear_everyday", "calm_domestic"]},
+    {"id": "local-professional", "should_trigger": true, "request": "Make this local practitioner booking site feel lifestyle-oriented but keep scope, availability, cost, cancellation, and privacy clear.", "expected_adapters": ["local_professional_and_lifestyle_services"], "candidate_families": ["quiet_editorial", "local_crafted"]},
+    {"id": "mixed-new-domain", "should_trigger": true, "request": "Establish an accessible, non-corporate direction for a new everyday service that does not fit an existing domain.", "expected_adapters": ["mixed_or_new_domain"], "candidate_families": ["clear_everyday", "lively_community"]},
+    {"id": "nontrigger-database", "should_trigger": false, "request": "Optimize a PostgreSQL query for a nightly warehouse job; no interface is involved.", "expected_adapters": [], "candidate_families": []}
+  ]
+}

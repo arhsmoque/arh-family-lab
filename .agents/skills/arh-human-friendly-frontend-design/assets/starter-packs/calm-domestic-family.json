@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "id": "calm-domestic-family-v1",
+  "label": "Calm Domestic",
+  "presentation_family": "calm_domestic",
+  "desired_feeling": "Warm, safe, respectful, and family-oriented without becoming childish.",
+  "audience": {"digital_confidence": "mixed", "reading_comfort": "everyday", "age_mix": "multigenerational"},
+  "domain_adapters": ["family_and_multigenerational"],
+  "direction": {"layout_rhythm": "calm_modular_sections", "imagery_policy": "warm_documentary_people_and_home_context", "motion_policy": "gentle_and_optional", "forbidden_traits": ["mascots_by_default", "rainbow_navigation", "childish_buttons", "academic_ranking"]},
+  "tokens": {
+    "color": {
+      "canvas": "#FAF6F0", "surface": "#F1E9DE", "surface_raised": "#FFFFFF",
+      "text_primary": "#3A3530", "text_secondary": "#675F57", "action_primary": "#455F4C",
+      "on_action_primary": "#FFFFFF", "accent": "#984B36", "on_accent": "#FFFFFF",
+      "border": "#B8AA9A", "focus": "#6A3F8C", "error": "#922B21", "on_error": "#FFFFFF"
+    },
+    "typography": {"display_stack": "Georgia, 'Iowan Old Style', serif", "body_stack": "system-ui, 'Segoe UI', sans-serif", "base_px": 18, "line_height": 1.55},
+    "shape": {"control_radius_px": 10, "card_radius_px": 18},
+    "spacing": {"section_gap_px": 64}
+  },
+  "safety": {"wcag_target": "AA", "reduced_motion": true, "color_only_meaning": false, "focus_visible": true, "minimum_target_css_px": 44},
+  "required_states": ["first_screen", "navigation", "information_list", "detail", "primary_action", "form", "success", "validation_error", "empty", "missing_media", "loading", "offline_or_failure", "help_or_contact", "narrow_mobile", "desktop", "enlarged_text_reflow", "keyboard_focus", "reduced_motion", "long_or_translated_content"]
+}
