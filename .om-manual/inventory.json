@@ -1,0 +1,1150 @@
+{
+  "target": "D:\\ARH-GITHUB\\arh-family-lab",
+  "generated_at": "2026-08-07T07:06:45+00:00",
+  "file_count": 188,
+  "by_category": {
+    "docs": 26,
+    "other": 30,
+    "config": 28,
+    "code": 104
+  },
+  "skipped_large_files": 11,
+  "skipped_binary_files": 2,
+  "stack_hints": [
+    "apps/kids-grades-garden/package.json",
+    "clinical/cpr-scenario-lab-v1/package.json",
+    "clinical/ecc-react-lab/package.json",
+    "package.json",
+    "servers/kids-terminal/package.json"
+  ],
+  "files": [
+    {
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md",
+      "size": 9639,
+      "sha1": "79a49f4ba39ecb14a2219b1c578167f6fecb4788",
+      "category": "docs"
+    },
+    {
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/assets/pages-deploy.yml.template",
+      "size": 1911,
+      "sha1": "8883dd1b767b1783247dd9e46bd7312da736bf09",
+      "category": "other"
+    },
+    {
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/assets/verify-deploy-unit.mjs",
+      "size": 7224,
+      "sha1": "240ad877067557b6ef0f25f59a7d154cda5fd225",
+      "category": "other"
+    },
+    {
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/assets/worker-deploy.yml.template",
+      "size": 2118,
+      "sha1": "e7eaa053c72d3034d9826e1f55bc826fbfdda38f",
+      "category": "other"
+    },
+    {
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/assets/wrangler.pages.toml.template",
+      "size": 366,
+      "sha1": "bd89a4c851aaafbc0822f470d0d7f965847f8fbf",
+      "category": "other"
+    },
+    {
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/assets/wrangler.worker.toml.template",
+      "size": 863,
+      "sha1": "36bec45ff0010d1cf4728b12957f69bb275a7293",
+      "category": "other"
+    },
+    {
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/references/known-pitfalls.md",
+      "size": 5144,
+      "sha1": "4e103fd755df46bdf1ccf7281856d883cf03a142",
+      "category": "docs"
+    },
+    {
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/references/required-secrets.md",
+      "size": 2568,
+      "sha1": "3dac12c5bbd09d66b7c16f88d266106accfac0c1",
+      "category": "docs"
+    },
+    {
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/references/supabase-ci-migration.md",
+      "size": 2847,
+      "sha1": "2482a5f79fddce365029311dc404a11e7fec35d0",
+      "category": "docs"
+    },
+    {
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/references/worker-from-script.md",
+      "size": 3466,
+      "sha1": "b712afc24420f3617be3e939f312dd998b730cb2",
+      "category": "docs"
+    },
+    {
+      "path": ".claude/skills/arh-universal-frontend-design/SKILL.md",
+      "size": 1725,
+      "sha1": "9c88757cf16932038bedbe9e78b8512031d589d9",
+      "category": "docs"
+    },
+    {
+      "path": ".claude/skills/arh-universal-frontend-design/references/repo-profile.md",
+      "size": 797,
+      "sha1": "077b822496862bbe48621d69fa46ca7a1e3c9aab",
+      "category": "docs"
+    },
+    {
+      "path": ".cloudflareignore",
+      "size": 70,
+      "sha1": "11c699bd7db00c810afbcf8dae7f35a1a670a438",
+      "category": "other"
+    },
+    {
+      "path": ".github/workflows/deploy-cloudflare-pages.yml",
+      "size": 2053,
+      "sha1": "b46b9770b1a18d72022ae0ba70b3a81a92cf62e7",
+      "category": "config"
+    },
+    {
+      "path": ".github/workflows/pages.yml",
+      "size": 1410,
+      "sha1": "154ac7c701728b5afd1624d542cc07caf35834c9",
+      "category": "config"
+    },
+    {
+      "path": ".github/workflows/sync-secrets.yml",
+      "size": 1362,
+      "sha1": "6105b4ba0d84b38fa5a52f2d17292e8976b25202",
+      "category": "config"
+    },
+    {
+      "path": ".gitignore",
+      "size": 355,
+      "sha1": "19a8bdf0051c48eac5f6e88b340de0528ca64b7a",
+      "category": "config"
+    },
+    {
+      "path": ".gitmodules",
+      "size": 136,
+      "sha1": "a199a23bc21ae9b812866190d3935bf6e60d9ae6",
+      "category": "other"
+    },
+    {
+      "path": ".infisical.json",
+      "size": 134,
+      "sha1": "b8d3422d53beef3476f3304043a2b270116cbf13",
+      "category": "config"
+    },
+    {
+      "path": "AGENTS.md",
+      "size": 4536,
+      "sha1": "f75c8d87ab0e25d2f65ed196a7178e59782910fa",
+      "category": "docs"
+    },
+    {
+      "path": "ARCHITECTURE.md",
+      "size": 8414,
+      "sha1": "47ee82f118ff09a7c252b661e4792c46d255d487",
+      "category": "docs"
+    },
+    {
+      "path": "README.md",
+      "size": 5653,
+      "sha1": "922098faf0b0f55d07d76cb15df90462d92a55e4",
+      "category": "docs"
+    },
+    {
+      "path": "SECRETS.md",
+      "size": 6835,
+      "sha1": "e8370998c47de639288a33f7a96f5ea33afc1a33",
+      "category": "docs"
+    },
+    {
+      "path": "apps/family-hub/README.md",
+      "size": 811,
+      "sha1": "896481c2fc42c7ca2f5280711160ade3e88bd997",
+      "category": "docs"
+    },
+    {
+      "path": "apps/family-hub/SETUP.md",
+      "size": 4709,
+      "sha1": "6c4c4a9ee17f7e889773372ebe02d70b0d7e5b5c",
+      "category": "docs"
+    },
+    {
+      "path": "apps/family-hub/app.css",
+      "size": 17454,
+      "sha1": "a8f7f995a993feb57834b3620c9a76fe9560d697",
+      "category": "code"
+    },
+    {
+      "path": "apps/family-hub/app.js",
+      "size": 41184,
+      "sha1": "a9fed01568dd9b0cc5c7667a183e6f7b08af51ce",
+      "category": "code"
+    },
+    {
+      "path": "apps/family-hub/core/audio-fx.js",
+      "size": 1919,
+      "sha1": "d25a4fd0cd07fbdc2030e81a6ac8884368265ed4",
+      "category": "code"
+    },
+    {
+      "path": "apps/family-hub/core/audit-log.js",
+      "size": 2809,
+      "sha1": "c15784c8b31fcd0689e61efc107931aff84656a4",
+      "category": "code"
+    },
+    {
+      "path": "apps/family-hub/core/auth.js",
+      "size": 3621,
+      "sha1": "f80da4c33fc9b57ae6d6bfafb898949232274632",
+      "category": "code"
+    },
+    {
+      "path": "apps/family-hub/core/db.js",
+      "size": 1587,
+      "sha1": "f22089e3d313ad070a2ca19285210b7f98286ab1",
+      "category": "code"
+    },
+    {
+      "path": "apps/family-hub/core/pin-security.js",
+      "size": 3313,
+      "sha1": "4cccf1aca547ce2cf071d153055022ac30f90ba8",
+      "category": "code"
+    },
+    {
+      "path": "apps/family-hub/core/store.js",
+      "size": 10681,
+      "sha1": "be2eb6e32b19f4cf0eb27f4ed84b757cc699efcc",
+      "category": "code"
+    },
+    {
+      "path": "apps/family-hub/family.config.js",
+      "size": 708,
+      "sha1": "7d1fdba9cbb036e05736d0afb7b3bbda48246c4f",
+      "category": "code"
+    },
+    {
+      "path": "apps/family-hub/family.config.local.js",
+      "size": 292,
+      "sha1": "e217263a52699351fd3f28e239f0228fcf55b082",
+      "category": "code"
+    },
+    {
+      "path": "apps/family-hub/index.html",
+      "size": 5478,
+      "sha1": "51efe497a2f8b29d30818ea18bc6f1fa47f31894",
+      "category": "code"
+    },
+    {
+      "path": "apps/family-hub/manifest.json",
+      "size": 156,
+      "sha1": "cb6d8a9a69d543092fc9455c3409ce9a015240fa",
+      "category": "config"
+    },
+    {
+      "path": "apps/family-hub/manifest.webmanifest",
+      "size": 640,
+      "sha1": "21a32ecb5297262d65a7eb4b1e4185416d9cf114",
+      "category": "other"
+    },
+    {
+      "path": "apps/family-hub/service-worker.js",
+      "size": 2648,
+      "sha1": "ecf8d8fec87577f9aaec1e5408961826a211645a",
+      "category": "code"
+    },
+    {
+      "path": "apps/family-hub/shared-bridge.mjs",
+      "size": 1777,
+      "sha1": "ed17d52e4d0066c411a7caa78cf712dddc8f4e11",
+      "category": "other"
+    },
+    {
+      "path": "apps/family-hub/test/smoke.js",
+      "size": 1477,
+      "sha1": "addb0e3abe6da54ed3e1ce027cdf856800aad460",
+      "category": "code"
+    },
+    {
+      "path": "apps/kids-grades-garden/.firebaserc.example",
+      "size": 64,
+      "sha1": "4a21f9e6f4f667342a6a8a5ba059ef6098936af9",
+      "category": "other"
+    },
+    {
+      "path": "apps/kids-grades-garden/.git",
+      "size": 51,
+      "sha1": "1825bbcd4e4a7cd1836a3ab17e3be1b3de5b63c7",
+      "category": "other"
+    },
+    {
+      "path": "apps/kids-grades-garden/.github/workflows/ci.yml",
+      "size": 625,
+      "sha1": "d1549b225c7e70817bfc4d58fb07de0810adf730",
+      "category": "config"
+    },
+    {
+      "path": "apps/kids-grades-garden/.github/workflows/deploy.yml",
+      "size": 1223,
+      "sha1": "c3a7b7dc62f9ed221de33040c3d39a16d3137771",
+      "category": "config"
+    },
+    {
+      "path": "apps/kids-grades-garden/.gitignore",
+      "size": 137,
+      "sha1": "13bde8ae539498b04827be7ae8f5c42814536d2c",
+      "category": "config"
+    },
+    {
+      "path": "apps/kids-grades-garden/.node-version",
+      "size": 11,
+      "sha1": "84092f8a805a55f8d6e0c6b65aeb09ddcdf746cc",
+      "category": "other"
+    },
+    {
+      "path": "apps/kids-grades-garden/AGENTS.md",
+      "size": 927,
+      "sha1": "32e6b4ba857d0aeeeb35f486a9a117dbf69e802b",
+      "category": "docs"
+    },
+    {
+      "path": "apps/kids-grades-garden/DESIGN.md",
+      "size": 1818,
+      "sha1": "af1ffe97e3a6971b20a116519964fca474ca22cf",
+      "category": "docs"
+    },
+    {
+      "path": "apps/kids-grades-garden/README.md",
+      "size": 637,
+      "sha1": "ce0277a0fe93c901d674645e36bc4cbf5d34dd9c",
+      "category": "docs"
+    },
+    {
+      "path": "apps/kids-grades-garden/SETUP.md",
+      "size": 1643,
+      "sha1": "fc71d8bf98ec996666685df37b4ae628c04dcf2f",
+      "category": "docs"
+    },
+    {
+      "path": "apps/kids-grades-garden/database.rules.json",
+      "size": 2970,
+      "sha1": "969965d549851bb7801bdc2092b33b3535647d32",
+      "category": "config"
+    },
+    {
+      "path": "apps/kids-grades-garden/dev-journal.md",
+      "size": 2857,
+      "sha1": "e70306dee21fbb27b767c8d6d4f3ac422b634923",
+      "category": "docs"
+    },
+    {
+      "path": "apps/kids-grades-garden/firebase.json",
+      "size": 256,
+      "sha1": "8764477de030fb2deb8d9860381395c19c21454e",
+      "category": "config"
+    },
+    {
+      "path": "apps/kids-grades-garden/handoff.md",
+      "size": 2690,
+      "sha1": "d217cda52aadf38daa8961b028d288fbff0bf490",
+      "category": "docs"
+    },
+    {
+      "path": "apps/kids-grades-garden/index.html",
+      "size": 300,
+      "sha1": "b55e4b2443fd4470e4df13464e5cce52eca55c2d",
+      "category": "code"
+    },
+    {
+      "path": "apps/kids-grades-garden/package.json",
+      "size": 840,
+      "sha1": "87b31d9ff02bd3669f60dfbd9f5f595e969f8127",
+      "category": "config"
+    },
+    {
+      "path": "apps/kids-grades-garden/pnpm-workspace.yaml",
+      "size": 1290,
+      "sha1": "fc6358bc129cf997c137cc6e9028db1081c73dd6",
+      "category": "config"
+    },
+    {
+      "path": "apps/kids-grades-garden/public/app.js",
+      "size": 20775,
+      "sha1": "09452901d3bbdefbf22edc0fcb25401debf42212",
+      "category": "code"
+    },
+    {
+      "path": "apps/kids-grades-garden/public/firebase-config.js",
+      "size": 273,
+      "sha1": "52b9117212e49a216a2eb8d7a1fe1afb14682bed",
+      "category": "code"
+    },
+    {
+      "path": "apps/kids-grades-garden/public/firebase-rest.js",
+      "size": 3479,
+      "sha1": "2c69c93c8791364a3b7879cee88c820a34ee781f",
+      "category": "code"
+    },
+    {
+      "path": "apps/kids-grades-garden/public/index.html",
+      "size": 13323,
+      "sha1": "61676855b1bb9f63007df3e38984eaae08898d56",
+      "category": "code"
+    },
+    {
+      "path": "apps/kids-grades-garden/public/manifest.webmanifest",
+      "size": 275,
+      "sha1": "729a15653c4a10fc260b3d2bd45b0abc21cae511",
+      "category": "other"
+    },
+    {
+      "path": "apps/kids-grades-garden/public/model.js",
+      "size": 2420,
+      "sha1": "0318c73d2c6d0ecef4d2d36714f51340bd14645f",
+      "category": "code"
+    },
+    {
+      "path": "apps/kids-grades-garden/public/pin-lock.js",
+      "size": 1080,
+      "sha1": "df34f63ab0cfe47171ece03622b26dbe78e8eb93",
+      "category": "code"
+    },
+    {
+      "path": "apps/kids-grades-garden/public/styles.css",
+      "size": 19999,
+      "sha1": "9eaa30fc04c76586e3c9101d57748ce3334f0c0f",
+      "category": "code"
+    },
+    {
+      "path": "apps/kids-grades-garden/public/sw.js",
+      "size": 924,
+      "sha1": "451643d4771edc501624034a7ddae419be5fa097",
+      "category": "code"
+    },
+    {
+      "path": "apps/kids-grades-garden/tests/database.rules.test.js",
+      "size": 2113,
+      "sha1": "a1c75186ce0d49641d5b7eb34825c3fc9339ece9",
+      "category": "code"
+    },
+    {
+      "path": "apps/kids-grades-garden/tests/model.test.js",
+      "size": 1785,
+      "sha1": "b260ff44b7e278ef428187c87248b84e90058d2c",
+      "category": "code"
+    },
+    {
+      "path": "apps/kids-grades-garden/wrangler.jsonc",
+      "size": 296,
+      "sha1": "46da86fdf16390cae1a6a4f83283e5c68b0c7722",
+      "category": "other"
+    },
+    {
+      "path": "apps/presentation/app.js",
+      "size": 24462,
+      "sha1": "a3586c7144f458cfadcfc6af66a1d5fc19a76b5f",
+      "category": "code"
+    },
+    {
+      "path": "apps/presentation/deck-core.js",
+      "size": 8048,
+      "sha1": "766cb82b670ab77604ed17d8b11e952e645f85b9",
+      "category": "code"
+    },
+    {
+      "path": "apps/presentation/deck-modules.js",
+      "size": 3136,
+      "sha1": "c2b43545cfbd648304a6fe7d37798da7f7c85ded",
+      "category": "code"
+    },
+    {
+      "path": "apps/presentation/deckmate.config.js",
+      "size": 236,
+      "sha1": "fc8e349c587dcd76f16ae9d08e03e2f87d3a35fd",
+      "category": "code"
+    },
+    {
+      "path": "apps/presentation/i18n.js",
+      "size": 9850,
+      "sha1": "747217c3129f64a735fd1dfb6f0d02b43327fb69",
+      "category": "code"
+    },
+    {
+      "path": "apps/presentation/index.html",
+      "size": 9321,
+      "sha1": "59fe2def49e250780049e90d6a112bcb6d022ad0",
+      "category": "code"
+    },
+    {
+      "path": "apps/presentation/manifest.json",
+      "size": 113,
+      "sha1": "cd8d62941300c579f69e4b8b5ff8d70ce2f574e3",
+      "category": "config"
+    },
+    {
+      "path": "apps/presentation/slide-renderer.js",
+      "size": 6064,
+      "sha1": "967a208277269f593d9e04ed0ec8a09a173d1eef",
+      "category": "code"
+    },
+    {
+      "path": "apps/presentation/storage-port.js",
+      "size": 2638,
+      "sha1": "039c78c2656f2b0e04cfbadc307a6e3d58d459be",
+      "category": "code"
+    },
+    {
+      "path": "apps/presentation/style.css",
+      "size": 10977,
+      "sha1": "fcd4f81ee661c7baeeabf8069e3277bffb24f902",
+      "category": "code"
+    },
+    {
+      "path": "apps/studio/SETUP.md",
+      "size": 6471,
+      "sha1": "bc52bd7c5ecef2d55a22533666fa10993291e294",
+      "category": "docs"
+    },
+    {
+      "path": "apps/studio/app.js",
+      "size": 28368,
+      "sha1": "5263442e7e74ca9775a26cba5676eab510f5b1e2",
+      "category": "code"
+    },
+    {
+      "path": "apps/studio/dev.html",
+      "size": 4812,
+      "sha1": "f1ac02fc9f28ae29ccdefdb8996c28cfc92e5bb9",
+      "category": "code"
+    },
+    {
+      "path": "apps/studio/dev.js",
+      "size": 6623,
+      "sha1": "aed0c96a4e21a3c67bf0ff45a03527b1d94c4768",
+      "category": "code"
+    },
+    {
+      "path": "apps/studio/firebase-rest.js",
+      "size": 5863,
+      "sha1": "9edb131bb6f07d07b6d74df158b6f5c7030a2ad1",
+      "category": "code"
+    },
+    {
+      "path": "apps/studio/index.html",
+      "size": 6502,
+      "sha1": "28689edf7ba059111d8364ec5f023c60f11c4fa7",
+      "category": "code"
+    },
+    {
+      "path": "apps/studio/manifest.json",
+      "size": 148,
+      "sha1": "4f89b0226ec46213c06c8bc428f171c61c4e25ee",
+      "category": "config"
+    },
+    {
+      "path": "apps/studio/shared-bridge.mjs",
+      "size": 2190,
+      "sha1": "7fb4d36855b34a54838877d2d1eda4d8139d9fb9",
+      "category": "other"
+    },
+    {
+      "path": "apps/studio/studio.config.js",
+      "size": 2603,
+      "sha1": "c79b9726fe16463dec1e862480b4a6c882c8fefd",
+      "category": "code"
+    },
+    {
+      "path": "apps/studio/studio.config.local.js",
+      "size": 300,
+      "sha1": "2d3f293334bb58548101deaf9b1e063f5f1aab9a",
+      "category": "code"
+    },
+    {
+      "path": "apps/studio/style.css",
+      "size": 6242,
+      "sha1": "9d3d794611ae2b9a940ca19cb523460e6c324120",
+      "category": "code"
+    },
+    {
+      "path": "clinical.html",
+      "size": 10043,
+      "sha1": "70d7e7937587193bb16dc951b93661afb18e0d75",
+      "category": "code"
+    },
+    {
+      "path": "clinical/cpr-komuniti-v0/README.md",
+      "size": 748,
+      "sha1": "aa1cff0365ff119d97b4debe41ead852876a7732",
+      "category": "docs"
+    },
+    {
+      "path": "clinical/cpr-komuniti-v0/app.css",
+      "size": 8090,
+      "sha1": "592ea12f815012e3b6f7791be74d8d7a1de875a6",
+      "category": "code"
+    },
+    {
+      "path": "clinical/cpr-komuniti-v0/app.js",
+      "size": 6696,
+      "sha1": "7ba29753859dc4419dca2efe92a30457487888cf",
+      "category": "code"
+    },
+    {
+      "path": "clinical/cpr-komuniti-v0/content.js",
+      "size": 6713,
+      "sha1": "3638a5219f9455e98ec07f4e7b09c7cd63226a33",
+      "category": "code"
+    },
+    {
+      "path": "clinical/cpr-komuniti-v0/index.html",
+      "size": 5759,
+      "sha1": "ea3b8324b6a25bf080c616623a7982292f0da1d5",
+      "category": "code"
+    },
+    {
+      "path": "clinical/cpr-komuniti-v0/manifest.webmanifest",
+      "size": 244,
+      "sha1": "e23bfd8291cb998ff27b07ab3dce5103c4615bdf",
+      "category": "other"
+    },
+    {
+      "path": "clinical/cpr-komuniti-v0/qrcode.js",
+      "size": 58991,
+      "sha1": "0f94bf6786b2b64be2ad9fad542120ba79b1e341",
+      "category": "code"
+    },
+    {
+      "path": "clinical/cpr-komuniti-v0/sw.js",
+      "size": 673,
+      "sha1": "f07e46898441fe1743c3fd3f9da841d4c4383d56",
+      "category": "code"
+    },
+    {
+      "path": "clinical/cpr-scenario-lab-v1/DESIGN.md",
+      "size": 3936,
+      "sha1": "e92bda123eeea6ae15a1f86f1993baa8acd4f036",
+      "category": "docs"
+    },
+    {
+      "path": "clinical/cpr-scenario-lab-v1/dist/assets/index-BBBtzUxn.css",
+      "size": 11860,
+      "sha1": "438ca4dcde5c4c1d80481031e33f016e66a41ed3",
+      "category": "code"
+    },
+    {
+      "path": "clinical/cpr-scenario-lab-v1/dist/index.html",
+      "size": 580,
+      "sha1": "347a55831129e4837354656cbf06ea0d9e8c1dc7",
+      "category": "code"
+    },
+    {
+      "path": "clinical/cpr-scenario-lab-v1/index.html",
+      "size": 477,
+      "sha1": "c5802e913ff94d0824c8b352ea09752d5aadf094",
+      "category": "code"
+    },
+    {
+      "path": "clinical/cpr-scenario-lab-v1/package-lock.json",
+      "size": 43755,
+      "sha1": "79f595820aac64c1dbe0ee6b28d31dc5ac493144",
+      "category": "config"
+    },
+    {
+      "path": "clinical/cpr-scenario-lab-v1/package.json",
+      "size": 396,
+      "sha1": "543fa0d6fe0700d7506984ab980e4dd7a95d8554",
+      "category": "config"
+    },
+    {
+      "path": "clinical/cpr-scenario-lab-v1/src/App.jsx",
+      "size": 19096,
+      "sha1": "07a3a3af400f0e470956de092a99eeb4314af838",
+      "category": "code"
+    },
+    {
+      "path": "clinical/cpr-scenario-lab-v1/src/index.css",
+      "size": 10528,
+      "sha1": "d772aa903c9c3e7b34a7b321aed48616bfcc6a0e",
+      "category": "code"
+    },
+    {
+      "path": "clinical/cpr-scenario-lab-v1/src/main.jsx",
+      "size": 239,
+      "sha1": "b60198c382d90948a4633c7ad775257d02f08628",
+      "category": "code"
+    },
+    {
+      "path": "clinical/cpr-scenario-lab-v1/vite.config.js",
+      "size": 154,
+      "sha1": "6ac32781f1595b6ed2dbbaef395cfd36e4ed92f7",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/.gitignore",
+      "size": 325,
+      "sha1": "aa2ef951da3156aed993f6bbed907693f269e48e",
+      "category": "config"
+    },
+    {
+      "path": "clinical/ecc-react-lab/.oxlintrc.json",
+      "size": 239,
+      "sha1": "37caee14a507db366be9cb58f15026505f48e79b",
+      "category": "config"
+    },
+    {
+      "path": "clinical/ecc-react-lab/README.md",
+      "size": 1025,
+      "sha1": "7378841343ae800e960a86119acdafae45edd90b",
+      "category": "docs"
+    },
+    {
+      "path": "clinical/ecc-react-lab/dist/assets/index-JbGoKzsM.css",
+      "size": 13936,
+      "sha1": "86f0c5797d13047e6b04f7b1a45e3498271f0b52",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/dist/favicon.svg",
+      "size": 9522,
+      "sha1": "3f5bb8f3a6a05b7ca68a62581d2dd5bc88812caf",
+      "category": "other"
+    },
+    {
+      "path": "clinical/ecc-react-lab/dist/icons.svg",
+      "size": 5055,
+      "sha1": "338549eae25bfaaf4b52a004811c913c8b1915a2",
+      "category": "other"
+    },
+    {
+      "path": "clinical/ecc-react-lab/dist/index.html",
+      "size": 992,
+      "sha1": "b313ebcf793c9a6054465a7abe55a32852d4ceed",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/index.html",
+      "size": 892,
+      "sha1": "4b96369768cda6de0bd42c9c3e85b09cc1975312",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/package-lock.json",
+      "size": 45414,
+      "sha1": "f254d675b7978bfbb42b00882a0233af0f258ff1",
+      "category": "config"
+    },
+    {
+      "path": "clinical/ecc-react-lab/package.json",
+      "size": 522,
+      "sha1": "1349291cfec674a84ef400dd8836509883bca1dd",
+      "category": "config"
+    },
+    {
+      "path": "clinical/ecc-react-lab/public/favicon.svg",
+      "size": 9522,
+      "sha1": "3f5bb8f3a6a05b7ca68a62581d2dd5bc88812caf",
+      "category": "other"
+    },
+    {
+      "path": "clinical/ecc-react-lab/public/icons.svg",
+      "size": 5055,
+      "sha1": "338549eae25bfaaf4b52a004811c913c8b1915a2",
+      "category": "other"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/App.css",
+      "size": 3075,
+      "sha1": "84f5b0716c217287938db5f5200e0fe8e8e8da24",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/App.jsx",
+      "size": 3092,
+      "sha1": "4d10219d0bb06de23dd14a395bf2001ffb8550c1",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/assets/react.svg",
+      "size": 4126,
+      "sha1": "f505ddc8ebe56bdc51efb721ef04923a8d3068dd",
+      "category": "other"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/assets/vite.svg",
+      "size": 8710,
+      "sha1": "e5b1d75f8a9c96f7b8657cbfcb59832b78ceeef1",
+      "category": "other"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/components/BatikPattern.jsx",
+      "size": 899,
+      "sha1": "5880947112b1a4e61e0542a75eb5bc9201fdb3ff",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/components/BilingualCard.jsx",
+      "size": 180,
+      "sha1": "e0ba69d4a28bbf97678cfef5d6da3f389591690a",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/components/Header.jsx",
+      "size": 808,
+      "sha1": "0f7197ef29a6103e761b0dee44b28ccf4a3547d1",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/components/MouthMap.jsx",
+      "size": 3949,
+      "sha1": "5064e4e4e3af3d5ea0fd33937af50c4bbcccdf75",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/components/NavPills.jsx",
+      "size": 745,
+      "sha1": "3e4c9238cdceced420e2f1c4d765ef58cdbb1ff5",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/components/SectionExam.jsx",
+      "size": 825,
+      "sha1": "a0bb3567b02c4a88dfee4b1a8b2aec39d3164c88",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/components/SectionIntro.jsx",
+      "size": 1898,
+      "sha1": "12900edd2af4f989bf1256d2b11687a23d9385c2",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/components/SectionPrevention.jsx",
+      "size": 1322,
+      "sha1": "09f093cec13006c5417047b2e817da0a17b73ae3",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/components/SectionRisk.jsx",
+      "size": 1039,
+      "sha1": "b6b1c67c297700391b4f356944afb10597450c2d",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/components/SectionTakeHome.jsx",
+      "size": 1337,
+      "sha1": "e393a7b735b51d643e997c2ad67af5f5cadf549c",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/components/SectionTreatment.jsx",
+      "size": 940,
+      "sha1": "bec65338bf1aa58be3e90bd97109acadcac60ef6",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/components/ToothLab.jsx",
+      "size": 6106,
+      "sha1": "5f71225c1f0efbb57668fb91bb50d966fcecfcab",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/data/content.js",
+      "size": 24656,
+      "sha1": "fe3f45ecd787aa92ba4177f04ad17b9eb42f76f0",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/index.css",
+      "size": 16609,
+      "sha1": "80b56f6de1ccd94468196c47028183ba54183cb6",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/src/main.jsx",
+      "size": 244,
+      "sha1": "3418c9281993d1ef1d6329b39ee689806699df9d",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-react-lab/vite.config.js",
+      "size": 183,
+      "sha1": "4fcbeba971a2eb3b7ec746df94ac013da2ff7798",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-realistic-tooth-lab/index.html",
+      "size": 27371,
+      "sha1": "6acb76def6c26280622e6c36b94355b6b0dff8d9",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-tooth-lab-mouth-map/index.html",
+      "size": 33619,
+      "sha1": "20fa33b832a38d17b00d60e24d808f8f4ef27562",
+      "category": "code"
+    },
+    {
+      "path": "clinical/ecc-tooth-lab/index.html",
+      "size": 25621,
+      "sha1": "45ed611ef5e5d47a281b25d3191139fd3c58342c",
+      "category": "code"
+    },
+    {
+      "path": "clinical/presentation-design-studio/PORTS.md",
+      "size": 1257,
+      "sha1": "ebc43bad93f11c4528d171de12b984499082f2f1",
+      "category": "docs"
+    },
+    {
+      "path": "clinical/presentation-design-studio/adapters.js",
+      "size": 4560,
+      "sha1": "ad81ea9f514ffbb0bfb09c4ba152fb49c892e94e",
+      "category": "code"
+    },
+    {
+      "path": "clinical/presentation-design-studio/app.js",
+      "size": 5944,
+      "sha1": "844ab3e0ddda9ed050e179addf58eebd4a518350",
+      "category": "code"
+    },
+    {
+      "path": "clinical/presentation-design-studio/index.html",
+      "size": 3393,
+      "sha1": "fbf947e9115a26553c6fa1e6426f288d01057708",
+      "category": "code"
+    },
+    {
+      "path": "clinical/presentation-design-studio/studio-core.js",
+      "size": 4468,
+      "sha1": "f6dc744be1c0f6e6e6b1922670cb7f5a7145d376",
+      "category": "code"
+    },
+    {
+      "path": "clinical/presentation-design-studio/style.css",
+      "size": 4586,
+      "sha1": "0eefd6b1c5965329541e8bdc2efb0870231821bf",
+      "category": "code"
+    },
+    {
+      "path": "index.html",
+      "size": 2999,
+      "sha1": "0565be56b14356f2a30f71487514bd907eaa95d9",
+      "category": "code"
+    },
+    {
+      "path": "package.json",
+      "size": 380,
+      "sha1": "391290bf512da4e224da412992e916ae3e034dc4",
+      "category": "config"
+    },
+    {
+      "path": "playwright.config.js",
+      "size": 811,
+      "sha1": "3d3d4566d77f9f7d362b29c1c76501ca334651ae",
+      "category": "code"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "size": 1293,
+      "sha1": "e651192eb66382acae2bab8e4a7f19eaa509d430",
+      "category": "config"
+    },
+    {
+      "path": "previews/deckmate-studio/README.md",
+      "size": 650,
+      "sha1": "0fca6c894a4e134a224b72ab3e8cada667e7ce3a",
+      "category": "docs"
+    },
+    {
+      "path": "previews/deckmate-studio/index.html",
+      "size": 6455,
+      "sha1": "6066c30140ac67c711392c7f8390c69aadab65b0",
+      "category": "code"
+    },
+    {
+      "path": "previews/deckmate-studio/preview.js",
+      "size": 729,
+      "sha1": "228b6ba982fe2a21bf34ee9055efdb603e7ee9d0",
+      "category": "code"
+    },
+    {
+      "path": "previews/deckmate-studio/style.css",
+      "size": 7518,
+      "sha1": "319de7f4634de1934467db433ec59a2619b304b7",
+      "category": "code"
+    },
+    {
+      "path": "run-kids-terminal.bat",
+      "size": 863,
+      "sha1": "485209086d977c8be8119a4171a1ecd60aa17b39",
+      "category": "code"
+    },
+    {
+      "path": "scripts/build-family-hub-config.mjs",
+      "size": 1322,
+      "sha1": "950f431e57a4736717d397b3a9b9867996ea2510",
+      "category": "other"
+    },
+    {
+      "path": "scripts/build-studio-config.mjs",
+      "size": 1304,
+      "sha1": "7ac0af103b801fecc3ac041478be937c06285377",
+      "category": "other"
+    },
+    {
+      "path": "scripts/prepare-deploy-bundle.mjs",
+      "size": 3052,
+      "sha1": "44d5bca05c5f0105d1a0cbd59662033f865cb1df",
+      "category": "other"
+    },
+    {
+      "path": "scripts/sync-secrets.mjs",
+      "size": 9311,
+      "sha1": "51a05ed64bf67149e729c3b13efe8b05a57f87a8",
+      "category": "other"
+    },
+    {
+      "path": "servers/kids-terminal/.env",
+      "size": 368,
+      "sha1": "60a1cbab448c9f590e4504bf322dd49b37bc9f05",
+      "category": "other"
+    },
+    {
+      "path": "servers/kids-terminal/agy-cadet-tray.ahk",
+      "size": 4304,
+      "sha1": "3fd4c98ddd239364beea1df2d7ad037342ab7174",
+      "category": "other"
+    },
+    {
+      "path": "servers/kids-terminal/app.js",
+      "size": 75466,
+      "sha1": "d4e02b1e33a54b2b2b1700c3f88c34e2ec0859e9",
+      "category": "code"
+    },
+    {
+      "path": "servers/kids-terminal/config.json",
+      "size": 2692,
+      "sha1": "5b4cbf74218a1220bdb3a2e8f231df32fd9014db",
+      "category": "config"
+    },
+    {
+      "path": "servers/kids-terminal/index.html",
+      "size": 17146,
+      "sha1": "3635d8eb2d1ae832c8ba2f8c4f3ac26de36f9a54",
+      "category": "code"
+    },
+    {
+      "path": "servers/kids-terminal/package-lock.json",
+      "size": 32581,
+      "sha1": "2ce44d4363bd49f545361073972f2d72f1752cfa",
+      "category": "config"
+    },
+    {
+      "path": "servers/kids-terminal/package.json",
+      "size": 302,
+      "sha1": "05f177048b454298d6ba8f1488e6134def6bef73",
+      "category": "config"
+    },
+    {
+      "path": "servers/kids-terminal/server.js",
+      "size": 37361,
+      "sha1": "4db4719d2d3b27278540d777916cdcf006bbc240",
+      "category": "code"
+    },
+    {
+      "path": "servers/kids-terminal/server.lock",
+      "size": 4,
+      "sha1": "3fc5e57d492c5d34a31d0926eaadbf1f5fdc4b69",
+      "category": "config"
+    },
+    {
+      "path": "servers/kids-terminal/setup-aliases.ps1",
+      "size": 3830,
+      "sha1": "e7bcf3aa26ff734fa59d24a1ab45b95dca332be4",
+      "category": "code"
+    },
+    {
+      "path": "servers/kids-terminal/shared-bridge.mjs",
+      "size": 2891,
+      "sha1": "114c53e484246e77c44c748c9bc1acd798918fb6",
+      "category": "other"
+    },
+    {
+      "path": "servers/kids-terminal/style.css",
+      "size": 19480,
+      "sha1": "9f718a51f5acb223ef309b3ef5f66513023ad7dd",
+      "category": "code"
+    },
+    {
+      "path": "shared/runtime/README.md",
+      "size": 1069,
+      "sha1": "d39bd85695b5ccb60e93b06f645622eb797ae35d",
+      "category": "docs"
+    },
+    {
+      "path": "shared/runtime/auth.js",
+      "size": 3211,
+      "sha1": "534e06db808e4e6219c4aa2ed8da9c1d7ec868f8",
+      "category": "code"
+    },
+    {
+      "path": "shared/runtime/config.js",
+      "size": 1775,
+      "sha1": "dc2e73a5d31c7364f4f34f5de47333a4d592b133",
+      "category": "code"
+    },
+    {
+      "path": "shared/runtime/db.js",
+      "size": 1858,
+      "sha1": "a1e893a0957659913be40045e1c33ec9668779f9",
+      "category": "code"
+    },
+    {
+      "path": "shared/runtime/plugin-host.js",
+      "size": 1916,
+      "sha1": "0ccb43f32fd203f3194d5a4915ef5ea35b5c71c9",
+      "category": "code"
+    },
+    {
+      "path": "shared/runtime/store.js",
+      "size": 3635,
+      "sha1": "c9233720d40dac5d2cf76842b3278a094749df6d",
+      "category": "code"
+    },
+    {
+      "path": "shared/runtime/ui.js",
+      "size": 1752,
+      "sha1": "5556dc00e3379fdab0c2763b03f3eee4331c7d3e",
+      "category": "code"
+    },
+    {
+      "path": "shared/theme.css",
+      "size": 3459,
+      "sha1": "6c0f92bd6be8fbe064a3f7dbaf98f4184d705c5e",
+      "category": "code"
+    },
+    {
+      "path": "test-results/.last-run.json",
+      "size": 45,
+      "sha1": "bc5897d23b9ecb4feeb05860deff62e1c26e8003",
+      "category": "config"
+    },
+    {
+      "path": "tests/baseline.spec.js",
+      "size": 2640,
+      "sha1": "0239946ab8eff581bf7217382a4923285879a1b6",
+      "category": "code"
+    },
+    {
+      "path": "tests/flow-rehearsals.spec.js",
+      "size": 9556,
+      "sha1": "ce57a0f9334be3a41614f9b4b871dbc204b56a4f",
+      "category": "code"
+    },
+    {
+      "path": "wrangler.jsonc",
+      "size": 220,
+      "sha1": "ea422a9d332f89bb102c26a9dda89b193c409593",
+      "category": "other"
+    }
+  ]
+}

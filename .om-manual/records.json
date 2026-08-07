@@ -1,0 +1,212 @@
+{
+  "target": "D:\\ARH-GITHUB\\arh-family-lab",
+  "agents_md": {
+    "path": "apps/kids-grades-garden/AGENTS.md",
+    "excerpt": "# AGENTS.md\n\n## Contract\n\n- Product: private, mobile-first family learning scrapbook for three children.\n- Stack: static HTML/CSS/ES modules; no frontend build step.\n- Data: Firebase Authentication + Realtime Database REST under `/kidsGarden/users/{uid}`.\n- Hosting: Cloudflare Workers Static Assets from `public/`.\n- Toolchain: Node from `.node-version`, pnpm from `packageManager`.\n\n## Safety boundaries\n\n- Never add database secrets, service-account files, OAuth tokens or child-identifying production fixtures.\n- Preserve deny-by-default RTDB rules and the owner-email plus UID boundary.\n- Run emulator rules tests before any production rules deploy.\n- Do not make profiles or photo URLs public.\n- Keep the three children peer-level; do not add rankings or sibling comparison features.\n\n## Verification\n\n```powershell\npnpm install --frozen-lockfile\npnpm test\npnpm test:rules\npnpm deploy:dry\n```\n"
+  },
+  "readmes": [
+    {
+      "path": "README.md",
+      "usage_sections": []
+    },
+    {
+      "path": "apps/family-hub/README.md",
+      "usage_sections": []
+    },
+    {
+      "path": "apps/kids-grades-garden/README.md",
+      "usage_sections": []
+    },
+    {
+      "path": "clinical/cpr-komuniti-v0/README.md",
+      "usage_sections": []
+    },
+    {
+      "path": "clinical/ecc-react-lab/README.md",
+      "usage_sections": []
+    },
+    {
+      "path": "previews/deckmate-studio/README.md",
+      "usage_sections": []
+    },
+    {
+      "path": "shared/runtime/README.md",
+      "usage_sections": []
+    }
+  ],
+  "decisions": [],
+  "design_docs": [
+    {
+      "path": "apps/kids-grades-garden/DESIGN.md",
+      "title": "Taman Ilmu — frontend direction",
+      "excerpt": "# Taman Ilmu — frontend direction\n\n## Product posture\n\n- Audience: three school-age siblings and their parent/caregiver.\n- Job: keep a private, child-owned record of everyday learning, not only marks.\n- Dominant environment: touch-first phones, intermittent use between school routines.\n- Primary action: select a child and add a story, photo, or result in under a minute.\n- Failure cost: exposing children's data, losing a post, or making one child feel compared with another.\n- Archetype: private social scrapbook with a lightweight learning record.\n- Signature behavior: the profile header always shows the child's two-part day — SJKC morning and KAFA evening — as one continuous journey.\n\n## Visual language\n\nThe Stitch Bright Futures concept contributes tactile depth, rounded shapes, warm paper and a visible dual-school switch. Taman Ilmu deliberately removes public rankings, locked rewards, competitive badges, perpetual motion and bright primary-color overload. The family-lab warm cream, deep green and restrained leaf/sun/berry accents keep the app calm enough for daily use.\n\nThe interface uses large touch targets, a four-item mobile dock, horizontal child switching and a responsive desktop rail. Cards only contain distinct writable or record-like objects. Empty, loading, saving, error, offline and permission states are explicit.\n\n## Privacy choices\n\nThere is no public profile or share link. Authentication is restricted in Firebase Rules to `arh.homelab@gmail.com`. Every record lives under that authenticated user's UID. Photos are resized and recompressed before being written as data URLs inside the protected Realtime Database subtree; this keeps the first release aligned with the proven Studio REST architecture and avoids bearer-like public image download URLs.\n"
+    },
+    {
+      "path": "clinical/cpr-scenario-lab-v1/DESIGN.md",
+      "title": "CPR Scenario Lab v1 — Interaction Specification",
+      "excerpt": "# CPR Scenario Lab v1 — Interaction Specification\n\n## Purpose\n\nTurn passive CPR recall into a facilitator-led rehearsal where four learners each own one meaningful action. The prop supports teaching and discussion; it does not assess CPR competence or replace manikin practice.\n\n## Cognitive requirements\n\n- Present one decision at a time; never expose the whole algorithm while a novice is choosing.\n- Keep the active rehearsal model to four named missions: `Kenal pasti`, `Aktifkan bantuan`, `Tekan dada`, `Gunakan AED`.\n- A wrong decision must prompt a retry; it must never unlock the next mission.\n- Reveal the full route only during debrief, after learners have traversed it.\n- Reserve colour semantics: red = emergency activation, coral = compressions, cyan = AED/information, green = correct/recovery, amber = caution.\n- Use motion only for the compression pulse and current-step transition; respect reduced-motion preferences.\n\n## Physical role cards\n\n| Role | Symbol | Responsibility |\n|---|---|---|\n| Safety Coach | Shield | Identify danger and verify safe approach |\n| Caller | Phone | Call 999, use speaker mode, give location |\n| Compressor | Hands | Start and maintain 100–120/min compressions |\n| AED Runner | Bolt | Retrieve, power, place pads, call clear |\n\nCards can be handwritten or printed. The projector uses the same symbols and names.\n\n## State machine\n\n```text\nlobby\n  -> roles\n  -> decision-recognition\n  -> decision-activation\n  -> compression-practice\n  -> aed-placement\n  -> debrief\n  -> lobby (reset)\n```\n\nThe facilitator owns all transitions. No screen auto-advances."
+    }
+  ],
+  "port_markers": [
+    {
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md",
+      "line": 14,
+      "text": "local machine holding a `wrangler login` session or an exported token.",
+      "context_before": "No unit ever depends on another unit's build succeeding, and no unit ever depends on a developer's"
+    },
+    {
+      "path": "SECRETS.md",
+      "line": 147,
+      "text": "Required GitHub secrets for the cloud path: `INFISICAL_CLIENT_ID` and `INFISICAL_CLIENT_SECRET`. `INFISICAL_TOKEN` is supported only for local runs; the cloud workflow does not use it.",
+      "context_before": ""
+    },
+    {
+      "path": "apps/family-hub/core/audit-log.js",
+      "line": 2,
+      "text": "// Events are stored locally and can be exported by the parent.",
+      "context_before": "// Family Hub — local-first observability log"
+    },
+    {
+      "path": "apps/presentation/slide-renderer.js",
+      "line": 77,
+      "text": "return `<p class=\"muted\">${esc(L.unsupported)}</p>`;",
+      "context_before": "default:"
+    },
+    {
+      "path": "clinical/cpr-komuniti-v0/qrcode.js",
+      "line": 1763,
+      "text": "throw 'sjis not supported.';",
+      "context_before": "if (!stringToBytes) {"
+    },
+    {
+      "path": "clinical/cpr-komuniti-v0/qrcode.js",
+      "line": 1769,
+      "text": "throw 'sjis not supported.';",
+      "context_before": "if (test.length != 2 || ( (test[0] << 8) | test[1]) != code) {"
+    },
+    {
+      "path": "clinical/presentation-design-studio/adapters.js",
+      "line": 11,
+      "text": "return createCanvas({title: \"Unsupported input\", slides: [normalizeSlide({title: \"Unsupported adapter\", blocks: [{type: \"text\", value: kind}]})]});",
+      "context_before": "if (kind === \"image\" || kind === \"jpg\" || kind === \"png\") return adaptImage(value, kind);"
+    },
+    {
+      "path": "clinical/presentation-design-studio/app.js",
+      "line": 107,
+      "text": "setStatus(\"exported\");",
+      "context_before": "URL.revokeObjectURL(url);"
+    },
+    {
+      "path": "tests/baseline.spec.js",
+      "line": 44,
+      "text": "if (!('serviceWorker' in navigator)) return { supported: false };",
+      "context_before": "const swState = await page.evaluate(async () => {"
+    },
+    {
+      "path": "tests/baseline.spec.js",
+      "line": 52,
+      "text": "expect(swState.supported).toBe(true);",
+      "context_before": "});"
+    }
+  ],
+  "recovery_markers": [
+    {
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/references/supabase-ci-migration.md",
+      "line": 67,
+      "text": "RLS correctness, or rollback consequences before merge."
+    },
+    {
+      "path": "apps/kids-grades-garden/pnpm-workspace.yaml",
+      "line": 22,
+      "text": "- '@firebase/firestore-compat@0.4.12'"
+    },
+    {
+      "path": "apps/kids-grades-garden/pnpm-workspace.yaml",
+      "line": 23,
+      "text": "- '@firebase/firestore@4.17.0'"
+    }
+  ],
+  "git": {
+    "is_repo": true,
+    "repo_root": "D:/ARH-GITHUB/arh-family-lab",
+    "log": [
+      "fd85956 feat(deckmate): align with plugin-host contract and add manifest/config",
+      "5d0d830 fix(family-hub): replace native dialogs with in-app modal; cache-bust Studio config",
+      "cb9fab6 fix(kids-terminal): stop leaking parent PIN, dynamic test port, safe local cache",
+      "f229bd3 test(kids-terminal): add AGY_TEST_MODE bypass and end-to-end rehearsal",
+      "490ef08 test: add flow-of-events rehearsals for Deckmate, Family Hub, Studio",
+      "78010a4 ci(sync-secrets): allow INFISICAL_TOKEN fallback for cloud runs",
+      "14a2e12 refactor(kids-terminal): use shared runtime auth/db via bridge",
+      "689e30a refactor(family-hub): use shared runtime auth/db via bridge",
+      "12d751a refactor(studio): use shared runtime auth/db via bridge",
+      "f273492 feat(runtime): add store plugin and app manifests",
+      "cd051fd feat(runtime): shared plugin foundation",
+      "fbc5c56 ci(deploy): let pnpm/action-setup read version from package.json",
+      "b0b5845 ci(deploy): install pnpm before wrangler-action",
+      "5e9f05c feat(secrets): sync Cloudflare credentials from Infisical to GitHub",
+      "9a70266 fix(family-hub): load local config before base, add SW update flow, harden CI",
+      "3009e5b Merge branch 'main' of https://github.com/arhsmoque/arh-family-lab",
+      "59bcb8f revert(family-hub): restore service worker cache name to v1",
+      "559196e Merge pull request #10 from arhsmoque/dependabot/npm_and_yarn/clinical/cpr-scenario-lab-v1/postcss-8.5.26",
+      "85b7f74 ci(deploy): version Family Hub service worker cache per deploy",
+      "bd63bb0 fix(secrets): use Infisical HTTP API in sync script",
+      "87cd379 feat(secrets): support Infisical Machine Identity in sync workflow",
+      "4ac616c fix(family-hub): bump service worker cache to v2",
+      "97c37bb ci(pages): deploy via gh-pages branch instead of actions/deploy-pages",
+      "037a4eb ci(deploy): upload lean dist/ bundle to Pages",
+      "a24a200 ci(pages): revert to deploy-pages@v4 and upload-pages-artifact@v3",
+      "d7ef3f5 ci(pages): try deploy-pages@v3 to work around hang",
+      "3967b7c chore: trigger Pages deploy",
+      "487ee2e fix(deploy): inject Family Hub config in both Pages workflows",
+      "ad77c46 ci(deploy): add Cloudflare Pages auto-deploy and cloud-agent secret sync",
+      "425f41b chore(deps): bump postcss in /clinical/cpr-scenario-lab-v1",
+      "3959402 chore(secrets): centralize Infisical â†’ GitHub/Cloudflare sync",
+      "b12b2f2 feat(family-hub): Firebase-backed v1 pilot",
+      "d839d86 feat(family-hub): complete Slices 2-5 with theme profiles, localStorage, PIN security & REST sync",
+      "6e784ef feat(family-hub): scaffold apps/family-hub static shell (Slice 1)",
+      "d15d17f Merge branch 'main' of https://github.com/arhsmoque/arh-family-lab",
+      "2e72371 feat: add arh-kids-grades-garden submodule, link from landing page",
+      "41ca198 fix(security): address code-scanning alerts (2 errors, 3 warnings)",
+      "a4d2391 Merge branch 'main' of https://github.com/arhsmoque/arh-family-lab",
+      "899ded5 fix(studio): replace dev.html's PIN+legacy-secret with real Firebase Auth",
+      "0f64c0c docs(readme): document kids-terminal env setup and provider switching",
+      "26fd314 fix(kids-terminal): add three missing DOM elements that broke auth entirely",
+      "020c836 docs(agents): add secrets doctrine for this home-lab environment",
+      "2f3d8e2 chore(deps): bump postcss in /clinical/ecc-react-lab",
+      "724de56 Studio i18n/local-config & kids-terminal security",
+      "72795d8 feat(deckmate): fullscreen present, export/import, chart editing, bilingual student UI",
+      "21a1a63 refactor: separate modules â€” clinical/ for clinical apps, servers/ for local server apps",
+      "995130c feat: add .agents/skills/arh-cloudflare-wrangler-deploy skill for cloud agents",
+      "d0811dd refine CPR Scenario Lab v1",
+      "355d692 publish community CPR v0",
+      "a2accf0 add CPR scenario lab v1",
+      "467e077 feat(systray): add AutoHotkey v2 tray manager for status check, server restart, and repo sync",
+      "89538ec fix(admin): resolve parent tab click infinite PIN gate loop",
+      "acf030c feat(admin): add /admin shortcut route to directly show parent pin modal",
+      "55ad9fb feat(bootstrap): add parent setup bypass gate to resolve first-time login catch-22",
+      "3291030 feat(security): extract system paths and firebase secrets to local .env configuration",
+      "fc5ef91 chore(config): update parent developer email to arh.homelab@gmail.com",
+      "fe7645e feat(kids-terminal): add Agy Cadet Kids Terminal with Firebase Auth, Parent Portal, Zvec Integration, and pwsh aliases",
+      "1ec1aa5 preview(family-lab): stage Deckmate and Studio concept",
+      "d054b85 Merge branch 'main' of https://github.com/arhsmoque/arh-family-lab",
+      "c53722a Refactor presentation app into modules",
+      "30d96f6 Merge pull request #2 from arhsmoque/enhance-ecc-realistic-tooth-model",
+      "9ccd6cb Merge pull request #1 from arhsmoque/claude/arh-family-lab-github-pages-mjaw83",
+      "a27bb0f Add realistic ECC tooth lab card to clinical landing",
+      "f94f65d Link realistic ECC tooth lab variant in README",
+      "dc53e1c Add realistic ECC tooth lab teaching prop",
+      "192fb96 Commit built static files for ECC CPG Interactive Lab",
+      "dbd6c2f Add ECC CPG Interactive Lab (React) with tooth progression and mouth map",
+      "da68ff8 Add ECC tooth lab mouth map version",
+      "443bee8 Add ECC briefing options and QR landing",
+      "43a1861 Enhance ECC tooth lab and add briefing downloads",
+      "91bb808 Add ECC tooth lab clinical landing",
+      "ade4c49 Add dental deck and presentation design studio",
+      "e986613 Add GitHub Pages deployment workflow",
+      "c87b1c9 Add wrangler.jsonc to authorize Worker deploy target",
+      "d9c34e0 Add Studio: tabbed-project workspace with note/photo/video cards",
+      "909017a Scaffold arh-family-lab hub with Deckmate presentation builder"
+    ],
+    "error": null
+  }
+}

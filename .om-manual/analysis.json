@@ -1,0 +1,986 @@
+{
+  "project": "arh-family-lab",
+  "llm_enabled": false,
+  "subsystems": [
+    {
+      "name": "(project root)",
+      "purpose": "Files located under (project root). Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "file_indices": [
+        12,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        91,
+        151,
+        152,
+        153,
+        154,
+        159,
+        187
+      ]
+    },
+    {
+      "name": ".agents",
+      "purpose": "Files located under .agents. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "file_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "name": ".claude",
+      "purpose": "Files located under .claude. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "file_indices": [
+        10,
+        11
+      ]
+    },
+    {
+      "name": ".github",
+      "purpose": "Files located under .github. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "file_indices": [
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "name": "apps",
+      "purpose": "Files located under apps. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "file_indices": [
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90
+      ]
+    },
+    {
+      "name": "clinical",
+      "purpose": "Files located under clinical. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "file_indices": [
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150
+      ]
+    },
+    {
+      "name": "previews",
+      "purpose": "Files located under previews. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "file_indices": [
+        155,
+        156,
+        157,
+        158
+      ]
+    },
+    {
+      "name": "scripts",
+      "purpose": "Files located under scripts. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "file_indices": [
+        160,
+        161,
+        162,
+        163
+      ]
+    },
+    {
+      "name": "servers",
+      "purpose": "Files located under servers. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "file_indices": [
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175
+      ]
+    },
+    {
+      "name": "shared",
+      "purpose": "Files located under shared. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "file_indices": [
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183
+      ]
+    },
+    {
+      "name": "test results",
+      "purpose": "Files located under test-results. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "file_indices": [
+        184
+      ]
+    },
+    {
+      "name": "tests",
+      "purpose": "Files located under tests. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "file_indices": [
+        185,
+        186
+      ]
+    }
+  ],
+  "flow": {
+    "summary": "This manual was generated without AI assistance (--no-llm). Parts are grouped by directory; no connection diagram data was inferred.",
+    "relationships": []
+  },
+  "chapters": {
+    "0": "This section was generated without AI assistance (--no-llm). Re-run with the LLM enabled for a narrative description.\n\nFiles in this part: .cloudflareignore, .gitignore, .gitmodules, .infisical.json, AGENTS.md, ARCHITECTURE.md, README.md, SECRETS.md, clinical.html, index.html, package.json, playwright.config.js, pnpm-lock.yaml, run-kids-terminal.bat, wrangler.jsonc.",
+    "1": "This section was generated without AI assistance (--no-llm). Re-run with the LLM enabled for a narrative description.\n\nFiles in this part: .agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md, .agents/skills/arh-cloudflare-wrangler-deploy/assets/pages-deploy.yml.template, .agents/skills/arh-cloudflare-wrangler-deploy/assets/verify-deploy-unit.mjs, .agents/skills/arh-cloudflare-wrangler-deploy/assets/worker-deploy.yml.template, .agents/skills/arh-cloudflare-wrangler-deploy/assets/wrangler.pages.toml.template, .agents/skills/arh-cloudflare-wrangler-deploy/assets/wrangler.worker.toml.template, .agents/skills/arh-cloudflare-wrangler-deploy/references/known-pitfalls.md, .agents/skills/arh-cloudflare-wrangler-deploy/references/required-secrets.md, .agents/skills/arh-cloudflare-wrangler-deploy/references/supabase-ci-migration.md, .agents/skills/arh-cloudflare-wrangler-deploy/references/worker-from-script.md.",
+    "2": "This section was generated without AI assistance (--no-llm). Re-run with the LLM enabled for a narrative description.\n\nFiles in this part: .claude/skills/arh-universal-frontend-design/SKILL.md, .claude/skills/arh-universal-frontend-design/references/repo-profile.md.",
+    "3": "This section was generated without AI assistance (--no-llm). Re-run with the LLM enabled for a narrative description.\n\nFiles in this part: .github/workflows/deploy-cloudflare-pages.yml, .github/workflows/pages.yml, .github/workflows/sync-secrets.yml.",
+    "4": "This section was generated without AI assistance (--no-llm). Re-run with the LLM enabled for a narrative description.\n\nFiles in this part: apps/family-hub/README.md, apps/family-hub/SETUP.md, apps/family-hub/app.css, apps/family-hub/app.js, apps/family-hub/core/audio-fx.js, apps/family-hub/core/audit-log.js, apps/family-hub/core/auth.js, apps/family-hub/core/db.js, apps/family-hub/core/pin-security.js, apps/family-hub/core/store.js, apps/family-hub/family.config.js, apps/family-hub/family.config.local.js, apps/family-hub/index.html, apps/family-hub/manifest.json, apps/family-hub/manifest.webmanifest, apps/family-hub/service-worker.js, apps/family-hub/shared-bridge.mjs, apps/family-hub/test/smoke.js, apps/kids-grades-garden/.firebaserc.example, apps/kids-grades-garden/.git, apps/kids-grades-garden/.github/workflows/ci.yml, apps/kids-grades-garden/.github/workflows/deploy.yml, apps/kids-grades-garden/.gitignore, apps/kids-grades-garden/.node-version, apps/kids-grades-garden/AGENTS.md, apps/kids-grades-garden/DESIGN.md, apps/kids-grades-garden/README.md, apps/kids-grades-garden/SETUP.md, apps/kids-grades-garden/database.rules.json, apps/kids-grades-garden/dev-journal.md, apps/kids-grades-garden/firebase.json, apps/kids-grades-garden/handoff.md, apps/kids-grades-garden/index.html, apps/kids-grades-garden/package.json, apps/kids-grades-garden/pnpm-workspace.yaml, apps/kids-grades-garden/public/app.js, apps/kids-grades-garden/public/firebase-config.js, apps/kids-grades-garden/public/firebase-rest.js, apps/kids-grades-garden/public/index.html, apps/kids-grades-garden/public/manifest.webmanifest, apps/kids-grades-garden/public/model.js, apps/kids-grades-garden/public/pin-lock.js, apps/kids-grades-garden/public/styles.css, apps/kids-grades-garden/public/sw.js, apps/kids-grades-garden/tests/database.rules.test.js, apps/kids-grades-garden/tests/model.test.js, apps/kids-grades-garden/wrangler.jsonc, apps/presentation/app.js, apps/presentation/deck-core.js, apps/presentation/deck-modules.js, apps/presentation/deckmate.config.js, apps/presentation/i18n.js, apps/presentation/index.html, apps/presentation/manifest.json, apps/presentation/slide-renderer.js, apps/presentation/storage-port.js, apps/presentation/style.css, apps/studio/SETUP.md, apps/studio/app.js, apps/studio/dev.html, apps/studio/dev.js, apps/studio/firebase-rest.js, apps/studio/index.html, apps/studio/manifest.json, apps/studio/shared-bridge.mjs, apps/studio/studio.config.js, apps/studio/studio.config.local.js, apps/studio/style.css.",
+    "5": "This section was generated without AI assistance (--no-llm). Re-run with the LLM enabled for a narrative description.\n\nFiles in this part: clinical/cpr-komuniti-v0/README.md, clinical/cpr-komuniti-v0/app.css, clinical/cpr-komuniti-v0/app.js, clinical/cpr-komuniti-v0/content.js, clinical/cpr-komuniti-v0/index.html, clinical/cpr-komuniti-v0/manifest.webmanifest, clinical/cpr-komuniti-v0/qrcode.js, clinical/cpr-komuniti-v0/sw.js, clinical/cpr-scenario-lab-v1/DESIGN.md, clinical/cpr-scenario-lab-v1/dist/assets/index-BBBtzUxn.css, clinical/cpr-scenario-lab-v1/dist/index.html, clinical/cpr-scenario-lab-v1/index.html, clinical/cpr-scenario-lab-v1/package-lock.json, clinical/cpr-scenario-lab-v1/package.json, clinical/cpr-scenario-lab-v1/src/App.jsx, clinical/cpr-scenario-lab-v1/src/index.css, clinical/cpr-scenario-lab-v1/src/main.jsx, clinical/cpr-scenario-lab-v1/vite.config.js, clinical/ecc-react-lab/.gitignore, clinical/ecc-react-lab/.oxlintrc.json, clinical/ecc-react-lab/README.md, clinical/ecc-react-lab/dist/assets/index-JbGoKzsM.css, clinical/ecc-react-lab/dist/favicon.svg, clinical/ecc-react-lab/dist/icons.svg, clinical/ecc-react-lab/dist/index.html, clinical/ecc-react-lab/index.html, clinical/ecc-react-lab/package-lock.json, clinical/ecc-react-lab/package.json, clinical/ecc-react-lab/public/favicon.svg, clinical/ecc-react-lab/public/icons.svg, clinical/ecc-react-lab/src/App.css, clinical/ecc-react-lab/src/App.jsx, clinical/ecc-react-lab/src/assets/react.svg, clinical/ecc-react-lab/src/assets/vite.svg, clinical/ecc-react-lab/src/components/BatikPattern.jsx, clinical/ecc-react-lab/src/components/BilingualCard.jsx, clinical/ecc-react-lab/src/components/Header.jsx, clinical/ecc-react-lab/src/components/MouthMap.jsx, clinical/ecc-react-lab/src/components/NavPills.jsx, clinical/ecc-react-lab/src/components/SectionExam.jsx, clinical/ecc-react-lab/src/components/SectionIntro.jsx, clinical/ecc-react-lab/src/components/SectionPrevention.jsx, clinical/ecc-react-lab/src/components/SectionRisk.jsx, clinical/ecc-react-lab/src/components/SectionTakeHome.jsx, clinical/ecc-react-lab/src/components/SectionTreatment.jsx, clinical/ecc-react-lab/src/components/ToothLab.jsx, clinical/ecc-react-lab/src/data/content.js, clinical/ecc-react-lab/src/index.css, clinical/ecc-react-lab/src/main.jsx, clinical/ecc-react-lab/vite.config.js, clinical/ecc-realistic-tooth-lab/index.html, clinical/ecc-tooth-lab-mouth-map/index.html, clinical/ecc-tooth-lab/index.html, clinical/presentation-design-studio/PORTS.md, clinical/presentation-design-studio/adapters.js, clinical/presentation-design-studio/app.js, clinical/presentation-design-studio/index.html, clinical/presentation-design-studio/studio-core.js, clinical/presentation-design-studio/style.css.",
+    "6": "This section was generated without AI assistance (--no-llm). Re-run with the LLM enabled for a narrative description.\n\nFiles in this part: previews/deckmate-studio/README.md, previews/deckmate-studio/index.html, previews/deckmate-studio/preview.js, previews/deckmate-studio/style.css.",
+    "7": "This section was generated without AI assistance (--no-llm). Re-run with the LLM enabled for a narrative description.\n\nFiles in this part: scripts/build-family-hub-config.mjs, scripts/build-studio-config.mjs, scripts/prepare-deploy-bundle.mjs, scripts/sync-secrets.mjs.",
+    "8": "This section was generated without AI assistance (--no-llm). Re-run with the LLM enabled for a narrative description.\n\nFiles in this part: servers/kids-terminal/.env, servers/kids-terminal/agy-cadet-tray.ahk, servers/kids-terminal/app.js, servers/kids-terminal/config.json, servers/kids-terminal/index.html, servers/kids-terminal/package-lock.json, servers/kids-terminal/package.json, servers/kids-terminal/server.js, servers/kids-terminal/server.lock, servers/kids-terminal/setup-aliases.ps1, servers/kids-terminal/shared-bridge.mjs, servers/kids-terminal/style.css.",
+    "9": "This section was generated without AI assistance (--no-llm). Re-run with the LLM enabled for a narrative description.\n\nFiles in this part: shared/runtime/README.md, shared/runtime/auth.js, shared/runtime/config.js, shared/runtime/db.js, shared/runtime/plugin-host.js, shared/runtime/store.js, shared/runtime/ui.js, shared/theme.css.",
+    "10": "This section was generated without AI assistance (--no-llm). Re-run with the LLM enabled for a narrative description.\n\nFiles in this part: test-results/.last-run.json.",
+    "11": "This section was generated without AI assistance (--no-llm). Re-run with the LLM enabled for a narrative description.\n\nFiles in this part: tests/baseline.spec.js, tests/flow-rehearsals.spec.js."
+  },
+  "at_a_glance": "arh-family-lab contains 188 files (104 code, 28 config, 26 docs, 30 other).\n\nIts parts, grouped by location: (project root), .agents, .claude, .github, apps, clinical, previews, scripts, servers, shared, test results, tests.\n\nStack hints detected: apps/kids-grades-garden/package.json, clinical/cpr-scenario-lab-v1/package.json, clinical/ecc-react-lab/package.json, package.json, servers/kids-terminal/package.json. Port/provenance markers found: 10. Decision and design documents found: 2.\n\n(Generated without AI assistance — re-run with the LLM enabled for a narrative overview.)",
+  "glossary": "The following technical terms appear in this project. Plain-language definitions are added when the manual is generated with the LLM enabled.\n\n- **API** — appears in `.agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md:19`. Definition pending.\n- **CLI** — appears in `.agents/skills/arh-cloudflare-wrangler-deploy/references/worker-from-script.md:11`. Definition pending.\n- **endpoint** — appears in `apps/family-hub/core/auth.js:34`. Definition pending.\n- **environment variable** — appears in `.agents/skills/arh-cloudflare-wrangler-deploy/references/required-secrets.md:16`. Definition pending.\n- **hook** — appears in `clinical/ecc-react-lab/.oxlintrc.json:5`. Definition pending.\n- **hooks** — appears in `clinical/ecc-react-lab/.oxlintrc.json:5`. Definition pending.\n- **HTTP** — appears in `.agents/skills/arh-cloudflare-wrangler-deploy/references/worker-from-script.md:10`. Definition pending.\n- **JSON** — appears in `.agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md:35`. Definition pending.\n- **Lua** — appears in `apps/family-hub/app.js:87`. Definition pending.\n- **MCP** — appears in `clinical/cpr-scenario-lab-v1/package-lock.json:1026`. Definition pending.\n- **observability** — appears in `apps/family-hub/core/audit-log.js:1`. Definition pending.\n- **pane** — appears in `apps/kids-grades-garden/dev-journal.md:25`. Definition pending.\n- **PATH** — appears in `.agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md:3`. Definition pending.\n- **POST** — appears in `apps/family-hub/app.js:276`. Definition pending.\n- **regex** — appears in `servers/kids-terminal/app.js:60`. Definition pending.\n- **repository** — appears in `.agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md:4`. Definition pending.\n- **scaffold** — appears in `apps/kids-grades-garden/dev-journal.md:21`. Definition pending.\n- **stderr** — appears in `servers/kids-terminal/app.js:889`. Definition pending.\n- **stdin** — appears in `servers/kids-terminal/server.js:300`. Definition pending.\n- **stdout** — appears in `ARCHITECTURE.md:35`. Definition pending.\n- **TOML** — appears in `.agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md:4`. Definition pending.\n- **WebSocket** — appears in `.agents/skills/arh-cloudflare-wrangler-deploy/references/known-pitfalls.md:6`. Definition pending.\n- **YAML** — appears in `.agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md:143`. Definition pending.",
+  "jargon": [
+    {
+      "term": "API",
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md",
+      "line": 19
+    },
+    {
+      "term": "CLI",
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/references/worker-from-script.md",
+      "line": 11
+    },
+    {
+      "term": "endpoint",
+      "path": "apps/family-hub/core/auth.js",
+      "line": 34
+    },
+    {
+      "term": "environment variable",
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/references/required-secrets.md",
+      "line": 16
+    },
+    {
+      "term": "hook",
+      "path": "clinical/ecc-react-lab/.oxlintrc.json",
+      "line": 5
+    },
+    {
+      "term": "hooks",
+      "path": "clinical/ecc-react-lab/.oxlintrc.json",
+      "line": 5
+    },
+    {
+      "term": "HTTP",
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/references/worker-from-script.md",
+      "line": 10
+    },
+    {
+      "term": "JSON",
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md",
+      "line": 35
+    },
+    {
+      "term": "Lua",
+      "path": "apps/family-hub/app.js",
+      "line": 87
+    },
+    {
+      "term": "MCP",
+      "path": "clinical/cpr-scenario-lab-v1/package-lock.json",
+      "line": 1026
+    },
+    {
+      "term": "observability",
+      "path": "apps/family-hub/core/audit-log.js",
+      "line": 1
+    },
+    {
+      "term": "pane",
+      "path": "apps/kids-grades-garden/dev-journal.md",
+      "line": 25
+    },
+    {
+      "term": "PATH",
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md",
+      "line": 3
+    },
+    {
+      "term": "POST",
+      "path": "apps/family-hub/app.js",
+      "line": 276
+    },
+    {
+      "term": "regex",
+      "path": "servers/kids-terminal/app.js",
+      "line": 60
+    },
+    {
+      "term": "repository",
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md",
+      "line": 4
+    },
+    {
+      "term": "scaffold",
+      "path": "apps/kids-grades-garden/dev-journal.md",
+      "line": 21
+    },
+    {
+      "term": "stderr",
+      "path": "servers/kids-terminal/app.js",
+      "line": 889
+    },
+    {
+      "term": "stdin",
+      "path": "servers/kids-terminal/server.js",
+      "line": 300
+    },
+    {
+      "term": "stdout",
+      "path": "ARCHITECTURE.md",
+      "line": 35
+    },
+    {
+      "term": "TOML",
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md",
+      "line": 4
+    },
+    {
+      "term": "WebSocket",
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/references/known-pitfalls.md",
+      "line": 6
+    },
+    {
+      "term": "YAML",
+      "path": ".agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md",
+      "line": 143
+    }
+  ],
+  "briefs": [
+    {
+      "index": 0,
+      "name": "(project root)",
+      "purpose": "Files located under (project root). Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "files": [
+        ".cloudflareignore",
+        ".gitignore",
+        ".gitmodules",
+        ".infisical.json",
+        "AGENTS.md",
+        "ARCHITECTURE.md",
+        "README.md",
+        "SECRETS.md",
+        "clinical.html",
+        "index.html",
+        "package.json",
+        "playwright.config.js",
+        "pnpm-lock.yaml",
+        "run-kids-terminal.bat",
+        "wrangler.jsonc"
+      ],
+      "snippets": [
+        {
+          "path": ".cloudflareignore",
+          "start_line": 1,
+          "end_line": 6,
+          "text": "node_modules/\n**/node_modules/\nservers/\n.git/\n.agents/\n.claude/"
+        },
+        {
+          "path": ".gitignore",
+          "start_line": 1,
+          "end_line": 17,
+          "text": ".DS_Store\n.wrangler/\nnode_modules/\n*.lock\n!pnpm-lock.yaml\nserver.lock\n.env\n.env.*\n.playwright-cli/\ntest-results/\nplaywright-report/\n\n# Studio app local config override, if ever used — never commit\napps/studio/studio.config.local.js\n\n# Family Hub local config override — generated from infisical\napps/family-hub/family.config.local.js"
+        },
+        {
+          "path": ".gitmodules",
+          "start_line": 1,
+          "end_line": 3,
+          "text": "[submodule \"apps/kids-grades-garden\"]\n\tpath = apps/kids-grades-garden\n\turl = https://github.com/arhsmoque/arh-kids-grades-garden.git"
+        },
+        {
+          "path": ".infisical.json",
+          "start_line": 1,
+          "end_line": 5,
+          "text": "{\n\t\"workspaceId\": \"90b0e7ef-3f72-4ddb-b888-055e90e13dfa\",\n\t\"defaultEnvironment\": \"dev\",\n\t\"gitBranchToEnvironmentMapping\": null\n}"
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "index": 1,
+      "name": ".agents",
+      "purpose": "Files located under .agents. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "files": [
+        ".agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md",
+        ".agents/skills/arh-cloudflare-wrangler-deploy/assets/pages-deploy.yml.template",
+        ".agents/skills/arh-cloudflare-wrangler-deploy/assets/verify-deploy-unit.mjs",
+        ".agents/skills/arh-cloudflare-wrangler-deploy/assets/worker-deploy.yml.template",
+        ".agents/skills/arh-cloudflare-wrangler-deploy/assets/wrangler.pages.toml.template",
+        ".agents/skills/arh-cloudflare-wrangler-deploy/assets/wrangler.worker.toml.template",
+        ".agents/skills/arh-cloudflare-wrangler-deploy/references/known-pitfalls.md",
+        ".agents/skills/arh-cloudflare-wrangler-deploy/references/required-secrets.md",
+        ".agents/skills/arh-cloudflare-wrangler-deploy/references/supabase-ci-migration.md",
+        ".agents/skills/arh-cloudflare-wrangler-deploy/references/worker-from-script.md"
+      ],
+      "snippets": [
+        {
+          "path": ".agents/skills/arh-cloudflare-wrangler-deploy/SKILL.md",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "---\nname: arh-cloudflare-wrangler-deploy\ndescription: \"Deploy Cloudflare Pages and Workers from GitHub Actions using wrangler, with each deployable unit independent (path-filtered triggers, its own job) and zero local-machine dependency (auth only via GitHub Actions repo/environment secrets, never a locally-held wrangler login). Use when adding, wiring, or auditing a Cloudflare Pages or Workers deployment, standardizing CI/CD across ARH repos, converting a locally-triggered deploy into a remote/CI-only one, or wiring a background job as a scheduled Worker.\"\ncompatibility: \"Requires read/write access to the target repository's .github/workflows and wrangler.toml files, and the ability to inspect or request the repo's GitHub Actions secrets (gh secret list / gh secret set).\"\n---\n\n# Arh Cloudflare Wrangler Deploy\n\n# ARH Cloudflare Wrangler Deploy\n\nStand up or extend a GitHub Actions -> Cloudflare deployment where every deployable unit — one\nPages app, each Worker — deploys independently and authenticates only with GitHub Actions secrets.\nNo unit ever depends on another unit's build succeeding, and no unit ever depends on a developer's\nlocal machine holding a `wrangler login` session or an exported token.\n\n## Core directive\n\nOne workflow file per deployable unit. Each workflow triggers only on changes under that unit's own\npath, builds and deploys using `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` from GitHub Actions\nsecrets, and fails fast with a clear diagnostic if those secrets are absent — never falls back to a\nprompt, a cached local credential, or a silent no-op deploy.\n\n```text\npush to main (path-filtered)\n→ checkout + install\n→ build (app-specific)\n→ verify Cloudflare secrets are present (fail fast, clear error, if not)\n→ wrangler deploy (pages deploy | deploy), scoped to this unit only\n```\n\n## 1. Inventory existing deployable units\n\nBefore adding anything, find what already exists:\n\n1. Every `wrangler.toml` / `wrangler.jsonc` in the repo (`git grep -l wrangler`), and whether each\n   targets Pages (`pages_build_output_dir`) or a Worker (`main =`, `[triggers]`).\n2. Every `.github/workflows/*.yml` that runs `wrangler`. Read each one fully — a working example in\n   the repo is the pattern to generalize, not to replace.\n3. `gh secret list` on the target repo to see which of `CLOUDFLARE_API_TOKEN`,\n   `CLOUDFLARE_ACCOUNT_ID`, and any app-specific secrets (Supabase URL/keys, API keys) already"
+        },
+        {
+          "path": ".agents/skills/arh-cloudflare-wrangler-deploy/assets/pages-deploy.yml.template",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "name: Deploy <UNIT_NAME> to Cloudflare Pages\n\n# Independent deploy unit. Triggers only on changes under <UNIT_PATH>/**, never blocked by or\n# blocking any other unit's deploy. Dormant (fails fast, clearly) until CLOUDFLARE_API_TOKEN and\n# CLOUDFLARE_ACCOUNT_ID exist as repository (or environment) secrets.\n\non:\n  push:\n    branches: [main]\n    paths:\n      - \"<UNIT_PATH>/**\"\n  workflow_dispatch:\n\nconcurrency:\n  group: deploy-<UNIT_NAME>\n  cancel-in-progress: false\n\njobs:\n  deploy:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      deployments: write\n\n    steps:\n      - name: Checkout\n        uses: actions/checkout@v4\n\n      - name: Setup Node.js\n        uses: actions/setup-node@v4\n        with:\n          node-version: \"22\"\n          cache: \"npm\"\n\n      - name: Install dependencies\n        run: npm ci\n\n      - name: Build\n        run: npm run build --workspace=<UNIT_NAME> # or your unit's actual build command\n        env:"
+        },
+        {
+          "path": ".agents/skills/arh-cloudflare-wrangler-deploy/assets/verify-deploy-unit.mjs",
+          "start_line": 71,
+          "end_line": 110,
+          "text": "}\n\n// prettier has no built-in parser for wrangler.toml (or other non-JS/TS/JSON/MD/YAML files) --\n// passing one to --check fails with \"No parser could be inferred\", not a real formatting issue.\nconst PRETTIER_EXTENSIONS = new Set([\n  \".js\",\n  \".mjs\",\n  \".cjs\",\n  \".jsx\",\n  \".ts\",\n  \".tsx\",\n  \".json\",\n  \".md\",\n  \".yml\",\n  \".yaml\",\n  \".css\",\n  \".html\"\n]);\n\nfunction splitByPrettierSupport(paths) {\n  const supported = [];\n  const unsupported = [];\n  for (const path of paths) {\n    const dot = path.lastIndexOf(\".\");\n    const ext = dot === -1 ? \"\" : path.slice(dot).toLowerCase();\n    (PRETTIER_EXTENSIONS.has(ext) ? supported : unsupported).push(path);\n  }\n  return { supported, unsupported };\n}\n\nfunction hasScript(name) {\n  if (!existsSync(\"package.json\")) return false;\n  const pkg = JSON.parse(readFileSync(\"package.json\", \"utf8\"));\n  return Boolean(pkg.scripts && pkg.scripts[name]);\n}\n\nfunction main() {\n  const args = parseArgs(process.argv.slice(2));\n  const results = [];\n"
+        },
+        {
+          "path": ".agents/skills/arh-cloudflare-wrangler-deploy/assets/worker-deploy.yml.template",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "name: Deploy <UNIT_NAME> to Cloudflare Workers\n\n# Independent deploy unit. Triggers only on changes under <UNIT_PATH>/**, never blocked by or\n# blocking any other unit's deploy. Dormant (fails fast, clearly) until CLOUDFLARE_API_TOKEN and\n# CLOUDFLARE_ACCOUNT_ID exist as repository (or environment) secrets. The Worker's own runtime\n# secrets (e.g. SUPABASE_SERVICE_ROLE_KEY) are set via `wrangler secret put` out-of-band, once,\n# not passed through this workflow -- see references/required-secrets.md.\n\non:\n  push:\n    branches: [main]\n    paths:\n      - \"<UNIT_PATH>/**\"\n  workflow_dispatch:\n\nconcurrency:\n  group: deploy-<UNIT_NAME>\n  cancel-in-progress: false\n\njobs:\n  deploy:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      deployments: write\n\n    steps:\n      - name: Checkout\n        uses: actions/checkout@v4\n\n      - name: Setup Node.js\n        uses: actions/setup-node@v4\n        with:\n          node-version: \"22\"\n          cache: \"npm\"\n\n      - name: Install dependencies\n        run: npm ci\n\n      - name: Check Cloudflare credentials are configured"
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "index": 2,
+      "name": ".claude",
+      "purpose": "Files located under .claude. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "files": [
+        ".claude/skills/arh-universal-frontend-design/SKILL.md",
+        ".claude/skills/arh-universal-frontend-design/references/repo-profile.md"
+      ],
+      "snippets": [
+        {
+          "path": ".claude/skills/arh-universal-frontend-design/SKILL.md",
+          "start_line": 1,
+          "end_line": 31,
+          "text": "---\nname: arh-universal-frontend-design\ndescription: Use when designing, reviewing, redesigning, implementing, or quality-checking frontend interfaces in arh-family-lab.\n---\n\n# Universal Frontend Design — arh-family-lab\n\nShared quality is mandatory; shared visual themes are forbidden.\n\n## Workflow\n\n1. Read this repository's `AGENTS.md`, README, active UI entrypoint, stack/config, and verification commands.\n2. Read [the repository profile](references/repo-profile.md).\n3. State audience, job, dominant environment/device, primary action, and failure cost.\n4. Choose the dominant archetype and one content-derived signature behavior before selecting palette, effects, libraries, or components.\n5. Preserve repository contracts, state ownership, tokens, and stack. Name user-facing and operator-facing ports.\n6. Implement the smallest coherent vertical slice with relevant empty, loading, error, offline, saving, and permission states.\n7. Run repository gates plus responsive, keyboard/focus, touch, reduced-motion, security-boundary, and performance checks.\n\n## Non-negotiables\n\n- NEVER copy another ARH product's theme merely because it succeeded.\n- NEVER style before understanding the audience and job.\n- NEVER treat a polished happy path as complete.\n- NEVER add a frontend dependency or rewrite the stack without necessity.\n- STOP and restart discovery if critical states or accessible fallbacks are missing.\n\n## Output contract\n\nReport the archetype, signature behavior, files changed, commands/browser states verified, and residual risks. Done means the interface fits this product, remains distinct for defensible reasons, passes local gates, and leaves operator-visible evidence.\n"
+        },
+        {
+          "path": ".claude/skills/arh-universal-frontend-design/references/repo-profile.md",
+          "start_line": 1,
+          "end_line": 10,
+          "text": "# arh-family-lab frontend profile\n\n- **Audience/job:** Children, family members, caregivers, and presenters with varied literacy, ability, devices, and confidence.\n- **Dominant archetype:** Learning/onboarding and personal creation lab.\n- **Signature behavior:** A visible what-happens-next cue appropriate to each small app; caregiver/presenter support where relevant.\n- **Priorities:** Plain language; large targets; low memory burden; reduced motion; privacy-safe state; phone and projector layouts; non-clinical warmth.\n- **Verification:** Run app-specific checks; smoke touch, keyboard, zoom, high contrast, empty/restart states, and projector readability.\n\nThis profile is context, not a theme preset. Live repository instructions and product evidence override stale assumptions.\n"
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "index": 3,
+      "name": ".github",
+      "purpose": "Files located under .github. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "files": [
+        ".github/workflows/deploy-cloudflare-pages.yml",
+        ".github/workflows/pages.yml",
+        ".github/workflows/sync-secrets.yml"
+      ],
+      "snippets": [
+        {
+          "path": ".github/workflows/deploy-cloudflare-pages.yml",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "name: Deploy to Cloudflare Pages\n\non:\n  push:\n    branches: [main]\n  workflow_dispatch:\n\nconcurrency:\n  group: cloudflare-pages\n  cancel-in-progress: false\n\njobs:\n  deploy:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n    steps:\n      - uses: actions/checkout@v4\n      - uses: pnpm/action-setup@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: \"20\"\n          cache: \"pnpm\"\n      - name: Verify Cloudflare credentials\n        env:\n          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}\n          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}\n        run: |\n          if [ -z \"$CLOUDFLARE_API_TOKEN\" ]; then\n            echo \"::error::CLOUDFLARE_API_TOKEN secret is missing\"\n            exit 1\n          fi\n          if [ -z \"$CLOUDFLARE_ACCOUNT_ID\" ]; then\n            echo \"::error::CLOUDFLARE_ACCOUNT_ID secret is missing\"\n            exit 1\n          fi\n      - name: Build app local configs from secrets\n        env:\n          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}\n          FIREBASE_URL: ${{ secrets.FIREBASE_URL }}"
+        },
+        {
+          "path": ".github/workflows/pages.yml",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "name: Deploy to GitHub Pages\n\non:\n  push:\n    branches: [main]\n  workflow_dispatch:\n\npermissions:\n  contents: write\n\nconcurrency:\n  group: pages\n  cancel-in-progress: false\n\njobs:\n  deploy:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: \"20\"\n      - name: Build app local configs from secrets\n        env:\n          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}\n          FIREBASE_URL: ${{ secrets.FIREBASE_URL }}\n          FIREBASE_ROOT_FAMILY_HUB: ${{ secrets.FIREBASE_ROOT_FAMILY_HUB }}\n          FIREBASE_ROOT_STUDIO: ${{ secrets.FIREBASE_ROOT_STUDIO }}\n        run: |\n          node scripts/build-family-hub-config.mjs\n          node scripts/build-studio-config.mjs\n      - name: Prepare deploy bundle\n        run: |\n          node scripts/prepare-deploy-bundle.mjs\n          # Bump the Family Hub service worker cache name per deploy so every\n          # push invalidates the old cache and the PWA auto-updates.\n          sed -i \"s/const CACHE_NAME = 'family-hub-v1';/const CACHE_NAME = 'family-hub-${{ github.sha }}';/\" dist/apps/family-hub/service-worker.js\n      - name: Deploy to GitHub Pages\n        uses: peaceiris/actions-gh-pages@v4\n        with:"
+        },
+        {
+          "path": ".github/workflows/sync-secrets.yml",
+          "start_line": 1,
+          "end_line": 37,
+          "text": "name: Sync secrets from Infisical\n\non:\n  workflow_dispatch:\n\nconcurrency:\n  group: sync-secrets\n  cancel-in-progress: true\n\njobs:\n  sync:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: \"20\"\n      - name: Install CLIs\n        run: |\n          # GitHub CLI\n          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg\n          echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main\" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null\n          sudo apt-get update\n          sudo apt-get install -y gh\n          # Wrangler\n          npm install -g wrangler\n      - name: Sync to GitHub and Cloudflare\n        env:\n          INFISICAL_TOKEN: ${{ secrets.INFISICAL_TOKEN }}\n          INFISICAL_CLIENT_ID: ${{ secrets.INFISICAL_CLIENT_ID }}\n          INFISICAL_CLIENT_SECRET: ${{ secrets.INFISICAL_CLIENT_SECRET }}\n          GH_TOKEN: ${{ secrets.GH_PAT }}\n          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}\n          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}\n        run: node scripts/sync-secrets.mjs"
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "index": 4,
+      "name": "apps",
+      "purpose": "Files located under apps. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "files": [
+        "apps/family-hub/README.md",
+        "apps/family-hub/SETUP.md",
+        "apps/family-hub/app.css",
+        "apps/family-hub/app.js",
+        "apps/family-hub/core/audio-fx.js",
+        "apps/family-hub/core/audit-log.js",
+        "apps/family-hub/core/auth.js",
+        "apps/family-hub/core/db.js",
+        "apps/family-hub/core/pin-security.js",
+        "apps/family-hub/core/store.js",
+        "apps/family-hub/family.config.js",
+        "apps/family-hub/family.config.local.js",
+        "apps/family-hub/index.html",
+        "apps/family-hub/manifest.json",
+        "apps/family-hub/manifest.webmanifest",
+        "apps/family-hub/service-worker.js",
+        "apps/family-hub/shared-bridge.mjs",
+        "apps/family-hub/test/smoke.js",
+        "apps/kids-grades-garden/.firebaserc.example",
+        "apps/kids-grades-garden/.git",
+        "apps/kids-grades-garden/.github/workflows/ci.yml",
+        "apps/kids-grades-garden/.github/workflows/deploy.yml",
+        "apps/kids-grades-garden/.gitignore",
+        "apps/kids-grades-garden/.node-version",
+        "apps/kids-grades-garden/AGENTS.md",
+        "apps/kids-grades-garden/DESIGN.md",
+        "apps/kids-grades-garden/README.md",
+        "apps/kids-grades-garden/SETUP.md",
+        "apps/kids-grades-garden/database.rules.json",
+        "apps/kids-grades-garden/dev-journal.md",
+        "apps/kids-grades-garden/firebase.json",
+        "apps/kids-grades-garden/handoff.md",
+        "apps/kids-grades-garden/index.html",
+        "apps/kids-grades-garden/package.json",
+        "apps/kids-grades-garden/pnpm-workspace.yaml",
+        "apps/kids-grades-garden/public/app.js",
+        "apps/kids-grades-garden/public/firebase-config.js",
+        "apps/kids-grades-garden/public/firebase-rest.js",
+        "apps/kids-grades-garden/public/index.html",
+        "apps/kids-grades-garden/public/manifest.webmanifest",
+        "apps/kids-grades-garden/public/model.js",
+        "apps/kids-grades-garden/public/pin-lock.js",
+        "apps/kids-grades-garden/public/styles.css",
+        "apps/kids-grades-garden/public/sw.js",
+        "apps/kids-grades-garden/tests/database.rules.test.js",
+        "apps/kids-grades-garden/tests/model.test.js",
+        "apps/kids-grades-garden/wrangler.jsonc",
+        "apps/presentation/app.js",
+        "apps/presentation/deck-core.js",
+        "apps/presentation/deck-modules.js",
+        "apps/presentation/deckmate.config.js",
+        "apps/presentation/i18n.js",
+        "apps/presentation/index.html",
+        "apps/presentation/manifest.json",
+        "apps/presentation/slide-renderer.js",
+        "apps/presentation/storage-port.js",
+        "apps/presentation/style.css",
+        "apps/studio/SETUP.md",
+        "apps/studio/app.js",
+        "apps/studio/dev.html",
+        "apps/studio/dev.js",
+        "apps/studio/firebase-rest.js",
+        "apps/studio/index.html",
+        "apps/studio/manifest.json",
+        "apps/studio/shared-bridge.mjs",
+        "apps/studio/studio.config.js",
+        "apps/studio/studio.config.local.js",
+        "apps/studio/style.css"
+      ],
+      "snippets": [
+        {
+          "path": "apps/family-hub/README.md",
+          "start_line": 1,
+          "end_line": 16,
+          "text": "# Family Hub — Shared Household iPad Pilot\n\nA shared, touch-first daily dashboard and task hub designed for household tablets and phones.\n\n## Features\n\n- **Today Dashboard**: Date/time, next activity countdown, family member avatar selector.\n- **3-Tap Child Action**: Instant task completion with sound chimes and zero login friction.\n- **Leaving-Home Checklists**: Quick checklists for school, sports, and family outings.\n- **Parent PIN Mode**: 4-digit PIN lock (Default PIN: `1234`) for sensitive actions.\n- **Bilingual**: Toggle between Bahasa Melayu and English.\n- **No-Build Architecture**: Static HTML5/CSS/JS linking `shared/theme.css`.\n\n## Setup\n\nNo build step required. Open `apps/family-hub/index.html` in any browser or launch via local HTTP server (`python3 -m http.server 4173`)."
+        },
+        {
+          "path": "apps/family-hub/SETUP.md",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "# Family Hub — Firebase setup\n\nFamily Hub uses the same Firebase project as Studio and Agy Kids Terminal (`arh-firebase-db`), isolated under a `familyHub` root. One owner account per household.\n\n## One-time console steps\n\n1. **Authentication → Sign-in method** → enable **Email/Password**.\n2. **Realtime Database → Rules** → merge the rules below into your existing rules (add the `\"familyHub\"` key alongside `\"studio\"` and `\"kids-terminal\"`).\n3. Generate `family.config.local.js` from infisical (see section below).\n\n## Security model\n\n- The **owner** signs in with a real Firebase Auth email/password.\n- The household iPad is a **trusted device**: once the owner signs in, the app stays authenticated.\n- **Parent mode** on the device is protected by a **local 4-digit PIN** (salted hash stored in `localStorage`, never in Firebase).\n- If the PIN is forgotten, the owner signs out and signs in again with the email/password.\n- Children are **profiles**, not accounts. They use the iPad directly without signing in.\n\n## Rules — paste into Realtime Database → Rules\n\n```json\n{\n  \"rules\": {\n    \"familyHub\": {\n      \"households\": {\n        \"$ownerUid\": {\n          \".read\": \"auth != null && auth.uid === $ownerUid\",\n          \".write\": \"auth != null && auth.uid === $ownerUid\",\n          \"meta\": {\n            \"ownerUid\": { \".validate\": \"newData.val() === auth.uid\" },\n            \"ownerEmail\": { \".validate\": \"newData.val() === auth.token.email\" }\n          }\n        }\n      }\n    }\n  }\n}\n```\n\nWhat this enforces: only the household owner can read or write their own household data. Children and guests have no database access — they interact only with the locally rendered data on the trusted device."
+        },
+        {
+          "path": "apps/family-hub/app.css",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "/* Family Hub Touch-First Stylesheet with Preset Visual Themes */\n@import \"../../shared/theme.css\";\n\n:root {\n  --color-primary: #D97706;\n  --color-primary-light: #FEF3C7;\n  --color-bg: #FFFBEB;\n  --color-surface: #FFFFFF;\n  --color-card: #FFFFFF;\n  --color-border: #FDE68A;\n  --color-text-main: #1E293B;\n  --color-text-muted: #64748B;\n  --color-success: #10B981;\n  --color-success-light: #ECFDF5;\n  --color-warning: #F59E0B;\n  --color-warning-light: #FFFBEB;\n  --color-danger: #EF4444;\n  --color-danger-light: #FEF2F2;\n\n  --font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;\n  --font-display: 'Playfair Display', Georgia, serif;\n  --font-size-xs: 0.75rem;\n  --font-size-sm: 0.875rem;\n  --font-size-base: 1rem;\n  --font-size-lg: 1.125rem;\n  --font-size-xl: 1.25rem;\n  --font-size-2xl: 1.5rem;\n  --font-size-3xl: 1.875rem;\n\n  --space-1: 0.25rem;\n  --space-2: 0.5rem;\n  --space-3: 0.75rem;\n  --space-4: 1rem;\n  --space-5: 1.25rem;\n  --space-6: 1.5rem;\n  --space-8: 2rem;\n\n  --touch-min-adult: 48px;\n  --touch-min-child: 64px;\n  --radius-lg: 16px;"
+        },
+        {
+          "path": "apps/family-hub/app.js",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "// Family Hub — main application controller\n(function () {\n  'use strict';\n\n  const store = window.FamilyHubStore;\n  const auth = window.FamilyHubAuth;\n  const security = window.FamilyHubSecurity;\n  const audit = window.FamilyHubAudit;\n  const audio = window.FamilyHubAudio;\n\n  const state = {\n    activeTab: 'today',\n    selectedMemberId: null,\n    pinInput: '',\n    parentUnlocked: false,\n    lang: localStorage.getItem('familyHub_lang') || 'en',\n    idleTimer: null,\n    lockTimer: null,\n    session: null\n  };\n\n  // Surface fatal errors so the app never silently stops on a blank screen.\n  window.addEventListener('error', e => {\n    console.error('Unhandled error:', e.error);\n    if (el.view && !el.view.innerHTML.trim()) {\n      el.view.innerHTML = `\n        <div class=\"card centered-card\">\n          <h2>😕 Something went wrong</h2>\n          <p>${e.message || 'An unexpected error occurred.'}</p>\n          <button class=\"btn-primary\" onclick=\"location.reload()\">Reload</button>\n        </div>\n      `;\n      hideNav();\n    }\n  });\n  window.addEventListener('unhandledrejection', e => {\n    console.error('Unhandled rejection:', e.reason);\n  });\n\n  const i18n = {"
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "index": 5,
+      "name": "clinical",
+      "purpose": "Files located under clinical. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "files": [
+        "clinical/cpr-komuniti-v0/README.md",
+        "clinical/cpr-komuniti-v0/app.css",
+        "clinical/cpr-komuniti-v0/app.js",
+        "clinical/cpr-komuniti-v0/content.js",
+        "clinical/cpr-komuniti-v0/index.html",
+        "clinical/cpr-komuniti-v0/manifest.webmanifest",
+        "clinical/cpr-komuniti-v0/qrcode.js",
+        "clinical/cpr-komuniti-v0/sw.js",
+        "clinical/cpr-scenario-lab-v1/DESIGN.md",
+        "clinical/cpr-scenario-lab-v1/dist/assets/index-BBBtzUxn.css",
+        "clinical/cpr-scenario-lab-v1/dist/index.html",
+        "clinical/cpr-scenario-lab-v1/index.html",
+        "clinical/cpr-scenario-lab-v1/package-lock.json",
+        "clinical/cpr-scenario-lab-v1/package.json",
+        "clinical/cpr-scenario-lab-v1/src/App.jsx",
+        "clinical/cpr-scenario-lab-v1/src/index.css",
+        "clinical/cpr-scenario-lab-v1/src/main.jsx",
+        "clinical/cpr-scenario-lab-v1/vite.config.js",
+        "clinical/ecc-react-lab/.gitignore",
+        "clinical/ecc-react-lab/.oxlintrc.json",
+        "clinical/ecc-react-lab/README.md",
+        "clinical/ecc-react-lab/dist/assets/index-JbGoKzsM.css",
+        "clinical/ecc-react-lab/dist/favicon.svg",
+        "clinical/ecc-react-lab/dist/icons.svg",
+        "clinical/ecc-react-lab/dist/index.html",
+        "clinical/ecc-react-lab/index.html",
+        "clinical/ecc-react-lab/package-lock.json",
+        "clinical/ecc-react-lab/package.json",
+        "clinical/ecc-react-lab/public/favicon.svg",
+        "clinical/ecc-react-lab/public/icons.svg",
+        "clinical/ecc-react-lab/src/App.css",
+        "clinical/ecc-react-lab/src/App.jsx",
+        "clinical/ecc-react-lab/src/assets/react.svg",
+        "clinical/ecc-react-lab/src/assets/vite.svg",
+        "clinical/ecc-react-lab/src/components/BatikPattern.jsx",
+        "clinical/ecc-react-lab/src/components/BilingualCard.jsx",
+        "clinical/ecc-react-lab/src/components/Header.jsx",
+        "clinical/ecc-react-lab/src/components/MouthMap.jsx",
+        "clinical/ecc-react-lab/src/components/NavPills.jsx",
+        "clinical/ecc-react-lab/src/components/SectionExam.jsx",
+        "clinical/ecc-react-lab/src/components/SectionIntro.jsx",
+        "clinical/ecc-react-lab/src/components/SectionPrevention.jsx",
+        "clinical/ecc-react-lab/src/components/SectionRisk.jsx",
+        "clinical/ecc-react-lab/src/components/SectionTakeHome.jsx",
+        "clinical/ecc-react-lab/src/components/SectionTreatment.jsx",
+        "clinical/ecc-react-lab/src/components/ToothLab.jsx",
+        "clinical/ecc-react-lab/src/data/content.js",
+        "clinical/ecc-react-lab/src/index.css",
+        "clinical/ecc-react-lab/src/main.jsx",
+        "clinical/ecc-react-lab/vite.config.js",
+        "clinical/ecc-realistic-tooth-lab/index.html",
+        "clinical/ecc-tooth-lab-mouth-map/index.html",
+        "clinical/ecc-tooth-lab/index.html",
+        "clinical/presentation-design-studio/PORTS.md",
+        "clinical/presentation-design-studio/adapters.js",
+        "clinical/presentation-design-studio/app.js",
+        "clinical/presentation-design-studio/index.html",
+        "clinical/presentation-design-studio/studio-core.js",
+        "clinical/presentation-design-studio/style.css"
+      ],
+      "snippets": [
+        {
+          "path": "clinical/cpr-komuniti-v0/README.md",
+          "start_line": 1,
+          "end_line": 12,
+          "text": "# Community CPR v0\n\nPreserved baseline release of the KKM community CPR adaptation in two coordinated formats:\n\n- `index.html` — mobile-first interactive HTML guide\n- `downloads/CPR-Komuniti-KKM-v0.pptx` — editable 19-slide projector presentation\n\nThe repository copy of the PPTX contains one deployment-specific change only: its closing QR points to the published v0 HTML URL. The original v0 task artifacts remain unchanged in the ARH deliverable folder.\n\nPrimary source: Kementerian Kesihatan Malaysia, *Manual CPR untuk Komuniti*, first edition 2019, MOH/P/PAK/418.19(HB)-e.\n\nEducational material only. It does not replace accredited CPR training, organisational protocols, manikin practice, or emergency-dispatch instructions."
+        },
+        {
+          "path": "clinical/cpr-komuniti-v0/app.css",
+          "start_line": 1,
+          "end_line": 7,
+          "text": ":root{--bg:#08131f;--panel:#102131;--panel2:#152b3f;--text:#f4f7fa;--muted:#a9b7c6;--red:#e23b3b;--coral:#ff6b5e;--cyan:#27c5d9;--green:#4ed49a;--amber:#ffc857;--line:#274158;--shadow:0 20px 60px #0005;--radius:24px;--max:1180px}\n*{box-sizing:border-box}[hidden]{display:none!important}html{scroll-behavior:smooth;scroll-padding-top:88px}body{margin:0;background:radial-gradient(circle at 80% 0,#12334b 0,transparent 30%),var(--bg);color:var(--text);font-family:Aptos,\"Segoe UI\",Arial,sans-serif;line-height:1.5}a{color:inherit}.skip{position:fixed;left:1rem;top:-5rem;z-index:99;background:#fff;color:#000;padding:.7rem 1rem;border-radius:8px}.skip:focus{top:1rem}.topbar{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:.8rem max(1rem,calc((100vw - var(--max))/2));background:#08131fe8;backdrop-filter:blur(16px);border-bottom:1px solid #ffffff14}.brand{display:flex;align-items:center;gap:.65rem;text-decoration:none}.brand-mark{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:var(--red);font-size:1.4rem}.brand b,.brand small{display:block;line-height:1}.brand small{margin-top:.25rem;color:var(--muted);font-size:.63rem;letter-spacing:.13em}.top-actions{display:flex;gap:.55rem;align-items:center}.ghost,.secondary,.primary,.call{border:1px solid var(--line);border-radius:999px;padding:.72rem 1rem;background:transparent;color:var(--text);font:inherit;font-weight:700;text-decoration:none;cursor:pointer}.primary,.call{background:var(--red);border-color:var(--red)}.secondary{background:#ffffff10}.compact{padding:.7rem 1rem}.page-section{max-width:var(--max);margin:0 auto;padding:clamp(3.5rem,7vw,7rem) 1.25rem}.hero{min-height:calc(100vh - 70px);display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,6vw,6rem);align-content:center;position:relative}.eyebrow{color:var(--cyan);font-size:.78rem;font-weight:800;letter-spacing:.16em}.hero h1,.section-heading h2,.handoff h2{margin:.5rem 0 1rem;font-size:clamp(2.8rem,7vw,6.8rem);line-height:.93;letter-spacing:-.055em}.hero h1 em{color:var(--coral);font-style:normal}.lede{max-width:680px;color:#d5dee6;font-size:clamp(1.05rem,2vw,1.35rem)}.hero-actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}.memory{display:grid;gap:.8rem}.memory>div{display:grid;grid-template-columns:50px 1fr;gap:.05rem 1rem;align-items:center;padding:1.1rem;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,#fff08,#fff02)}.memory span{grid-row:1/3;color:var(--coral);font-size:1.6rem;font-weight:900}.memory b{font-size:1.15rem}.memory small{color:var(--muted)}.emergency-note{grid-column:1/-1;border-left:4px solid var(--amber);background:#ffc85712;padding:1rem 1.2rem;border-radius:4px 14px 14px 4px;color:#f8e8be}.module-nav{position:sticky;top:69px;z-index:20;display:flex;gap:.5rem;overflow:auto;padding:.75rem max(1rem,calc((100vw - var(--max))/2));background:#0b1926eb;backdrop-filter:blur(10px);border-block:1px solid #ffffff10}.module-nav a{white-space:nowrap;text-decoration:none;padding:.55rem .8rem;border-radius:999px;color:var(--muted);font-weight:700}.module-nav a:hover,.module-nav a:focus{background:#ffffff10;color:var(--text)}.module{border-bottom:1px solid #ffffff0f}.section-heading{display:grid;grid-template-columns:1fr minmax(260px,520px);gap:1rem 3rem;align-items:end}.section-heading .eyebrow{grid-column:1/-1;margin:0}.section-heading h2{font-size:clamp(2.4rem,5vw,5rem)}.section-heading>p:last-child{color:var(--muted);font-size:1.15rem}.step-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin-top:2.5rem}.step{position:relative;min-height:230px;padding:1.35rem;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,#173149,#0d1d2b);box-shadow:var(--shadow)}.step-label{display:inline-grid;place-items:center;min-width:46px;height:46px;padding:0 .7rem;border-radius:13px;background:var(--accent,var(--coral));color:#07131e;font-weight:950}.step h3{font-size:1.35rem;margin:1rem 0 .5rem}.step p{color:#c5d1dc}.metric{display:block;color:var(--accent,var(--coral));font-weight:900;margin-top:1rem}.cautions{margin:2rem 0 0;padding:1.2rem 1.2rem 1.2rem 2.4rem;background:#ffffff08;border-radius:18px}.practice-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}.pulse-panel,.quality-list{display:grid;place-items:center;padding:2rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel)}.pulse{width:min(62vw,280px);aspect-ratio:1;border-radius:50%;border:12px solid #ffffff18;background:var(--coral);color:#07131e;box-shadow:0 0 0 0 #ff6b5e66;cursor:pointer}.pulse.running{animation:beat var(--beat,.545s) infinite}.pulse span{display:block;font-size:5rem;font-weight:950;line-height:1}.pulse small{font-weight:800}.practice-controls{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-top:1.2rem}.practice-controls label{display:grid;color:var(--muted)}.quality-list{display:block}.quality-list li{margin:.8rem 0}.quiz-list{display:grid;gap:1rem}.quiz-card{padding:1.4rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel)}.quiz-card h3{font-size:1.35rem}.choices{display:grid;gap:.7rem}.choice{padding:1rem;text-align:left;border:1px solid var(--line);border-radius:14px;background:#ffffff06;color:var(--text);font:inherit;cursor:pointer}.choice:hover,.choice:focus{border-color:var(--cyan)}.choice.correct{border-color:var(--green);background:#4ed49a18}.choice.wrong{border-color:var(--red);background:#e23b3b18}.reasoning{padding:1rem;margin-top:1rem;border-left:4px solid var(--cyan);background:#27c5d912}.handoff{display:grid;grid-template-columns:1fr auto;align-items:center;gap:3rem}.handoff h2{font-size:clamp(2.5rem,5vw,5.3rem)}.qr{width:280px;aspect-ratio:1;padding:16px;background:#fff;border-radius:24px}.qr img,.qr svg{width:100%;height:100%}.url{word-break:break-all;color:var(--cyan)}.sources{color:var(--muted)}.sources a{display:block;padding:.8rem 0;color:var(--text)}footer{display:flex;justify-content:space-between;gap:1rem;padding:2rem max(1rem,calc((100vw - var(--max))/2));border-top:1px solid var(--line);color:var(--muted)}.noscript{position:fixed;bottom:0;inset-inline:0;padding:1rem;background:var(--amber);color:#000}.present-controls{position:fixed;z-index:60;bottom:1rem;left:50%;transform:translateX(-50%);display:flex;gap:.5rem;align-items:center;padding:.5rem;background:#06101acc;border:1px solid var(--line);border-radius:999px;backdrop-filter:blur(12px)}.present-controls button{border:0;border-radius:999px;padding:.6rem .9rem;background:#ffffff12;color:#fff;cursor:pointer}\n@keyframes beat{50%{transform:scale(.94);box-shadow:0 0 0 26px #ff6b5e00}0%{box-shadow:0 0 0 0 #ff6b5e66}}\n:focus-visible{outline:3px solid var(--amber);outline-offset:3px}\nbody.present{overflow:hidden}body.present .topbar,body.present .module-nav,body.present footer{display:none}body.present main{height:100vh}body.present .present-slide{display:none;max-width:none;height:100vh;overflow:auto;padding:5vh 6vw}body.present .present-slide.active{display:grid}body.present .hero{grid-template-columns:1.1fr .9fr;min-height:100vh}body.present .module .section-heading{align-self:end}body.present .module .step-grid{align-self:start}body.present .step{min-height:210px}body.present .hero h1{font-size:6.6vw}body.present .emergency-note{align-self:start}\n@media(max-width:760px){html{scroll-padding-top:68px}.topbar{padding:.65rem 1rem}.top-actions .ghost{display:none}.compact{font-size:.85rem}.hero{grid-template-columns:1fr;min-height:auto;padding-top:3rem}.hero h1{font-size:clamp(3rem,15vw,5rem)}.module-nav{top:64px}.section-heading{grid-template-columns:1fr}.step-grid{grid-template-columns:1fr}.step{min-height:auto}.practice-grid,.handoff{grid-template-columns:1fr}.qr{width:min(78vw,320px);justify-self:center}footer{display:grid}.page-section{padding-block:4rem}.call{box-shadow:0 8px 25px #e23b3b55}}\n@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.pulse.running{animation:none}}"
+        },
+        {
+          "path": "clinical/cpr-komuniti-v0/app.js",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "(() => {\n  const content = window.CPR_CONTENT;\n  if (!content) return;\n  const accent = {red:'#e23b3b',coral:'#ff6b5e',cyan:'#27c5d9',green:'#4ed49a',amber:'#ffc857'};\n  const esc = value => String(value).replace(/[&<>\"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]));\n  const modules = document.querySelector('#modules');\n  modules.innerHTML = content.modules.map(module => `\n    <section id=\"${esc(module.id)}\" class=\"module page-section present-slide\" data-title=\"${esc(module.title)}\" style=\"--accent:${accent[module.accent] || accent.coral}\">\n      <div class=\"section-heading\"><p class=\"eyebrow\">${esc(module.eyebrow)}</p><h2>${esc(module.title)}</h2><p>${esc(module.summary)}</p></div>\n      <div class=\"step-grid\">${module.steps.map(step => `<article class=\"step\"><span class=\"step-label\">${esc(step.label)}</span><h3>${esc(step.title)}</h3><p>${esc(step.body)}</p>${step.metric ? `<b class=\"metric\">${esc(step.metric)}</b>` : ''}</article>`).join('')}</div>\n      ${module.cautions ? `<ul class=\"cautions\">${module.cautions.map(item => `<li>${esc(item)}</li>`).join('')}</ul>` : ''}\n    </section>`).join('');\n\n  const quizList = document.querySelector('#quizList');\n  quizList.innerHTML = content.quiz.map((q, qi) => `<article class=\"quiz-card\" data-quiz=\"${qi}\"><h3>${qi + 1}. ${esc(q.prompt)}</h3><div class=\"choices\">${q.choices.map((choice, ci) => `<button class=\"choice\" type=\"button\" data-choice=\"${ci}\">${esc(choice)}</button>`).join('')}</div><p class=\"reasoning\" hidden></p></article>`).join('');\n  quizList.addEventListener('click', event => {\n    const button = event.target.closest('.choice'); if (!button) return;\n    const card = button.closest('.quiz-card'); const q = content.quiz[Number(card.dataset.quiz)]; const selected = Number(button.dataset.choice);\n    card.querySelectorAll('.choice').forEach((el, index) => { el.disabled = true; if (index === q.answer) el.classList.add('correct'); else if (index === selected) el.classList.add('wrong'); });\n    const reasoning = card.querySelector('.reasoning'); reasoning.hidden = false; reasoning.textContent = (selected === q.answer ? 'Betul — ' : 'Belum tepat — ') + q.reasoning;\n  });\n\n  document.querySelector('#sourceList').innerHTML = content.sources.map(source => `<a href=\"${esc(source.url)}\" target=\"_blank\" rel=\"noreferrer\">↗ ${esc(source.label)}</a>`).join('');\n  const cleanUrl = location.href.split('#')[0].replace(/[?&]present=1/, '').replace(/[?&]$/, '');\n  document.querySelector('#currentUrl').textContent = cleanUrl;\n  const qrTarget = document.querySelector('#qr');\n  if (window.qrcode && /^https?:/.test(cleanUrl)) { const qr = window.qrcode(0, 'M'); qr.addData(cleanUrl); qr.make(); qrTarget.innerHTML = qr.createSvgTag({cellSize:6,margin:0,scalable:true}); }\n  else { qrTarget.style.background = '#102131'; qrTarget.innerHTML = '<div style=\"display:grid;place-items:center;height:100%;padding:1rem;text-align:center;color:#ffc857;font-weight:800\">Gunakan apply_serve_on_lan.ps1 untuk menghasilkan QR yang boleh dicapai telefon.</div>'; }\n\n  const bpm = document.querySelector('#bpm'); const bpmOutput = document.querySelector('#bpmOutput'); const pulse = document.querySelector('#pulseButton'); const countEl = document.querySelector('#pulseCount'); let timer; let count = 0; let audio;\n  const tick = () => { count += 1; countEl.textContent = count; try { audio ||= new (window.AudioContext || window.webkitAudioContext)(); const osc = audio.createOscillator(); const gain = audio.createGain(); osc.frequency.value = count % 30 === 1 ? 760 : 520; gain.gain.setValueAtTime(.08, audio.currentTime); gain.gain.exponentialRampToValueAtTime(.001, audio.currentTime + .07); osc.connect(gain).connect(audio.destination); osc.start(); osc.stop(audio.currentTime + .08); } catch {} };\n  const stop = () => { clearInterval(timer); timer = null; pulse.classList.remove('running'); pulse.setAttribute('aria-pressed','false'); pulse.querySelector('small').textContent = 'tekan untuk mula'; };\n  const start = () => { stop(); const interval = 60000 / Number(bpm.value); pulse.style.setProperty('--beat', `${interval}ms`); pulse.classList.add('running'); pulse.setAttribute('aria-pressed','true'); pulse.querySelector('small').textContent = 'tekan untuk berhenti'; tick(); timer = setInterval(tick, interval); };\n  pulse.addEventListener('click', () => timer ? stop() : start()); bpm.addEventListener('input', () => { bpmOutput.value = bpm.value; if (timer) start(); });\n  document.querySelector('#resetPractice').addEventListener('click', () => { stop(); count = 0; countEl.textContent = '0'; });\n  document.querySelector('#startPractice').addEventListener('click', () => { location.hash = '#practice'; setTimeout(start, 350); });\n\n  document.querySelector('#shareButton').addEventListener('click', async () => { try { if (navigator.share) await navigator.share({title:content.meta.title,text:content.meta.subtitle,url:cleanUrl}); else { await navigator.clipboard.writeText(cleanUrl); alert('Pautan disalin.'); } } catch {} });\n  let installPrompt; window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installPrompt = e; document.querySelector('#installButton').hidden = false; });\n  document.querySelector('#installButton').addEventListener('click', async () => { if (!installPrompt) return; installPrompt.prompt(); await installPrompt.userChoice; installPrompt = null; document.querySelector('#installButton').hidden = true; });"
+        },
+        {
+          "path": "clinical/cpr-komuniti-v0/content.js",
+          "start_line": 1,
+          "end_line": 1,
+          "text": "window.CPR_CONTENT={\"meta\":{\"title\":\"CPR Untuk Komuniti\",\"subtitle\":\"Kenal pasti. Hubungi 999. Tekan dada. Gunakan AED.\",\"language\":\"ms-MY\",\"edition\":\"Adaptasi pendidikan daripada Manual CPR untuk Komuniti KKM (2019)\",\"sourceUrl\":\"https://www.moh.gov.my/moh/resources/Arkib/MANUAL_CPR_UNTUK_KOMUNITI_KKM.pdf\",\"sourceId\":\"MOH/P/PAK/418.19(HB)-e\",\"safety\":\"Bahan pendidikan sahaja. Bukan pengganti latihan CPR bertauliah. Dalam kecemasan sebenar di Malaysia, hubungi 999 dan ikut arahan operator.\"},\"memoryLine\":[\"SELAMAT\",\"RESPONS\",\"999 + AED\",\"TEKAN DADA\"],\"modules\":[{\"id\":\"adult\",\"eyebrow\":\"TINDAKAN UTAMA\",\"title\":\"Dewasa tidak responsif\",\"summary\":\"Anggap jantung terhenti apabila mangsa tidak responsif dan tidak bernafas secara normal. Nafas tercungap-cungap bukan nafas normal.\",\"accent\":\"red\",\"steps\":[{\"label\":\"1\",\"title\":\"Pastikan selamat\",\"body\":\"Periksa bahaya kepada anda, mangsa dan orang sekeliling. Jangan dekati wayar hidup, trafik, api atau tumpahan berbahaya.\"},{\"label\":\"2\",\"title\":\"Periksa respons\",\"body\":\"Tepuk bahu dan tanya dengan kuat: “Hello! Anda OK?”\"},{\"label\":\"3\",\"title\":\"Jerit bantuan + hubungi 999\",\"body\":\"Arahkan orang tertentu: “Anda, telefon 999 dan bawa AED.” Jika bersendirian, guna pembesar suara.\"},{\"label\":\"4\",\"title\":\"Periksa pernafasan\",\"body\":\"Buka saluran pernafasan dan nilai pernafasan tidak melebihi 10 saat. Jika tidak normal atau ragu-ragu, mula tekan dada.\"},{\"label\":\"5\",\"title\":\"Tekan dada\",\"body\":\"Tengah dada. Tangan bertindih, siku lurus, bahu tegak di atas tangan.\",\"metric\":\"100–120/min • 5–6 cm • recoil penuh\"},{\"label\":\"6\",\"title\":\"30:2 jika terlatih\",\"body\":\"Berikan 30 tekanan dan 2 hembusan. Jika tidak terlatih atau tidak mahu memberi nafas bantuan, teruskan hands-only CPR.\"},{\"label\":\"7\",\"title\":\"Gunakan AED segera\",\"body\":\"Hidupkan AED, tampal pad dan ikut arahan suara. Sambung tekanan serta-merta selepas analisis atau kejutan.\"}]},{\"id\":\"quality\",\"eyebrow\":\"CPR BERKUALITI\",\"title\":\"Empat nombor yang menyelamatkan masa\",\"summary\":\"Tekanan yang konsisten mengekalkan aliran darah sementara bantuan perubatan tiba.\",\"accent\":\"coral\",\"steps\":[{\"label\":\"110\",\"title\":\"Sasaran rentak\",\"body\":\"Kekal dalam julat 100–120 tekanan seminit. Metronom latihan ditetapkan pada 110.\"},{\"label\":\"5–6\",\"title\":\"Kedalaman dewasa\",\"body\":\"Tekan sekurang-kurangnya 5 cm tetapi tidak melebihi 6 cm.\"},{\"label\":\"30:2\",\"title\":\"Jika beri nafas bantuan\",\"body\":\"Dua hembusan selepas setiap 30 tekanan; minimumkan gangguan.\"},{\"label\":\"<10s\",\"title\":\"Gangguan\",\"body\":\"Pastikan setiap jeda sesingkat mungkin dan dada kembali sepenuhnya selepas setiap tekanan.\"}]},{\"id\":\"aed\",\"eyebrow\":\"AED\",\"title\":\"Hidupkan. Tampal. Jauh. Sambung.\",\"summary\":\"Sesiapa boleh menggunakan AED. Alat akan menganalisis rentak jantung dan hanya mengarahkan kejutan apabila sesuai.\",\"accent\":\"cyan\",\"steps\":[{\"label\":\"ON\",\"title\":\"Hidupkan AED\",\"body\":\"Letakkan di sebelah mangsa. Buka penutup atau tekan butang ON.\"},{\"label\":\"PAD\",\"title\":\"Tampal pad\",\"body\":\"Satu pad di dada kanan atas, satu lagi di dada kiri bawah. Dedahkan dan keringkan dada jika perlu.\"},{\"label\":\"CLEAR\",\"title\":\"Jangan sentuh\",\"body\":\"Berhenti seketika semasa analisis. Jerit “Jauh!” dan lihat sekeliling sebelum kejutan.\"},{\"label\":\"CPR\",\"title\":\"Sambung serta-merta\",\"body\":\"Sambung tekanan dada selepas kejutan atau apabila AED menyatakan tiada kejutan diperlukan.\"}],\"cautions\":[\"Jangan letak pad di atas tampalan ubat atau bonjolan perentak jantung.\",\"Keringkan dada yang basah.\",\"Untuk kanak-kanak 1–8 tahun, gunakan pad pediatrik jika ada dan ikut gambar pada pad.\"]},{\"id\":\"child\",\"eyebrow\":\"KANAK-KANAK & BAYI\",\"title\":\"Pernafasan lebih penting — tetapi jangan lewat bertindak\",\"summary\":\"Masalah pernafasan lebih kerap mendahului jantung terhenti pada kanak-kanak. Berikan 5 nafas awal jika terlatih, kemudian CPR 30:2.\",\"accent\":\"green\",\"steps\":[{\"label\":\"KANAK\",\"title\":\"Kanak-kanak\",\"body\":\"Tekan tengah dada menggunakan satu atau dua tangan mengikut saiz.\",\"metric\":\"100–120/min • kira-kira 1/3 dada (±5 cm)\"},{\"label\":\"BAYI\",\"title\":\"Bayi <1 tahun\",\"body\":\"Gunakan dua jari di tengah dada untuk penyelamat tunggal.\",\"metric\":\"100–120/min • kira-kira 1/3 dada (±4 cm)\"},{\"label\":\"5\",\"title\":\"Nafas awal\",\"body\":\"Jika tidak bernafas dan anda terlatih, beri 5 hembusan yang cukup untuk menaikkan dada.\"},{\"label\":\"1 min\",\"title\":\"Jika benar-benar bersendirian\",\"body\":\"Manual KKM 2019 mengajar kira-kira 1 minit CPR sebelum meninggalkan mangsa kanak-kanak/bayi untuk mendapatkan bantuan. Jika telefon ada, hubungi 999 menggunakan pembesar suara tanpa meninggalkan mangsa.\"}]},{\"id\":\"choking\",\"eyebrow\":\"TERCEKIK\",\"title\":\"Batuk kuat atau batuk lemah?\",\"summary\":\"Keupayaan batuk menentukan tindakan. Jangan melakukan sapuan jari secara membuta tuli.\",\"accent\":\"amber\",\"steps\":[{\"label\":\"BATUK\",\"title\":\"Batuk berkesan\",\"body\":\"Galakkan mangsa terus batuk. Pantau dengan dekat; jangan ganggu batuk yang kuat.\"},{\"label\":\"5\",\"title\":\"Batuk tidak berkesan\",\"body\":\"Berikan sehingga 5 tepukan belakang di antara tulang belikat.\"},{\"label\":\"5\",\"title\":\"Masih tersekat\",\"body\":\"Dewasa/kanak-kanak: sehingga 5 tekanan perut. Bayi: 5 tekanan dada — jangan tekan perut bayi.\"},{\"label\":\"CPR\",\"title\":\"Menjadi tidak sedar\",\"body\":\"Baringkan di permukaan rata, hubungi 999 dan mulakan CPR. Keluarkan objek hanya jika jelas kelihatan dan mudah dicapai.\"}]}],\"quiz\":[{\"id\":\"q1\",\"prompt\":\"Seorang dewasa rebah, tidak responsif dan tercungap-cungap. Apa tindakan seterusnya?\",\"choices\":[\"Tunggu sehingga nafas berhenti sepenuhnya\",\"Hubungi 999/AED dan mula tekan dada\",\"Beri air\"],\"answer\":1,\"reasoning\":\"Nafas tercungap-cungap tidak dianggap normal. Aktifkan bantuan dan mulakan CPR segera.\"},{\"id\":\"q2\",\"prompt\":\"AED sedang menganalisis rentak jantung. Apa yang perlu dilakukan?\",\"choices\":[\"Terus pegang bahu mangsa\",\"Pastikan tiada sesiapa menyentuh mangsa\",\"Tanggalkan semua pad\"],\"answer\":1,\"reasoning\":\"Hentikan sentuhan semasa analisis dan kejutan. Sambung CPR serta-merta selepas arahan AED.\"},{\"id\":\"q3\",\"prompt\":\"Bayi sedar tetapi tercekik dan batuk tidak berkesan. Selepas 5 tepukan belakang masih tersekat. Apa seterusnya?\",\"choices\":[\"5 tekanan perut\",\"5 tekanan dada\",\"Sapuan jari secara membuta tuli\"],\"answer\":1,\"reasoning\":\"Gunakan tekanan dada untuk bayi. Tekanan perut tidak digunakan pada bayi.\"}],\"sources\":[{\"label\":\"Manual CPR untuk Komuniti, KKM (2019)\",\"url\":\"https://www.moh.gov.my/moh/resources/Arkib/MANUAL_CPR_UNTUK_KOMUNITI_KKM.pdf\"},{\"label\":\"Adult Basic Life Support Guidelines 2025, Resuscitation Council UK\",\"url\":\"https://www.resus.org.uk/professional-library/2025-resuscitation-guidelines/adult-basic-life-support-guidelines\"}]};"
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "index": 6,
+      "name": "previews",
+      "purpose": "Files located under previews. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "files": [
+        "previews/deckmate-studio/README.md",
+        "previews/deckmate-studio/index.html",
+        "previews/deckmate-studio/preview.js",
+        "previews/deckmate-studio/style.css"
+      ],
+      "snippets": [
+        {
+          "path": "previews/deckmate-studio/README.md",
+          "start_line": 1,
+          "end_line": 17,
+          "text": "# Deckmate + Studio concept preview\n\nStatic, non-production concept for cloud-agent and operator review. It does not read localStorage, Firebase, authentication state, or production data.\n\nPreview from the repository root:\n\n```text\npython -m http.server 4173\nhttp://localhost:4173/previews/deckmate-studio/\n```\n\nDesign direction:\n\n- Deckmate uses visible progress and story readiness to help a student move toward presenting.\n- Studio uses a tactile pinboard metaphor for collecting and reusing notes, images, and opening lines.\n- Both inherit Family Lab’s warm tokens and accessibility floor without becoming visually identical.\n"
+        },
+        {
+          "path": "previews/deckmate-studio/index.html",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>Family Lab — Deckmate & Studio Preview</title>\n  <link rel=\"stylesheet\" href=\"../../shared/theme.css\">\n  <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n  <a class=\"skip-link\" href=\"#preview\">Skip to preview</a>\n  <header class=\"topbar\">\n    <a class=\"brand\" href=\"../../index.html\" aria-label=\"Back to Family Lab\">\n      <span class=\"brand-mark\" aria-hidden=\"true\">FL</span>\n      <span><strong>Family Lab</strong><small>Preview workspace</small></span>\n    </a>\n    <div class=\"preview-note\"><span></span>Concept only · no live data</div>\n  </header>\n\n  <main id=\"preview\">\n    <section class=\"intro\">\n      <p class=\"eyebrow\">One place to make and remember</p>\n      <h1>School ideas, from first note to confident presentation.</h1>\n      <p>Deckmate turns research into a clear story. Studio keeps the useful pieces close, so nothing gets lost between homework sessions.</p>\n      <div class=\"product-switch\" role=\"tablist\" aria-label=\"Choose preview\">\n        <button role=\"tab\" aria-selected=\"true\" aria-controls=\"deckmate-panel\" id=\"deckmate-tab\" data-panel=\"deckmate-panel\">\n          <span aria-hidden=\"true\">✦</span><b>Deckmate</b><small>Shape the story</small>\n        </button>\n        <button role=\"tab\" aria-selected=\"false\" aria-controls=\"studio-panel\" id=\"studio-tab\" data-panel=\"studio-panel\">\n          <span aria-hidden=\"true\">⌂</span><b>Studio</b><small>Keep the pieces</small>\n        </button>\n      </div>\n    </section>\n\n    <section class=\"app-shell\" id=\"deckmate-panel\" role=\"tabpanel\" aria-labelledby=\"deckmate-tab\">\n      <aside class=\"rail\">\n        <div class=\"rail-head\"><span class=\"mini-logo\">D</span><strong>Deckmate</strong></div>\n        <nav aria-label=\"Deck sections\">\n          <button class=\"nav-item active\"><span>01</span>My decks</button>\n          <button class=\"nav-item\"><span>02</span>Idea tray</button>"
+        },
+        {
+          "path": "previews/deckmate-studio/preview.js",
+          "start_line": 1,
+          "end_line": 18,
+          "text": "const tabs = [...document.querySelectorAll('[role=\"tab\"]')];\nconst panels = [...document.querySelectorAll('[role=\"tabpanel\"]')];\n\nfunction activate(tab) {\n  tabs.forEach((candidate) => candidate.setAttribute('aria-selected', String(candidate === tab)));\n  panels.forEach((panel) => { panel.hidden = panel.id !== tab.dataset.panel; });\n  tab.focus();\n}\n\ntabs.forEach((tab, index) => {\n  tab.addEventListener('click', () => activate(tab));\n  tab.addEventListener('keydown', (event) => {\n    if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;\n    event.preventDefault();\n    const offset = event.key === 'ArrowRight' ? 1 : -1;\n    activate(tabs[(index + offset + tabs.length) % tabs.length]);\n  });\n});"
+        },
+        {
+          "path": "previews/deckmate-studio/style.css",
+          "start_line": 1,
+          "end_line": 3,
+          "text": ":root{--preview-ink:#17312f;--preview-cream:#fbf5e9;--preview-paper:#fffdf8;--preview-green:#246a5a;--preview-coral:#e7755d;--preview-yellow:#f3ca52;--preview-blue:#a8cee0;--preview-shadow:0 24px 60px rgba(23,49,47,.13)}\n*{box-sizing:border-box}html{scroll-behavior:smooth}body{min-height:100vh;background:radial-gradient(circle at 8% 0%,#fff8d8 0,transparent 24rem),var(--preview-cream);color:var(--preview-ink)}button,a{font:inherit}.skip-link{position:fixed;left:1rem;top:-5rem;z-index:20;background:#fff;padding:.75rem 1rem;color:var(--preview-ink)}.skip-link:focus{top:1rem}.topbar{max-width:1240px;margin:auto;padding:20px 24px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none}.brand-mark,.mini-logo{display:grid;place-items:center;background:var(--preview-ink);color:#fff;border-radius:10px;font-weight:800}.brand-mark{width:42px;height:42px}.brand span:last-child{display:grid}.brand small{color:var(--muted)}.preview-note{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}.preview-note span{width:8px;height:8px;border-radius:50%;background:var(--warm)}main{max-width:1240px;margin:auto;padding:42px 24px 90px}.intro{max-width:780px;margin-bottom:32px}.eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:12px;font-weight:800;color:var(--preview-green)}.intro h1{font-size:clamp(38px,6vw,72px);line-height:.98;margin:12px 0 20px;max-width:780px}.intro>p:not(.eyebrow){font-size:18px;line-height:1.6;max-width:650px;color:var(--muted)}.product-switch{display:flex;gap:10px;margin-top:28px}.product-switch button{min-width:180px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.6);padding:13px 16px;display:grid;grid-template-columns:32px 1fr;text-align:left;cursor:pointer}.product-switch button>span{grid-row:1/3;font-size:22px}.product-switch small{color:var(--muted)}.product-switch [aria-selected=true]{background:var(--preview-ink);color:#fff;box-shadow:var(--preview-shadow)}.product-switch [aria-selected=true] small{color:#d9e6e2}.app-shell{min-height:690px;display:grid;grid-template-columns:210px 1fr;background:var(--preview-paper);border:1px solid rgba(23,49,47,.12);border-radius:26px;overflow:hidden;box-shadow:var(--preview-shadow)}.rail{padding:26px 18px;background:#e8f0e9;display:flex;flex-direction:column}.rail-head{display:flex;gap:10px;align-items:center;margin-bottom:32px}.mini-logo{width:34px;height:34px;background:var(--preview-green)}.rail nav{display:grid;gap:6px}.nav-item{border:0;background:transparent;padding:11px;border-radius:10px;text-align:left;color:var(--muted);cursor:pointer}.nav-item span{font-size:10px;margin-right:8px}.nav-item.active{background:#fff;color:var(--preview-ink);font-weight:800}.rail-tip{margin-top:auto;background:rgba(255,255,255,.68);padding:14px;border-radius:14px}.rail-tip p{font-size:12px;line-height:1.5;margin:5px 0;color:var(--muted)}.workspace{padding:34px;min-width:0}.workspace-head,.section-heading{display:flex;justify-content:space-between;align-items:center;gap:16px}.workspace-head h2{font-size:34px;margin:4px 0}.context{font-size:13px;color:var(--muted);margin:0}.primary-action{border:0;background:var(--preview-green);color:#fff;padding:12px 18px;border-radius:12px;font-weight:800}.continue-card{display:grid;grid-template-columns:1fr 230px;min-height:220px;background:#fff0c7;border-radius:22px;padding:28px;margin:28px 0}.continue-copy h3{font-size:30px;margin:14px 0 6px}.continue-copy p,.continue-copy small{color:#6f654d}.status-pill{display:inline-block;border:1px solid rgba(23,49,47,.2);border-radius:99px;padding:5px 9px;font-size:11px;font-weight:800}.progress{max-width:340px;height:8px;background:rgba(23,49,47,.12);border-radius:99px;margin:22px 0 8px;overflow:hidden}.progress span{display:block;height:100%;background:var(--preview-coral)}.slide-stack{position:relative;min-height:160px}.slide-stack span{position:absolute;inset:15px 0 0 25px;background:#fff;border-radius:10px;box-shadow:0 12px 24px rgba(23,49,47,.12);transform:rotate(7deg)}.slide-stack span:nth-child(2){transform:rotate(-3deg);inset:8px 15px 7px 8px;background:#d8ebdf}.slide-stack span:nth-child(3){transform:rotate(1deg);inset:0 22px 14px 0;display:grid;place-items:center;text-align:center;font-family:var(--fd);font-size:22px}.section-heading h3{font-size:22px}.section-heading button,.note-card button{border:0;background:transparent;color:var(--preview-green);font-weight:800}.deck-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.project-card{min-height:185px;border-radius:18px;padding:20px}.project-card h4{font-size:20px;margin:22px 0 5px}.project-card p{font-size:13px;color:#5d6966}.project-card>span{font-size:11px;font-weight:800}.card-icon{font-size:26px}.sunflower{background:#ffeda9}.coral{background:#f8d4ca}.mint{background:#d9eee6}.studio-shell .rail{background:#efe7db}.studio-shell .mini-logo{background:#87574a}.studio-shell .primary-action{background:#87574a}.pinboard{display:grid;grid-template-columns:1.15fr .85fr 1fr;gap:18px;padding:30px;background-color:#ded1bd;background-image:radial-gradient(rgba(67,52,43,.12) 1px,transparent 1px);background-size:13px 13px;border-radius:22px;margin:28px 0}.note-card{position:relative;min-height:230px;padding:22px;box-shadow:0 13px 22px rgba(67,52,43,.14);transform:rotate(-1.4deg)}.note-card:nth-child(2){transform:rotate(1.2deg)}.note-card:nth-child(3){transform:rotate(-.3deg)}.note-card h3{font-size:21px;margin:12px 0 8px}.note-card p{font-size:14px;line-height:1.55}.note-card small{font-weight:800;color:#665d51}.note-yellow{background:#fff0a7}.note-blue{background:#d8edf6}.photo-card{background:#fff}.pin{position:absolute;top:7px;left:50%;color:#a24f42}.photo-placeholder{height:120px;background:linear-gradient(145deg,#8eafaf,#345f61);display:grid;place-items:end start;padding:10px;color:#fff;margin-bottom:12px}.folder-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.folder-row article{display:flex;align-items:center;gap:12px;border:1px solid var(--line);padding:16px;border-radius:14px;background:#fff}.folder-row article>span{display:grid;place-items:center;width:45px;height:45px;border-radius:12px;background:#eee2d2;font-weight:800}.folder-row h4,.folder-row p{margin:0}.folder-row p{font-size:12px;color:var(--muted);margin-top:4px}.design-notes{padding:76px 0 0}.design-notes h2{font-size:36px;max-width:640px}.design-notes>div{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.design-notes article{border-top:2px solid var(--preview-ink);padding-top:14px}.design-notes p{color:var(--muted);line-height:1.6}.app-shell[hidden]{display:none!important}button:focus-visible,a:focus-visible{outline:3px solid var(--warm);outline-offset:3px}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}\n@media(max-width:800px){.topbar{padding:16px}.preview-note{display:none}main{padding:24px 14px 60px}.intro h1{font-size:42px}.product-switch{overflow-x:auto}.app-shell{display:block;min-height:0}.rail{display:none}.workspace{padding:20px}.workspace-head{align-items:flex-end}.workspace-head h2{font-size:28px}.continue-card{grid-template-columns:1fr;padding:20px}.slide-stack{display:none}.deck-row,.design-notes>div{grid-template-columns:1fr}.project-card{min-height:145px}.pinboard{grid-template-columns:1fr;padding:18px}.note-card{min-height:190px;transform:none!important}.folder-row{grid-template-columns:1fr}}"
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "index": 7,
+      "name": "scripts",
+      "purpose": "Files located under scripts. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "files": [
+        "scripts/build-family-hub-config.mjs",
+        "scripts/build-studio-config.mjs",
+        "scripts/prepare-deploy-bundle.mjs",
+        "scripts/sync-secrets.mjs"
+      ],
+      "snippets": [
+        {
+          "path": "scripts/build-family-hub-config.mjs",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "#!/usr/bin/env node\n/**\n * Generate apps/family-hub/family.config.local.js from environment variables.\n *\n * Expected env vars (set by GitHub Actions from repository secrets):\n *   FIREBASE_API_KEY\n *   FIREBASE_URL\n *   FIREBASE_ROOT_FAMILY_HUB  (defaults to \"familyHub\")\n *\n * The generated file is gitignored and is consumed by apps/family-hub/family.config.js\n * alongside the committed base config.\n */\n\nimport fs from \"node:fs\";\nimport path from \"node:path\";\nimport { fileURLToPath } from \"node:url\";\n\nconst __filename = fileURLToPath(import.meta.url);\nconst __dirname = path.dirname(__filename);\n\nconst outPath = path.join(__dirname, \"..\", \"apps\", \"family-hub\", \"family.config.local.js\");\n\nconst apiKey = process.env.FIREBASE_API_KEY;\nconst url = process.env.FIREBASE_URL;\nconst root = process.env.FIREBASE_ROOT_FAMILY_HUB || \"familyHub\";\n\nif (!apiKey || !url) {\n  console.error(\"[build-family-hub-config] Missing FIREBASE_API_KEY or FIREBASE_URL\");\n  process.exit(1);\n}\n\nconst file = `// Generated by scripts/build-family-hub-config.mjs — do not commit.\nwindow.FAMILY_HUB_CONFIG_LOCAL = {\n  firebase: {\n    url: ${JSON.stringify(url)},\n    root: ${JSON.stringify(root)},\n    apiKey: ${JSON.stringify(apiKey)},\n  },\n};\n`;"
+        },
+        {
+          "path": "scripts/build-studio-config.mjs",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "#!/usr/bin/env node\n/**\n * Generate apps/studio/studio.config.local.js from environment variables.\n *\n * Expected env vars (set by GitHub Actions from repository secrets):\n *   FIREBASE_API_KEY\n *   FIREBASE_URL\n *   FIREBASE_ROOT_STUDIO  (defaults to \"studio\")\n *\n * The generated file is gitignored and is consumed by apps/studio/firebase-rest.js\n * alongside the committed studio.config.js.\n */\n\nimport fs from \"node:fs\";\nimport path from \"node:path\";\nimport { fileURLToPath } from \"node:url\";\n\nconst __filename = fileURLToPath(import.meta.url);\nconst __dirname = path.dirname(__filename);\n\nconst outPath = path.join(__dirname, \"..\", \"apps\", \"studio\", \"studio.config.local.js\");\n\nconst apiKey = process.env.FIREBASE_API_KEY;\nconst url = process.env.FIREBASE_URL;\nconst root = process.env.FIREBASE_ROOT_STUDIO || \"studio\";\n\nif (!apiKey || !url) {\n  console.error(\"[build-studio-config] Missing FIREBASE_API_KEY or FIREBASE_URL\");\n  process.exit(1);\n}\n\nconst file = `// Generated by scripts/build-studio-config.mjs — do not commit.\nwindow.STUDIO_APP_CONFIG_LOCAL = {\n  firebase: {\n    url: ${JSON.stringify(url)},\n    root: ${JSON.stringify(root)},\n  },\n  auth: {\n    apiKey: ${JSON.stringify(apiKey)},\n  },"
+        },
+        {
+          "path": "scripts/prepare-deploy-bundle.mjs",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "#!/usr/bin/env node\n/**\n * Prepare the static deploy bundle under dist/.\n *\n * Usage:\n *   node scripts/prepare-deploy-bundle.mjs\n *\n * This centralises the copy logic that was duplicated across\n * .github/workflows/pages.yml and .github/workflows/deploy-cloudflare-pages.yml.\n */\n\nimport fs from \"node:fs\";\nimport path from \"node:path\";\nimport { fileURLToPath } from \"node:url\";\n\nconst __filename = fileURLToPath(import.meta.url);\nconst __dirname = path.dirname(__filename);\nconst root = path.join(__dirname, \"..\");\nconst dist = path.join(root, \"dist\");\n\nconst filesToCopy = [\n  \"index.html\",\n  \"clinical.html\",\n  \"AGENTS.md\",\n  \"README.md\",\n  \"SECRETS.md\",\n];\nconst dirsToCopy = [\"shared\", \"apps\", \"previews\", \"clinical\"];\n\nfunction rmrf(p) {\n  if (!fs.existsSync(p)) return;\n  fs.rmSync(p, { recursive: true, force: true });\n}\n\nfunction copyDir(src, dest) {\n  fs.mkdirSync(dest, { recursive: true });\n  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {\n    const srcPath = path.join(src, entry.name);\n    const destPath = path.join(dest, entry.name);\n    if (entry.isDirectory()) {"
+        },
+        {
+          "path": "scripts/sync-secrets.mjs",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "#!/usr/bin/env node\n/**\n * Family Lab — Infisical → GitHub / Cloudflare Pages secret sync.\n *\n * Source of truth: Infisical project 90b0e7ef-3f72-4ddb-b888-055e90e13dfa\n * Targets:\n *   - GitHub repository secrets for arhsmoque/arh-family-lab\n *   - Cloudflare Pages project secrets for project arh-family-lab\n *\n * Run manually after rotating a secret, or as a workflow_dispatch job.\n * Never logs secret values — only key names and status.\n */\n\nimport { spawnSync } from \"node:child_process\";\nimport fs from \"node:fs\";\nimport os from \"node:os\";\nimport path from \"node:path\";\nimport { fileURLToPath } from \"node:url\";\n\nconst __filename = fileURLToPath(import.meta.url);\nconst __dirname = path.dirname(__filename);\n\nconst PROJECT_ID = \"90b0e7ef-3f72-4ddb-b888-055e90e13dfa\";\nconst INFISICAL_API = \"https://app.infisical.com/api/v3/secrets/raw\";\nconst UNIVERSAL_AUTH_URL = \"https://app.infisical.com/api/v1/auth/universal-auth/login\";\nconst REPO = \"arhsmoque/arh-family-lab\";\nconst CF_PAGES_PROJECT = \"arh-family-lab\";\nconst CF_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID || \"\";\n\nconst DRY_RUN = process.argv.includes(\"--dry-run\");\n\nfunction log(...args) {\n  console.log(\"[sync-secrets]\", ...args);\n}\n\nfunction fail(...args) {\n  console.error(\"[sync-secrets] ERROR\", ...args);\n  process.exitCode = 1;\n}\n"
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "index": 8,
+      "name": "servers",
+      "purpose": "Files located under servers. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "files": [
+        "servers/kids-terminal/.env",
+        "servers/kids-terminal/agy-cadet-tray.ahk",
+        "servers/kids-terminal/app.js",
+        "servers/kids-terminal/config.json",
+        "servers/kids-terminal/index.html",
+        "servers/kids-terminal/package-lock.json",
+        "servers/kids-terminal/package.json",
+        "servers/kids-terminal/server.js",
+        "servers/kids-terminal/server.lock",
+        "servers/kids-terminal/setup-aliases.ps1",
+        "servers/kids-terminal/shared-bridge.mjs",
+        "servers/kids-terminal/style.css"
+      ],
+      "snippets": [
+        {
+          "path": "servers/kids-terminal/.env",
+          "start_line": 1,
+          "end_line": 9,
+          "text": "FIREBASE_API_KEY='AIzaSyD7PzpBG9fk3BGM96vYOyKDaaOe3FDFnnY'\nFIREBASE_ROOT='kids-terminal'\nFIREBASE_URL='https://arh-firebase-db-default-rtdb.asia-southeast1.firebasedatabase.app'\nPARENT_MASTER_EMAIL='arh.homelab@gmail.com'\nPARENT_NOTIFY_URL='http://100.85.170.170:8080/notify'\nPARENT_PIN='1234'\nSECURITY_ENABLED='false'\nSERVER_PORT='3000'\nTAILSCALE_IP='100.85.130.130'"
+        },
+        {
+          "path": "servers/kids-terminal/agy-cadet-tray.ahk",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "#Requires AutoHotkey v2.0\n#SingleInstance Force\nPersistent\n\n; Central Directories — prefer ARH_FAMILY_LAB_ROOT env var; fall back to\n; deriving the repo root from this script's own location (it lives at\n; <repoRoot>\\servers\\kids-terminal\\agy-cadet-tray.ahk), so a fresh clone at\n; any path works without editing this file.\nRepoRoot := EnvGet(\"ARH_FAMILY_LAB_ROOT\")\nif (RepoRoot = \"\") {\n    RepoRoot := RegExReplace(A_ScriptDir, \"[\\\\/]servers[\\\\/]kids-terminal$\", \"\")\n}\nAppDir := RepoRoot . \"\\servers\\kids-terminal\"\nLockFile := AppDir . \"\\server.lock\"\n\n; Initialize Tray State\nTraySetIcon(\"shell32.dll\", 132) ; Default offline (Red X)\nA_IconTip := \"Agy Cadet Space Station`nStatus: Checking...\"\n\n; Create Custom Tray Menu\nA_TrayMenu.Delete()\nA_TrayMenu.Add(\"Agy Cadet Space Station\", (*) => OpenBrowser())\nA_TrayMenu.SetDefault(\"Agy Cadet Space Station\")\nA_TrayMenu.Add() ; Separator\n\nGlobal StatusItemText := \"Status: Checking...\"\nA_TrayMenu.Add(StatusItemText, (*) => CheckStatus())\nA_TrayMenu.Disable(StatusItemText)\nA_TrayMenu.Add() ; Separator\n\nA_TrayMenu.Add(\"Open Cadet Console\", (*) => OpenBrowser())\nA_TrayMenu.Add(\"Open Parent Portal (/admin)\", (*) => OpenAdmin())\nA_TrayMenu.Add() ; Separator\n\nA_TrayMenu.Add(\"Restart Express Server\", (*) => RestartServer())\nA_TrayMenu.Add(\"Sync Repository (git pull)\", (*) => SyncRepository())\nA_TrayMenu.Add(\"Static Rebuild Check\", (*) => RebuildFrontend())\nA_TrayMenu.Add() ; Separator\n\nA_TrayMenu.Add(\"Exit Tray Agent\", (*) => ExitApp())"
+        },
+        {
+          "path": "servers/kids-terminal/app.js",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "// ============================================================================\n// PURE BUSINESS LOGIC (Deterministic, zero I/O side effects, zero DOM)\n// ============================================================================\n\nconst YamlParser = {\n  parse(yamlStr) {\n    const obj = {};\n    const lines = yamlStr.split('\\n');\n\n    for (let line of lines) {\n      line = line.trim();\n      if (!line || line.startsWith('#') || !line.includes(':')) continue;\n\n      const colonIdx = line.indexOf(':');\n      const key = line.slice(0, colonIdx).trim();\n      let val = line.slice(colonIdx + 1).trim();\n\n      if (val.startsWith('\"') && val.endsWith('\"')) val = val.slice(1, -1);\n      else if (val.startsWith(\"'\") && val.endsWith(\"'\")) val = val.slice(1, -1);\n\n      if (val.toLowerCase() === 'true') val = true;\n      else if (val.toLowerCase() === 'false') val = false;\n      else if (!isNaN(val) && val !== '') val = Number(val);\n\n      else if (val === '' && lines[lines.indexOf(line) + 1]?.trim().startsWith('-')) {\n        const arr = [];\n        let nextIdx = lines.indexOf(line) + 1;\n        while (nextIdx < lines.length && lines[nextIdx].trim().startsWith('-')) {\n          const itemVal = lines[nextIdx].trim().slice(1).trim().replace(/^['\"]|['\"]$/g, '');\n          arr.push(itemVal);\n          nextIdx++;\n        }\n        obj[key] = arr;\n      } else {\n        obj[key] = val;\n      }\n    }\n    return obj;\n  }\n};"
+        },
+        {
+          "path": "servers/kids-terminal/config.json",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "{\n  \"firebase\": {\n    \"url\": \"https://arh-firebase-db-default-rtdb.asia-southeast1.firebasedatabase.app\",\n    \"root\": \"kids-terminal\"\n  },\n  \"auth\": {\n    \"apiKey\": \"REPLACE_WITH_WEB_API_KEY\"\n  },\n  \"parent\": {\n    \"pin\": \"REPLACE_WITH_A_PIN\",\n    \"notifyUrl\": \"http://REPLACE_WITH_PARENT_PHONE_TAILSCALE_IP:8080/notify\",\n    \"masterGatedEmail\": \"arh.homelab@gmail.com\",\n    \"cadets\": [\n      \"aflah\",\n      \"haidar\",\n      \"asma\"\n    ],\n    \"gatedKeywords\": [\n      \"delete\",\n      \"remove\",\n      \"destroy\",\n      \"format\",\n      \"rm -rf\",\n      \"system32\",\n      \"cmd.exe\",\n      \"powershell\"\n    ]\n  },\n  \"theme\": {\n    \"fontFamilyBody\": \"\\\"DM Sans\\\", system-ui, sans-serif\",\n    \"fontFamilyHeading\": \"\\\"Playfair Display\\\", Georgia, serif\",\n    \"fontSizeBody\": \"16px\",\n    \"fontSizeConsole\": \"15px\",\n    \"colorBackground\": \"#f7f1e8\",\n    \"colorPaper\": \"#fffaf2\",\n    \"colorSurface\": \"#ffffff\",\n    \"colorInk\": \"#17211f\",\n    \"colorMuted\": \"#63736f\",\n    \"colorBrand\": \"#12323a\",\n    \"colorAccent\": \"#2f7b67\","
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "index": 9,
+      "name": "shared",
+      "purpose": "Files located under shared. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "files": [
+        "shared/runtime/README.md",
+        "shared/runtime/auth.js",
+        "shared/runtime/config.js",
+        "shared/runtime/db.js",
+        "shared/runtime/plugin-host.js",
+        "shared/runtime/store.js",
+        "shared/runtime/ui.js",
+        "shared/theme.css"
+      ],
+      "snippets": [
+        {
+          "path": "shared/runtime/README.md",
+          "start_line": 1,
+          "end_line": 34,
+          "text": "# Shared Runtime\n\nOpt-in ES-module plugins used by apps in this hub. The goal is to stop\ncopy-pasting Firebase auth/REST code across Family Hub, Studio, and Kids\nTerminal, and to give new apps a clear onboarding path.\n\n## Plugins\n\n| Module | Purpose |\n|---|---|\n| `config.js` | Load base config + gitignored local override |\n| `auth.js` | Firebase Identity Toolkit REST auth |\n| `db.js` | Firebase Realtime Database REST layer |\n| `store.js` | Generic `localStorage` cache + sync queue |\n| `ui.js` | Modal, toast, HTML escape helpers |\n| `plugin-host.js` | Manifest-driven app bootstrap |\n\n## App contract\n\n1. Create `apps/<name>/manifest.json`:\n   ```json\n   {\n     \"name\": \"my-app\",\n     \"title\": \"My App\",\n     \"entry\": \"./app.js\",\n     \"plugins\": [\"config\", \"auth\", \"db\"],\n     \"configKey\": \"MY_APP_CONFIG\"\n   }\n   ```\n2. `index.html` loads `shared/theme.css` and `shared/runtime/plugin-host.js` as a module.\n3. `app.js` exports a `mount({ manifest, plugins })` function.\n\nExisting apps that still use classic scripts continue to work; migration is\nopt-in per app."
+        },
+        {
+          "path": "shared/runtime/auth.js",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "/**\n * Shared Firebase Identity Toolkit auth layer (no SDK).\n *\n * Usage:\n *   import { FirebaseAuth } from '../../shared/runtime/auth.js';\n *   const auth = new FirebaseAuth({ apiKey: '...' });\n *   await auth.signIn(email, password);\n */\n\nconst AUTH_BASE = \"https://identitytoolkit.googleapis.com/v1\";\nconst REFRESH_BASE = \"https://securetoken.googleapis.com/v1/token\";\n\nexport class FirebaseAuth {\n  constructor({ apiKey, sessionKey = \"arh_firebase_session_v1\" }) {\n    if (!apiKey) throw new Error(\"FirebaseAuth requires apiKey\");\n    this.apiKey = apiKey;\n    this.sessionKey = sessionKey;\n  }\n\n  isConfigured() {\n    return !!this.apiKey;\n  }\n\n  async signUp(email, password) {\n    const data = await this._authFetch(\"accounts:signUp\", { email, password });\n    const session = this._sessionFromAuthResponse(data);\n    this._writeSession(session);\n    return session;\n  }\n\n  async signIn(email, password) {\n    const data = await this._authFetch(\"accounts:signInWithPassword\", { email, password });\n    const session = this._sessionFromAuthResponse(data);\n    this._writeSession(session);\n    return session;\n  }\n\n  async currentSession() {\n    let session = this._readSession();\n    if (!session) return null;"
+        },
+        {
+          "path": "shared/runtime/config.js",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "/**\n * Shared runtime config loader.\n *\n * Each app declares a base config object and an optional window global\n * override (gitignored, generated at deploy time). This module merges them\n * and validates required keys.\n *\n * Usage:\n *   import { loadConfig } from '../../shared/runtime/config.js';\n *   const config = loadConfig('FAMILY_HUB_CONFIG', {\n *     required: ['firebase.url', 'firebase.apiKey'],\n *     defaults: { theme: 'warm', lang: 'en' }\n *   });\n */\n\nexport function loadConfig(baseGlobalName, options = {}) {\n  const base = typeof window !== \"undefined\" && window[baseGlobalName]\n    ? window[baseGlobalName]\n    : {};\n\n  const localGlobalName = `${baseGlobalName}_LOCAL`;\n  const local = typeof window !== \"undefined\" && window[localGlobalName]\n    ? window[localGlobalName]\n    : {};\n\n  const merged = deepMerge(base, local);\n\n  if (options.defaults) {\n    return deepMerge(options.defaults, merged);\n  }\n\n  if (options.required) {\n    const missing = options.required.filter(path => {\n      const value = getPath(merged, path);\n      return value === undefined || value === null || value === \"\";\n    });\n    if (missing.length > 0) {\n      throw new Error(`Missing required config: ${missing.join(\", \")}`);\n    }\n  }"
+        },
+        {
+          "path": "shared/runtime/db.js",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "/**\n * Shared Firebase Realtime Database REST layer (no SDK).\n *\n * Usage:\n *   import { FirebaseDB } from '../../shared/runtime/db.js';\n *   const db = new FirebaseDB({ baseUrl: 'https://...firebaseio.com', root: 'familyHub' });\n *   const data = await db.get('households/owner/tasks', { auth: idToken });\n *   await db.patch('households/owner/tasks', { newTask: true }, { auth: idToken });\n */\n\nexport class FirebaseDB {\n  constructor({ baseUrl, root = \"\" }) {\n    if (!baseUrl) throw new Error(\"FirebaseDB requires baseUrl\");\n    this.baseUrl = baseUrl.replace(/\\/$/, \"\");\n    this.root = root;\n  }\n\n  _url(path, { auth, shallow } = {}) {\n    let url = `${this.baseUrl}/${this.root ? `${this.root}/` : \"\"}${path}.json`;\n    const params = new URLSearchParams();\n    if (auth) params.set(\"auth\", auth);\n    if (shallow) params.set(\"shallow\", \"true\");\n    const qs = params.toString();\n    return qs ? `${url}?${qs}` : url;\n  }\n\n  async _fetch(method, path, body, opts) {\n    const init = { method, headers: { \"Content-Type\": \"application/json\" } };\n    if (body !== undefined) init.body = JSON.stringify(body);\n    const r = await fetch(this._url(path, opts), init);\n    const data = await r.json().catch(() => null);\n    if (!r.ok) {\n      throw new Error(data?.error || `DB ${method} ${path} failed: ${r.status}`);\n    }\n    return data;\n  }\n\n  async get(path, opts = {}) {\n    return this._fetch(\"GET\", path, undefined, opts);\n  }"
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "index": 10,
+      "name": "test results",
+      "purpose": "Files located under test-results. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "files": [
+        "test-results/.last-run.json"
+      ],
+      "snippets": [
+        {
+          "path": "test-results/.last-run.json",
+          "start_line": 1,
+          "end_line": 4,
+          "text": "{\n  \"status\": \"passed\",\n  \"failedTests\": []\n}"
+        }
+      ],
+      "relationships": []
+    },
+    {
+      "index": 11,
+      "name": "tests",
+      "purpose": "Files located under tests. Grouped by directory because this manual was generated with --no-llm (no AI narrative).",
+      "owner_angle": "These files sit together in the project layout.",
+      "files": [
+        "tests/baseline.spec.js",
+        "tests/flow-rehearsals.spec.js"
+      ],
+      "snippets": [
+        {
+          "path": "tests/baseline.spec.js",
+          "start_line": 24,
+          "end_line": 63,
+          "text": "    await page.goto('/apps/family-hub/');\n    await page.waitForLoadState('networkidle');\n\n    const notConfigured = page.locator('text=Family Hub not configured');\n    await expect(notConfigured).toHaveCount(0);\n\n    // The auth card or today view should be visible.\n    await expect(page.locator('h2').first()).toContainText(/Welcome to Family Hub|Hari Ini|Today/);\n  });\n\n  test('service worker registers and reports a cache name', async ({ page }) => {\n    await page.goto('/apps/family-hub/');\n    await page.waitForLoadState('networkidle');\n\n    // Wait for the registration to settle.\n    await page.waitForFunction(() =>\n      navigator.serviceWorker?.getRegistration().then(r => !!r?.active)\n    );\n\n    const swState = await page.evaluate(async () => {\n      if (!('serviceWorker' in navigator)) return { supported: false };\n      const reg = await navigator.serviceWorker.getRegistration();\n      return {\n        supported: true,\n        active: reg?.active?.scriptURL || null,\n        scope: reg?.scope || null,\n      };\n    });\n    expect(swState.supported).toBe(true);\n    expect(swState.active).toContain('service-worker.js');\n  });\n});\n\ntest.describe('Deckmate', () => {\n  test('renders the deck list screen', async ({ page }) => {\n    await page.goto('/apps/presentation/');\n    await expect(page.locator('h1')).toContainText(/Deckmate/);\n  });\n});\n"
+        },
+        {
+          "path": "tests/flow-rehearsals.spec.js",
+          "start_line": 1,
+          "end_line": 40,
+          "text": "import { test, expect } from '@playwright/test';\nimport crypto from 'node:crypto';\nimport { spawn } from 'node:child_process';\nimport fs from 'node:fs';\nimport path from 'node:path';\nimport { setTimeout as sleep } from 'node:timers/promises';\n\n/**\n * Flow-of-events rehearsals for the Family Lab apps.\n *\n * These tests exercise the rendered UI the way a real user would, per the\n * flow-of-events-first checklist. They are intentionally not unit tests:\n * they click, type, and watch the screen.\n */\n\n// ---------------------------------------------------------------------------\n// Helpers\n// ---------------------------------------------------------------------------\n\nasync function derivePinHash(pin, saltHex) {\n  const salt = Buffer.from(saltHex, 'hex');\n  const encoder = new TextEncoder();\n  const keyMaterial = await crypto.subtle.importKey(\n    'raw',\n    encoder.encode(pin),\n    { name: 'PBKDF2' },\n    false,\n    ['deriveBits']\n  );\n  const bits = await crypto.subtle.deriveBits(\n    { name: 'PBKDF2', salt: new Uint8Array(salt), iterations: 100000, hash: 'SHA-256' },\n    keyMaterial,\n    256\n  );\n  return Buffer.from(bits).toString('hex');\n}\n\nfunction makeSession(email = 'test@family.lab') {\n  return {\n    uid: 'test-user-1',"
+        }
+      ],
+      "relationships": []
+    }
+  ],
+  "warnings": [],
+  "llm_meta": {
+    "stage_calls": []
+  },
+  "llm_drafted": {
+    "at_a_glance": false,
+    "glossary": false,
+    "chapters": []
+  }
+}

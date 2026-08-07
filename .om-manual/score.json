@@ -1,0 +1,45 @@
+{
+  "score": 1.0,
+  "threshold": 0.8,
+  "passed": true,
+  "checks": [
+    {
+      "name": "subsystem_headings",
+      "weight": 2,
+      "passed": true,
+      "detail": "all subsystems have a ## heading in 02"
+    },
+    {
+      "name": "citations_in_drafted",
+      "weight": 1,
+      "passed": true,
+      "detail": "every AI-drafted chapter cites path:line"
+    },
+    {
+      "name": "watermark_audit",
+      "weight": 2,
+      "passed": true,
+      "detail": "watermarked files [] match expected []"
+    },
+    {
+      "name": "mermaid_edges",
+      "weight": 1,
+      "passed": true,
+      "detail": "mermaid edges 0 == validated relationships 0"
+    },
+    {
+      "name": "staleness",
+      "weight": 1,
+      "passed": true,
+      "detail": "all target files unchanged since inventory"
+    },
+    {
+      "name": "deterministic_chapters",
+      "weight": 1,
+      "passed": true,
+      "detail": "chapters 03-07 exist and are non-empty"
+    }
+  ],
+  "stale_files": [],
+  "watermarked_files": []
+}
