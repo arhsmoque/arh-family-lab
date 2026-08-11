@@ -37,7 +37,7 @@ Server-backed apps live under `servers/<name>/` and only run on the home PC — 
 
 ## Design previews
 
-- **[Deckmate + Studio concept](previews/deckmate-studio/)** — isolated, no-data preview for operator and cloud-agent review. It does not replace or mutate either live app.
+- **[Deckmate + Studio concept](previews/deckmate-studio/)** — isolated, no-data preview for operator and cloud-agent review. It does not replace or mutate either live app. See [`PLATFORM-PROPOSAL.md`](previews/deckmate-studio/PLATFORM-PROPOSAL.md) for the research and recommendation behind a possible multi-user collaborative rebuild.
 
 ## Clinical / presentation lab
 
