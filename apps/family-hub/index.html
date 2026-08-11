@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Family Hub</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#D97706">
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="brand-group">
+      <h1>🏡 Family Hub</h1>
+    </div>
+    <div class="header-actions">
+      <div class="status-badge" id="syncBadge">
+        <span class="dot"></span>
+        <span id="syncStatusText">Saved just now</span>
+      </div>
+      <button class="btn-icon" id="btnThemeToggle" title="Select theme">🎨</button>
+      <button class="btn-icon" id="btnLangToggle" title="Toggle language">EN</button>
+      <button class="btn-icon" id="btnUnlockParent" title="Parent mode">🔒</button>
+    </div>
+  </header>
+
+  <main class="app-viewport" id="viewContainer"></main>
+
+  <nav class="app-nav">
+    <div class="nav-item active" data-tab="today">
+      <span class="nav-icon">☀️</span>
+      <span>Today</span>
+    </div>
+    <div class="nav-item" data-tab="family">
+      <span class="nav-icon">👨‍👩‍👧‍👦</span>
+      <span>Family</span>
+    </div>
+    <div class="nav-item" data-tab="calendar">
+      <span class="nav-icon">📅</span>
+      <span>Calendar</span>
+    </div>
+    <div class="nav-item" data-tab="parent">
+      <span class="nav-icon">🔐</span>
+      <span>Parent</span>
+    </div>
+  </nav>
+
+  <!-- Theme picker -->
+  <div class="modal-overlay" id="themeModal">
+    <div class="pin-modal">
+      <h3>Visual Theme Profile</h3>
+      <p>Choose a preset visual foundation for your household display.</p>
+      <div class="theme-picker-grid">
+        <div class="theme-card" data-theme-id="warm"><span>🏡</span><div><div>Warm</div><small>Amber & Cream</small></div></div>
+        <div class="theme-card" data-theme-id="playful"><span>🎨</span><div><div>Playful</div><small>Vibrant Blue</small></div></div>
+        <div class="theme-card" data-theme-id="dark"><span>🌙</span><div><div>Sleek Dark</div><small>Slate & Sky</small></div></div>
+        <div class="theme-card" data-theme-id="nordic"><span>🌿</span><div><div>Nordic</div><small>Emerald Clean</small></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Parent PIN modal -->
+  <div class="modal-overlay" id="pinModal">
+    <div class="pin-modal">
+      <h3 id="pinTitle">Parent Access</h3>
+      <p id="pinSubtitle"></p>
+      <div class="pin-display">
+        <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+      </div>
+      <div class="pin-keypad">
+        <button class="pin-key" data-val="1">1</button>
+        <button class="pin-key" data-val="2">2</button>
+        <button class="pin-key" data-val="3">3</button>
+        <button class="pin-key" data-val="4">4</button>
+        <button class="pin-key" data-val="5">5</button>
+        <button class="pin-key" data-val="6">6</button>
+        <button class="pin-key" data-val="7">7</button>
+        <button class="pin-key" data-val="8">8</button>
+        <button class="pin-key" data-val="9">9</button>
+        <button class="pin-key" data-val="clear">C</button>
+        <button class="pin-key" data-val="0">0</button>
+        <button class="pin-key" data-val="back">⌫</button>
+      </div>
+      <p id="pinModalError" class="form-error"></p>
+    </div>
+  </div>
+
+  <!-- Generic form/confirm modal (replaces native prompt()/confirm()) -->
+  <div class="modal-overlay" id="formModal">
+    <div class="pin-modal form-modal">
+      <h3 id="formModalTitle"></h3>
+      <p id="formModalSubtitle"></p>
+      <div id="formModalBody" class="form-stack"></div>
+      <p id="formModalError" class="form-error"></p>
+      <div class="form-actions">
+        <button class="btn-secondary" id="formModalCancel" type="button">Cancel</button>
+        <button class="btn-primary" id="formModalConfirm" type="button">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Local override must load first so family.config.js can merge it. -->
+  <script src="family.config.local.js"></script>
+  <script src="family.config.js"></script>
+  <script src="core/audio-fx.js"></script>
+  <script src="core/audit-log.js"></script>
+  <!-- Shared runtime bridge replaces legacy core/auth.js + core/db.js. -->
+  <script type="module" src="shared-bridge.mjs"></script>
+  <script>
+    import('./shared-bridge.mjs').then(() => {
+      ['core/pin-security.js', 'core/store.js', 'app.js'].forEach(src => {
+        const s = document.createElement('script');
+        s.src = src;
+        document.body.appendChild(s);
+      });
+    }).catch(err => {
+      console.error('Failed to load Family Hub shared runtime bridge:', err);
+      document.body.innerHTML = '<div style="padding:2rem;text-align:center"><h2>Family Hub failed to load</h2><p>' + err.message + '</p></div>';
+    });
+  </script>
+</body>
+</html>

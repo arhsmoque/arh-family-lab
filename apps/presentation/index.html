@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Deckmate — School Presentation Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/theme.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== Deck list view ===== -->
+<main id="view-list" class="view">
+  <header class="list-header">
+    <div>
+      <h1 class="fd">Deckmate</h1>
+      <p class="muted" data-i18n="tagline">Build a presentation. Present it from your phone. No account needed.</p>
+    </div>
+    <div class="list-actions">
+      <button class="btn btn-ghost lang-toggle" type="button">BM</button>
+      <button class="btn" id="btnImportDeck" data-i18n="importDeck">Import deck</button>
+      <input id="importDeckFile" type="file" accept=".json,application/json" hidden>
+      <button class="btn btn-primary" id="btnNewDeck" data-i18n="newDeck">+ New deck</button>
+    </div>
+  </header>
+  <div id="deckGrid" class="deck-grid"></div>
+  <p id="emptyState" class="muted empty-state" hidden data-i18n="emptyState">No decks yet — tap "New deck" to start your first presentation.</p>
+</main>
+
+<!-- ===== Editor view ===== -->
+<main id="view-editor" class="view" hidden>
+  <header class="editor-toolbar">
+    <button class="btn btn-ghost" id="btnBack" data-i18n="back">← Decks</button>
+    <input id="deckTitleInput" class="deck-title-input fd" type="text" data-i18n-aria="ariaDeckTitle" aria-label="Deck title">
+    <div class="toolbar-actions">
+      <span id="saveIndicator" class="save-indicator" role="status" aria-live="polite"></span>
+      <button class="btn btn-ghost lang-toggle" type="button">BM</button>
+      <button class="btn" id="btnInspiration" data-i18n="ideas">Find ideas</button>
+      <button class="btn" id="btnExport" data-i18n="exportPdf">Export PDF</button>
+      <button class="btn btn-accent" id="btnPresent" data-i18n="present">▶ Present</button>
+    </div>
+  </header>
+
+  <div class="editor-body">
+    <div class="slide-strip" id="slideStrip"></div>
+
+    <div class="canvas-wrap">
+      <div class="slide-canvas glass-card" id="slideCanvas"></div>
+      <p class="muted canvas-hint" data-i18n="clickToEdit">Tip: click any text on the slide to edit it.</p>
+      <div class="canvas-actions">
+        <button class="btn" id="btnMoveUp" data-i18n="moveUp">↑ Move up</button>
+        <button class="btn" id="btnMoveDown" data-i18n="moveDown">↓ Move down</button>
+        <button class="btn" id="btnDuplicateSlide" data-i18n="duplicateSlide">⧉ Duplicate</button>
+        <button class="btn btn-danger" id="btnDeleteSlide" data-i18n="deleteSlideBtn">Delete slide</button>
+      </div>
+    </div>
+
+    <aside class="research-panel glass-card" aria-label="Deck research notes">
+      <div class="panel-heading">
+        <h2 class="fd" data-i18n="researchTitle">Find ideas</h2>
+        <button class="btn btn-ghost" id="btnOpenInspiration" data-i18n="open">Open</button>
+      </div>
+      <p class="muted" data-i18n="researchHint">Keep useful links here so image credits and sources do not disappear before presenting.</p>
+      <div id="sourceList" class="source-list"></div>
+    </aside>
+  </div>
+
+  <button class="fab" id="btnAddSlide" data-i18n-aria="ariaAddSlide" aria-label="Add slide">+</button>
+</main>
+
+<!-- ===== Template picker modal ===== -->
+<div id="templateModal" class="modal-backdrop" hidden>
+  <div class="modal glass-card">
+    <h2 class="fd" data-i18n="addSlideTitle">Add a slide</h2>
+    <div class="template-grid" id="templateGrid"></div>
+    <section class="module-composer">
+      <div>
+        <h3 class="fd" data-i18n="moduleTitle">Add slides from text</h3>
+        <p class="muted" data-i18n="moduleDesc">Paste your notes once, and Deckmate turns them into slides for you.</p>
+      </div>
+      <label class="field-label" for="moduleKind" data-i18n="moduleKindLabel">What are you pasting?</label>
+      <select id="moduleKind" class="idea-input"></select>
+      <p class="muted module-hint" id="moduleHint"></p>
+      <textarea id="moduleInput" class="idea-input module-input" data-i18n-placeholder="modulePlaceholder" placeholder="Paste text, Markdown, image links, or label,number chart rows here"></textarea>
+      <div class="module-actions">
+        <label class="btn btn-warm file-btn"><span data-i18n="importFile">Choose a file</span><input id="moduleFile" type="file" accept=".txt,.md,.csv,.jpg,.jpeg,.png,.webp,text/plain,text/markdown,text/csv,image/*"></label>
+        <button class="btn btn-primary" id="btnAddModule" data-i18n="addModule">Make slides</button>
+        <button class="btn btn-ghost" id="btnCancelTemplate" data-i18n="cancel">Cancel</button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ===== Inspiration / source helper modal ===== -->
+<div id="inspirationModal" class="modal-backdrop" hidden>
+  <div class="modal inspiration-modal glass-card">
+    <div class="modal-head">
+      <div>
+        <h2 class="fd" data-i18n="inspirationTitle">Ideas, Images & Sources</h2>
+        <p class="muted" data-i18n="inspirationDesc">Search outside sources, then paste the best image or link back into Deckmate.</p>
+      </div>
+      <button class="btn btn-ghost" id="btnCloseInspiration" data-i18n="close">Close</button>
+    </div>
+
+    <label class="field-label" for="ideaQuery" data-i18n="topicLabel">Topic / keywords</label>
+    <input id="ideaQuery" class="idea-input" type="search" data-i18n-placeholder="ideaQueryPlaceholder" placeholder="Example: food chain, water cycle, tokoh kemerdekaan">
+
+    <div class="quick-search-grid" aria-label="External inspiration links">
+      <a class="search-card" data-search="canva" target="_blank" rel="noopener">
+        <b data-i18n="searchCanvaTitle">Canva templates</b>
+        <span data-i18n="searchCanvaDesc">Look at layouts and school-style presentation ideas.</span>
+      </a>
+      <a class="search-card" data-search="googleImages" target="_blank" rel="noopener">
+        <b data-i18n="searchGoogleTitle">Google Images</b>
+        <span data-i18n="searchGoogleDesc">Find visual references, then check the original source.</span>
+      </a>
+      <a class="search-card" data-search="wikimedia" target="_blank" rel="noopener">
+        <b data-i18n="searchWikimediaTitle">Wikimedia Commons</b>
+        <span data-i18n="searchWikimediaDesc">Better for reusable images and attribution.</span>
+      </a>
+      <a class="search-card" data-search="unsplash" target="_blank" rel="noopener">
+        <b data-i18n="searchUnsplashTitle">Unsplash</b>
+        <span data-i18n="searchUnsplashDesc">Good for clean background photos.</span>
+      </a>
+    </div>
+
+    <div class="helper-grid">
+      <section class="helper-card">
+        <h3 data-i18n="addImageTitle">Add image slide</h3>
+        <label class="field-label" for="imageUrlQuick" data-i18n="imageUrlLabel">Image URL</label>
+        <input id="imageUrlQuick" class="idea-input" type="url" data-i18n-placeholder="imageUrlPlaceholder" placeholder="https://...jpg / png / webp">
+        <label class="field-label" for="imageCaptionQuick" data-i18n="captionLabel">Caption / credit</label>
+        <input id="imageCaptionQuick" class="idea-input" type="text" data-i18n-placeholder="captionPlaceholder" placeholder="Source: ...">
+        <button class="btn btn-primary" id="btnAddImageFromUrl" data-i18n="addImageBtn">Add image slide</button>
+      </section>
+
+      <section class="helper-card">
+        <h3 data-i18n="saveSourceTitle">Save a source</h3>
+        <label class="field-label" for="sourceTitleInput" data-i18n="sourceTitleLabel">Source title</label>
+        <input id="sourceTitleInput" class="idea-input" type="text" data-i18n-placeholder="sourceTitlePlaceholder" placeholder="Article, image, video, book">
+        <label class="field-label" for="sourceUrlInput" data-i18n="linkLabel">Link</label>
+        <input id="sourceUrlInput" class="idea-input" type="url" placeholder="https://...">
+        <button class="btn btn-primary" id="btnSaveSource" data-i18n="saveSourceBtn">Save source</button>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Present mode ===== -->
+<div id="presentOverlay" class="present-overlay" hidden>
+  <div class="present-slide glass-card" id="presentSlide"></div>
+  <button class="present-nav present-prev" id="btnPrev" data-i18n-aria="ariaPrev" aria-label="Previous slide">‹</button>
+  <button class="present-nav present-next" id="btnNext" data-i18n-aria="ariaNext" aria-label="Next slide">›</button>
+  <button class="present-exit" id="btnExitPresent" data-i18n-aria="ariaExit" aria-label="Exit presentation">✕</button>
+  <div class="present-counter" id="presentCounter"></div>
+</div>
+
+<!-- ===== Print sheet (built at export time) ===== -->
+<div id="printSheet" class="print-sheet"></div>
+
+<script src="deckmate.config.js"></script>
+<script type="module" src="../../shared/runtime/plugin-host.js"></script>
+</body>
+</html>

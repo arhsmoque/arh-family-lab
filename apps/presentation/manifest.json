@@ -1,0 +1,6 @@
+{
+  "name": "deckmate",
+  "plugins": ["config", "ui"],
+  "entry": "./app.js",
+  "configKey": "DECKMATE_CONFIG"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "family-hub",
+  "title": "Family Hub",
+  "entry": "./app.js",
+  "plugins": ["config", "auth", "db", "ui"],
+  "configKey": "FAMILY_HUB_CONFIG"
+}

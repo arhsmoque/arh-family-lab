@@ -1,0 +1,7 @@
+{
+  "name": "studio",
+  "title": "Studio",
+  "entry": "./app.js",
+  "plugins": ["config", "auth", "db", "ui"],
+  "configKey": "STUDIO_APP_CONFIG"
+}

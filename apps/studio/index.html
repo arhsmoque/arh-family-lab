@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/theme.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== Auth view ===== -->
+<main id="view-auth" class="view auth-view">
+  <div class="auth-card glass-card">
+    <div class="auth-head-row">
+      <h1 class="fd">Studio</h1>
+      <button class="btn btn-ghost lang-toggle" type="button">Bahasa Melayu</button>
+    </div>
+    <p class="muted" data-i18n="tagline">Your own workspace — notes, photos, and video links, one project at a time.</p>
+
+    <!-- Shown instead of the form when the Firebase API key is still a placeholder -->
+    <div id="setupPanel" class="setup-panel" hidden>
+      <h2 class="fd">Studio isn't set up yet</h2>
+      <p>A parent or admin needs to add the Firebase API key to <code>studio.config.js</code> before anyone can sign in. The steps are in <code>SETUP.md</code>.</p>
+      <p>Ibu bapa atau admin perlu masukkan kunci API Firebase ke dalam <code>studio.config.js</code> dahulu sebelum sesiapa boleh log masuk. Langkahnya ada dalam <code>SETUP.md</code>.</p>
+    </div>
+
+    <div id="authArea">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-mode="login" type="button" data-i18n="tabLogin">Log in</button>
+        <button class="auth-tab" data-mode="signup" type="button" data-i18n="tabSignup">Sign up</button>
+      </div>
+
+      <form id="authForm">
+        <label class="field"><span data-i18n="labelEmail">Email</span><input id="authEmail" type="email" required autocomplete="username"></label>
+        <label class="field"><span data-i18n="labelPassword">Password</span><input id="authPassword" type="password" required minlength="6" autocomplete="current-password"></label>
+        <button class="btn btn-primary" type="submit" id="authSubmit">Log in</button>
+      </form>
+      <button class="btn btn-ghost auth-forgot" id="btnForgot" type="button" data-i18n="forgot">Forgot password?</button>
+      <p id="authMessage" class="auth-message" hidden></p>
+      <p class="muted auth-hint" id="signupHint" hidden></p>
+    </div>
+  </div>
+</main>
+
+<!-- ===== Landing view ===== -->
+<main id="view-landing" class="view" hidden>
+  <header class="list-header">
+    <div>
+      <h1 class="fd"><span data-i18n="hi">Hi</span><span id="landingAlias"></span></h1>
+      <p class="muted" data-i18n="yourProjects">Your projects</p>
+    </div>
+    <div class="row-actions">
+      <button class="btn btn-ghost lang-toggle" type="button">Bahasa Melayu</button>
+      <button class="btn" id="btnEditAlias" data-i18n="editName">Edit name</button>
+      <button class="btn btn-ghost" id="btnSignOut" data-i18n="signOut">Sign out</button>
+    </div>
+  </header>
+
+  <section id="pinnedSection" hidden>
+    <h3 class="fd section-title" data-i18n="quickAccess">📌 Quick access</h3>
+    <div id="pinnedRail" class="pinned-rail"></div>
+  </section>
+
+  <div class="section-head-row">
+    <h3 class="fd section-title" data-i18n="projects">Projects</h3>
+    <button class="btn btn-primary" id="btnNewProject" data-i18n="newProject">+ New project</button>
+  </div>
+  <div id="projectGrid" class="deck-grid"></div>
+  <p id="projectEmpty" class="muted empty-state" hidden data-i18n="projectEmpty">Nothing here yet — make your first project!</p>
+</main>
+
+<!-- ===== Workspace view ===== -->
+<main id="view-workspace" class="view" hidden>
+  <header class="editor-toolbar">
+    <button class="btn btn-ghost" id="btnBackToLanding" data-i18n="back">← Projects</button>
+    <input id="projectNameInput" class="deck-title-input fd" type="text" aria-label="Project name">
+    <div class="toolbar-actions">
+      <button class="btn btn-accent" id="btnAddCard" data-i18n="addCard">+ Add card</button>
+    </div>
+  </header>
+  <div id="cardGrid" class="card-grid"></div>
+  <p id="cardEmpty" class="muted empty-state" hidden data-i18n="cardEmpty">Nothing here yet — make your first card!</p>
+</main>
+
+<!-- ===== Add-card modal ===== -->
+<div id="addCardModal" class="modal-backdrop" hidden>
+  <div class="modal glass-card">
+    <h2 class="fd" data-i18n="addCardTitle">Add a card</h2>
+    <div class="template-grid">
+      <button class="template-option" data-type="note"><span class="t-icon">📝</span><span data-i18n="note">Note</span></button>
+      <button class="template-option" data-type="photo"><span class="t-icon">🖼️</span><span data-i18n="photo">Photo</span></button>
+      <button class="template-option" data-type="video"><span class="t-icon">🎬</span><span data-i18n="video">Video link</span></button>
+    </div>
+    <button class="btn btn-ghost" id="btnCancelAddCard" data-i18n="cancel">Cancel</button>
+  </div>
+</div>
+
+<!-- ===== Generic prompt/confirm modal (replaces native prompt()/confirm()) ===== -->
+<div id="appModal" class="modal-backdrop" hidden>
+  <div class="modal glass-card">
+    <h2 class="fd" id="appModalTitle"></h2>
+    <p class="muted" id="appModalBody" hidden></p>
+    <input id="appModalInput" class="modal-input" type="text" hidden>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="appModalCancel" type="button">Cancel</button>
+      <button class="btn btn-primary" id="appModalOk" type="button">OK</button>
+    </div>
+  </div>
+</div>
+
+<script src="studio.config.js?v=fd65d28d52c42baf4992f94f0a033bcea2969309"></script>
+<!-- Optional gitignored secret override; a 404 here is harmless (it just doesn't define STUDIO_APP_CONFIG_LOCAL). -->
+<script src="studio.config.local.js?v=fd65d28d52c42baf4992f94f0a033bcea2969309"></script>
+<script type="module" src="shared-bridge.mjs"></script>
+<script>
+  // Load app.js only after the shared-runtime bridge has set up window.Auth/Db.
+  import('./shared-bridge.mjs').then(() => {
+    const s = document.createElement('script');
+    s.src = 'app.js';
+    document.body.appendChild(s);
+  }).catch(err => {
+    console.error('Failed to load Studio shared runtime bridge:', err);
+    document.body.innerHTML = '<div style="padding:2rem;text-align:center"><h2>Studio failed to load</h2><p>' + err.message + '</p></div>';
+  });
+</script>
+</body>
+</html>

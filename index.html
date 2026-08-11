@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Family Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/theme.css">
+<style>
+  main{max-width:860px;margin:0 auto;padding:60px 20px}
+  h1{color:var(--brand);font-size:36px}
+  .section-kicker{margin:32px 0 0;text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:800;color:var(--accent)}
+  .app-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:24px}
+  .app-card{display:block;border-radius:var(--radius);border:1px solid var(--line);background:var(--surface);padding:20px;text-decoration:none;color:inherit;transition:box-shadow .15s ease,transform .15s ease}
+  .app-card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+  .app-card h3{margin:0 0 6px;font-family:var(--fd);color:var(--brand)}
+  .app-card p{margin:0;font-size:14px;color:var(--muted)}
+  .utility-link{display:inline-block;margin-top:24px;color:var(--accent);font-weight:700;text-decoration:none}
+</style>
+</head>
+<body>
+<main>
+  <h1 class="fd">Family Lab</h1>
+  <p class="muted">Small ad-hoc apps for family &amp; friends. Pick one below.</p>
+  <p class="section-kicker">Family apps</p>
+  <div class="app-grid">
+    <a class="app-card" href="apps/family-hub/" style="border: 2px solid var(--accent)">
+      <h3>🏡 Family Hub</h3>
+      <p>Shared household dashboard: Today's schedule, 3-tap child tasks &amp; leaving-home checklists.</p>
+    </a>
+    <a class="app-card" href="apps/presentation/">
+      <h3>Deckmate</h3>
+      <p>Build and present school slide decks from your phone.</p>
+    </a>
+    <a class="app-card" href="apps/studio/">
+      <h3>Studio</h3>
+      <p>Your own workspace: tabbed projects, note/photo/video cards, quick-access pins.</p>
+    </a>
+    <a class="app-card" href="servers/kids-terminal/">
+      <h3>Agy Cadet</h3>
+      <p>Playful workspace: speak to Agy, run space math games, and interactive stories.</p>
+      <p style="margin-top:10px"><span style="display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 8px;font-size:12px;font-weight:800;color:var(--accent);background:#fff">Runs on home PC only</span></p>
+      <p style="margin-top:6px;font-size:12px">Needs the local Node server — launch it with run-kids-terminal.bat.</p>
+    </a>
+    <a class="app-card" href="https://arh-kids-grades-garden.arh-homelab.workers.dev/">
+      <h3>Taman Ilmu</h3>
+      <p>Private family scrapbook: three kids' stories, photos and SJKC/KAFA results in one place.</p>
+    </a>
+  </div>
+  <a class="utility-link" href="clinical.html">Open clinical / presentation lab artifacts →</a>
+</main>
+</body>
+</html>

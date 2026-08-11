@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#08131f">
+  <meta name="description" content="Panduan pembelajaran CPR komuniti berasaskan Manual CPR KKM.">
+  <title>CPR Untuk Komuniti</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <a class="skip" href="#main">Langkau ke kandungan</a>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="CPR Untuk Komuniti — utama">
+      <span class="brand-mark" aria-hidden="true">♥</span>
+      <span><b>CPR</b><small>UNTUK KOMUNITI</small></span>
+    </a>
+    <div class="top-actions">
+      <button id="shareButton" class="ghost" type="button">Kongsi</button>
+      <button id="installButton" class="ghost" type="button" hidden>Pasang</button>
+      <a class="call compact" href="tel:999" aria-label="Hubungi talian kecemasan 999">Hubungi 999</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="home" class="hero page-section present-slide" data-title="Utama">
+      <div class="hero-copy">
+        <p class="eyebrow">BERTINDAK SEBELUM BANTUAN TIBA</p>
+        <h1>Empat langkah.<br><em>Satu peluang hidup.</em></h1>
+        <p class="lede">Jika seseorang tidak responsif dan tidak bernafas secara normal: aktifkan bantuan, mula tekan dada, dan gunakan AED secepat mungkin.</p>
+        <div class="hero-actions">
+          <a class="primary" href="#adult">Lihat tindakan dewasa</a>
+          <button id="startPractice" class="secondary" type="button">Latih rentak 110</button>
+        </div>
+      </div>
+      <div class="memory" aria-label="Empat langkah ingatan">
+        <div><span>01</span><b>SELAMAT</b><small>Periksa bahaya</small></div>
+        <div><span>02</span><b>RESPONS</b><small>Tepuk dan panggil</small></div>
+        <div><span>03</span><b>999 + AED</b><small>Arahkan bantuan</small></div>
+        <div><span>04</span><b>TEKAN DADA</b><small>100–120/min</small></div>
+      </div>
+      <aside class="emergency-note"><b>Kecemasan sebenar?</b> Jangan gunakan laman ini untuk melengahkan panggilan. Hubungi 999 dan ikut arahan operator.</aside>
+    </section>
+
+    <nav class="module-nav" aria-label="Modul CPR">
+      <a href="#adult">Dewasa</a><a href="#aed">AED</a><a href="#child">Kanak-kanak</a><a href="#choking">Tercekik</a><a href="#practice">Latihan</a><a href="#quiz">Semak diri</a>
+    </nav>
+
+    <div id="modules"></div>
+
+    <section id="practice" class="practice page-section present-slide" data-title="Latihan rentak">
+      <div class="section-heading">
+        <p class="eyebrow">LATIHAN DI BAWAH PENGAWASAN</p>
+        <h2>Rasa rentak 110</h2>
+        <p>Metronom ini membantu membina memori rentak. Berlatih pada manikin — bukan pada orang yang sedar.</p>
+      </div>
+      <div class="practice-grid">
+        <div class="pulse-panel">
+          <button id="pulseButton" class="pulse" type="button" aria-pressed="false"><span id="pulseCount">0</span><small>tekan untuk mula</small></button>
+          <div class="practice-controls">
+            <button id="resetPractice" class="ghost" type="button">Set semula</button>
+            <label>Rentak <output id="bpmOutput">110</output> bpm<input id="bpm" type="range" min="100" max="120" value="110"></label>
+          </div>
+        </div>
+        <div class="quality-list">
+          <h3>Semak bentuk badan</h3>
+          <ul><li>Tumit tangan di tengah dada</li><li>Siku lurus, bahu di atas tangan</li><li>Tekan 5–6 cm untuk dewasa</li><li>Biarkan dada kembali sepenuhnya</li><li>Kurangkan semua gangguan</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz" class="quiz page-section present-slide" data-title="Semak diri">
+      <div class="section-heading"><p class="eyebrow">LATIH KEPUTUSAN</p><h2>Tiga situasi. Pilih tindakan.</h2><p>Jawapan menerangkan sebab, bukan sekadar betul atau salah.</p></div>
+      <div id="quizList" class="quiz-list"></div>
+    </section>
+
+    <section id="handoff" class="handoff page-section present-slide" data-title="Bawa pulang">
+      <div>
+        <p class="eyebrow">BAWA PANDUAN INI</p>
+        <h2>Imbas untuk buka pada telefon</h2>
+        <p>Apabila laman ini diterbitkan pada pelayan atau rangkaian tempatan, kod ini menggunakan alamat semasa secara automatik.</p>
+        <p id="currentUrl" class="url"></p>
+      </div>
+      <div id="qr" class="qr" aria-label="Kod QR ke halaman ini"></div>
+    </section>
+
+    <section id="sources" class="sources page-section present-slide" data-title="Sumber">
+      <div class="section-heading"><p class="eyebrow">SUMBER & BATASAN</p><h2>Belajar. Berlatih. Dapatkan pensijilan.</h2></div>
+      <p>Bahan ini ialah adaptasi pendidikan ringkas. Ia tidak menggantikan latihan praktikal, penilaian kompetensi, protokol organisasi, atau arahan operator kecemasan.</p>
+      <div id="sourceList"></div>
+    </section>
+  </main>
+
+  <footer><span>Adaptasi pendidikan • KKM 2019</span><a href="#sources">Sumber & keselamatan</a></footer>
+  <div id="presentControls" class="present-controls" hidden><button id="prevSlide" type="button">←</button><span id="slideStatus"></span><button id="nextSlide" type="button">→</button><button id="exitPresent" type="button">Tutup</button></div>
+  <noscript><div class="noscript"><b>JavaScript dimatikan.</b> Ringkasan kecemasan masih kelihatan di atas. Untuk modul interaktif, aktifkan JavaScript.</div></noscript>
+  <script src="qrcode.js"></script>
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

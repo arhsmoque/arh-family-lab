@@ -1,0 +1,859 @@
+:root {
+  /* Malaysian batik & heritage palette */
+  --bg: #f7f1e8;
+  --paper: #fffaf2;
+  --surface: #ffffff;
+  --ink: #17211f;
+  --muted: #5d6e6a;
+  --line: rgba(23, 33, 31, 0.12);
+  --brand: #0f3c35;
+  --brand-light: #1d5a50;
+  --accent: #2f7b67;
+  --accent-light: #4a9d86;
+  --warm: #c9822c;
+  --warm-light: #e3a85c;
+  --terracotta: #a85d3e;
+  --gold: #d4a574;
+  --danger: #9f392f;
+  --ok: #1e7b4f;
+  --radius: 16px;
+  --radius-lg: 28px;
+  --shadow: 0 18px 50px rgba(18, 50, 58, 0.12);
+  --shadow-sm: 0 6px 18px rgba(18, 50, 58, 0.08);
+  --fd: "Playfair Display", Georgia, serif;
+  --fb: "DM Sans", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--fb);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.fd {
+  font-family: var(--fd);
+}
+
+/* Batik-inspired geometric pattern (CSS-only, subtle) */
+.batik-stripe {
+  background-image:
+    repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(47, 123, 103, 0.04) 8px, rgba(47, 123, 103, 0.04) 16px),
+    repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(201, 130, 44, 0.03) 8px, rgba(201, 130, 44, 0.03) 16px);
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(247, 241, 232, 0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--line);
+}
+
+.header-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.header-title {
+  font-family: var(--fd);
+  font-size: 20px;
+  color: var(--brand);
+  line-height: 1.2;
+}
+
+.header-title small {
+  display: block;
+  font-family: var(--fb);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.lang-toggle {
+  display: flex;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px;
+}
+
+.lang-toggle button {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.lang-toggle button.active {
+  background: var(--brand);
+  color: #fff;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(47, 123, 103, 0.12), transparent 30rem),
+    radial-gradient(circle at 10% 90%, rgba(201, 130, 44, 0.1), transparent 25rem),
+    var(--bg);
+  padding: 48px 20px 36px;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--accent);
+  margin: 0 0 10px;
+}
+
+.hero h1 {
+  font-family: var(--fd);
+  font-size: clamp(36px, 6vw, 64px);
+  line-height: 1.05;
+  color: var(--brand);
+  margin: 0 0 16px;
+  max-width: 800px;
+}
+
+.hero p {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 720px;
+  margin: 0 0 24px;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 13px;
+  background: rgba(255, 255, 255, 0.65);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.nav-pills {
+  position: sticky;
+  top: 64px;
+  z-index: 40;
+  background: rgba(247, 241, 232, 0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 0;
+}
+
+.nav-pills-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-pills-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-pill {
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.nav-pill:hover {
+  background: #fff;
+}
+
+.nav-pill.active {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+}
+
+.section {
+  margin-bottom: 44px;
+}
+
+.section-header {
+  margin-bottom: 20px;
+}
+
+.section-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.section h2 {
+  font-family: var(--fd);
+  font-size: clamp(26px, 4vw, 40px);
+  color: var(--brand);
+  margin: 0 0 8px;
+}
+
+.section-subtitle {
+  color: var(--muted);
+  font-size: 15px;
+  margin: 0;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.card h3 {
+  font-family: var(--fd);
+  font-size: 20px;
+  color: var(--brand);
+  margin: 0 0 10px;
+}
+
+.card h4 {
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin: 0 0 8px;
+}
+
+.card p,
+.card li {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.card ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.card li {
+  margin-bottom: 6px;
+}
+
+.bilingual-card {
+  border-left: 4px solid var(--accent);
+}
+
+.bilingual-card .bm {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.bilingual-card .en {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--line);
+}
+
+.highlight-card {
+  background: linear-gradient(145deg, #fffdf6, #eef6f0);
+  border-color: rgba(47, 123, 103, 0.22);
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.stat {
+  text-align: center;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.stat b {
+  display: block;
+  font-family: var(--fd);
+  font-size: 28px;
+  color: var(--brand);
+}
+
+.stat span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Tooth Lab */
+.lab-shell {
+  background: linear-gradient(160deg, #12323a 0%, #1a4a41 100%);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+
+.lab-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.lab-header h3 {
+  font-family: var(--fd);
+  font-size: 22px;
+  margin: 0;
+}
+
+.lab-header p {
+  margin: 4px 0 0;
+  color: #b8d4cd;
+  font-size: 13px;
+}
+
+.lab-stage-label {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.lab-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 1fr;
+  gap: 22px;
+}
+
+@media (max-width: 860px) {
+  .lab-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lab-scene {
+  height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1100px;
+  touch-action: none;
+  cursor: grab;
+  position: relative;
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius);
+}
+
+.lab-scene:active {
+  cursor: grabbing;
+}
+
+.lab-tooth-wrapper {
+  width: 240px;
+  height: 300px;
+  transform-style: preserve-3d;
+  transition: transform 0.25s ease;
+  position: relative;
+}
+
+.lab-tooth {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%) rotateX(2deg);
+  transform-style: preserve-3d;
+  width: 170px;
+  height: 240px;
+  border-radius: 48% 48% 38% 38% / 36% 36% 58% 58%;
+  background: radial-gradient(circle at 35% 20%, #fffcf5, #f2e8d6 55%, #dfd0b6 100%);
+  box-shadow:
+    inset -16px -12px 24px rgba(100, 70, 40, 0.18),
+    inset 12px 7px 18px rgba(255, 255, 240, 0.9),
+    0 22px 42px rgba(0, 0, 0, 0.25);
+}
+
+.lab-tooth.incisor {
+  width: 160px;
+  height: 230px;
+  border-radius: 44% 44% 32% 32% / 32% 32% 54% 54%;
+}
+
+.lab-tooth.canine {
+  width: 180px;
+  height: 250px;
+  border-radius: 46% 36% 38% 48% / 40% 28% 62% 58%;
+}
+
+.lab-tooth.molar {
+  width: 190px;
+  height: 220px;
+  border-radius: 38% 42% 34% 30% / 28% 32% 60% 64%;
+}
+
+.lab-tooth::before,
+.lab-tooth::after {
+  content: '';
+  position: absolute;
+  bottom: -58px;
+  width: 58px;
+  height: 92px;
+  background: linear-gradient(150deg, #ece0ca, #d4c2a4);
+  border-radius: 0 0 38px 38px;
+  box-shadow: inset -8px -8px 12px rgba(80, 60, 30, 0.12);
+}
+
+.lab-tooth.incisor::before { left: 24px; transform: rotate(8deg); }
+.lab-tooth.incisor::after { right: 24px; transform: rotate(-8deg); }
+.lab-tooth.canine::before { left: 34px; width: 50px; transform: rotate(4deg); }
+.lab-tooth.canine::after { right: 34px; width: 50px; transform: rotate(-4deg); }
+.lab-tooth.molar::before { left: 16px; width: 46px; height: 76px; transform: rotate(12deg); }
+.lab-tooth.molar::after { right: 16px; width: 46px; height: 76px; transform: rotate(-12deg); }
+
+.lab-gum {
+  position: absolute;
+  left: 50%;
+  top: 64%;
+  width: 280px;
+  height: 78px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at 50% 0%, #efb3b0, #c97a7a);
+  border-radius: 60% 60% 30% 30% / 50% 50% 30% 30%;
+  filter: drop-shadow(0 10px 22px rgba(100, 50, 50, 0.22));
+  z-index: -1;
+}
+
+.lab-lesion {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.lab-lesion.plaque {
+  left: 24px;
+  top: 152px;
+  width: 108px;
+  height: 26px;
+  border-radius: 18px;
+  background: linear-gradient(90deg, #f0d481, #c9b05a);
+}
+
+.lab-lesion.white-spot {
+  left: 48px;
+  top: 116px;
+  width: 56px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 245, 0.85);
+  border: 1px solid rgba(180, 160, 120, 0.5);
+}
+
+.lab-lesion.brown-spot {
+  left: 60px;
+  top: 112px;
+  width: 46px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #8a4a26, #b8733d 62%, transparent 66%);
+}
+
+.lab-lesion.cavity {
+  left: 58px;
+  top: 104px;
+  width: 60px;
+  height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 42% 38%, #120b08 0 28%, #4b2118 44%, #9c5538 64%, transparent 68%);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+.lab-tooth-wrapper.stage-plaque .lab-lesion.plaque,
+.lab-tooth-wrapper.stage-white .lab-lesion.plaque,
+.lab-tooth-wrapper.stage-white .lab-lesion.white-spot,
+.lab-tooth-wrapper.stage-brown .lab-lesion.plaque,
+.lab-tooth-wrapper.stage-brown .lab-lesion.brown-spot,
+.lab-tooth-wrapper.stage-cavity .lab-lesion.plaque,
+.lab-tooth-wrapper.stage-cavity .lab-lesion.cavity {
+  opacity: 1;
+}
+
+.lab-surface {
+  position: absolute;
+  border: 2px solid rgba(60, 160, 120, 0.55);
+  background: rgba(60, 160, 120, 0.1);
+  border-radius: 12px;
+  opacity: 0;
+  transition: opacity 0.25s, background 0.25s;
+  pointer-events: none;
+}
+
+.lab-surface.active {
+  opacity: 0.85;
+  background: rgba(60, 160, 120, 0.28);
+}
+
+.lab-surface.gingival {
+  left: 6px;
+  top: 158px;
+  width: 150px;
+  height: 32px;
+  border-radius: 12px;
+}
+
+.lab-surface.smooth {
+  left: 14px;
+  top: 64px;
+  width: 132px;
+  height: 104px;
+  border-radius: 38%;
+}
+
+.lab-surface.proximal {
+  right: -2px;
+  top: 70px;
+  width: 34px;
+  height: 90px;
+  border-radius: 36%;
+}
+
+.lab-surface.occlusal {
+  left: 40px;
+  top: 10px;
+  width: 80px;
+  height: 38px;
+  border-radius: 50%;
+}
+
+.lab-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.lab-controls button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #e0eeea;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.lab-controls button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.lab-controls button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.lab-info h4 {
+  color: #b8d4cd;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 0 8px;
+}
+
+.lab-info .stage-title {
+  font-family: var(--fd);
+  font-size: 26px;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+.lab-info p {
+  color: #d4e7e2;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 14px;
+}
+
+.lab-note {
+  background: rgba(255, 255, 255, 0.1);
+  border-left: 3px solid var(--accent-light);
+  border-radius: 0 12px 12px 0;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #e0f0ec;
+  margin-bottom: 16px;
+}
+
+/* Mouth map */
+.map-shell {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.map-shell h3 {
+  font-family: var(--fd);
+  font-size: 22px;
+  color: var(--brand);
+  margin: 0 0 6px;
+}
+
+.map-shell > p {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0 0 16px;
+}
+
+.map-grid {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 22px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .map-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.map-legend button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.map-legend button.active {
+  border-color: var(--brand);
+  background: #f2f8f6;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.map-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.map-actions button {
+  flex: 1;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.map-actions button.primary {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+}
+
+.map-panel {
+  background: #f8f6f2;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.map-panel h4 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin: 0 0 10px;
+}
+
+.map-panel ul {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.map-panel li {
+  margin-bottom: 6px;
+}
+
+/* Recommendation cards */
+.rec-card {
+  border-top: 3px solid var(--warm);
+}
+
+.rec-card .rec-id {
+  display: inline-block;
+  background: var(--warm);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.evidence {
+  display: inline-block;
+  background: rgba(47, 123, 103, 0.1);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+/* Footer */
+.footer {
+  border-top: 1px solid var(--line);
+  background: #fff;
+  padding: 28px 20px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.footer-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.footer strong {
+  color: var(--brand);
+}
+
+/* Accessibility */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 32px 16px 28px;
+  }
+  .container {
+    padding: 20px 16px 48px;
+  }
+  .header-inner {
+    padding: 12px 16px;
+  }
+  .nav-pills {
+    top: 58px;
+  }
+  .lab-scene {
+    height: 300px;
+  }
+}
