@@ -1,0 +1,17 @@
+schema_version: 1
+features:
+  complete_task:
+    parity: action
+    web: large_labelled_target
+    android: web_surface_initially
+    ios: web_surface_initially
+  parent_authorisation:
+    parity: outcome
+    shared_display: app_PIN
+    android: biometric_or_device_credential
+    ios: local_authentication
+  family_summary:
+    parity: capability_specific
+    shared_display: ambient_today_view
+    android: home_widget
+    ios: WidgetKit_projection

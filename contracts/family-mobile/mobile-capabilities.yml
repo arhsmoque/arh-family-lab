@@ -1,0 +1,27 @@
+schema_version: 1
+capabilities:
+  lifecycle:
+    priority: gate_5
+    fallback: web_visibility_events
+  deep_links:
+    priority: gate_5
+    fallback: safe_today_route
+  local_notifications:
+    priority: gate_6
+    permission_timing: after_first_timed_routine
+    fallback: in_app_reminders
+  parent_reauthorisation:
+    priority: gate_7
+    identity_role: reauthorisation_only
+    fallback: app_PIN_or_account_reauthentication
+  background_sync:
+    priority: gate_8
+    exact_timing_guaranteed: false
+    fallback: foreground_queue_flush
+  widget:
+    priority: gate_9
+    data_source: prepared_privacy_safe_snapshot
+    fallback: app_shortcut
+  secure_storage:
+    priority: gate_7
+    prohibited: long_lived_secret_in_web_storage

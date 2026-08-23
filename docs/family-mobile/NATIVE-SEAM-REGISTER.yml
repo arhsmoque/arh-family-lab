@@ -1,0 +1,16 @@
+schema_version: 1
+seams:
+  lifecycle:
+    status: scaffolded_web_bridge
+  deep_links:
+    status: scaffolded_web_bridge
+  local_notifications:
+    status: plugin_dependency_declared
+  parent_reauthorisation:
+    status: native_reference_only
+  background_sync:
+    status: native_reference_only
+  widgets:
+    status: native_reference_only
+  secure_storage:
+    status: decision_required

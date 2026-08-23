@@ -1,0 +1,43 @@
+frontend_design_trace:
+  task: apply_Family_Lab_mobile_scaffold_to_draft_branch
+  branch: agent/family-hub-mobile-scaffold
+  situation:
+    actor: family_member_and_parent
+    relationship: intimate_household
+    context: personal_mobile_and_shared_household_display
+    attention: glance_and_quick_action
+    action: check_and_complete_family_items
+    consequence: missed_family_activity_or_incorrect_protected_change
+  source_of_truth:
+    repository: arhsmoque/arh-family-lab
+    base_commit: 3009e5bb3f7488f41f09f229dd7d94ab02c3099c
+    product: apps/family-hub
+    design_skill: arh-frontend-design
+  preserved:
+    - shared_display_PWA
+    - hosted_no_build_contract
+    - local_first_intent
+    - parent_PIN_fallback
+    - bilingual_semantics
+  changed:
+    - deterministic_mobile_build_boundary
+    - bundled_Capacitor_plugin_runtime
+    - platform_port_contracts
+    - native_capability_scaffold
+    - corrected_PIN_documentation
+  inferred:
+    - provisional_application_name
+    - native_widget_projection
+  unresolved:
+    - final_application_ID
+    - signing
+    - package_lock_before_native_generation
+    - structured_database_choice
+    - push_backend
+  tests:
+    - scaffold_structure
+    - JSON_and_YAML_parse
+    - JavaScript_syntax
+    - deep_link_contract
+    - fallback_presence
+    - bundled_runtime_has_no_bare_Capacitor_imports

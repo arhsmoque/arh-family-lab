@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FamilyWidgetSnapshot",
+  "type": "object",
+  "required": ["generatedAt", "householdId", "memberScope", "confidence", "deepLink"],
+  "properties": {
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "householdId": { "type": "string", "minLength": 1 },
+    "memberScope": { "type": ["string", "null"] },
+    "nextActivity": {
+      "type": ["object", "null"],
+      "properties": { "title": { "type": "string" }, "time": { "type": "string" } },
+      "required": ["title", "time"],
+      "additionalProperties": false
+    },
+    "pendingCount": { "type": "integer", "minimum": 0 },
+    "attentionCount": { "type": "integer", "minimum": 0 },
+    "confidence": { "enum": ["fresh", "stale", "unavailable"] },
+    "deepLink": { "type": "string", "pattern": "^familylab://" }
+  },
+  "additionalProperties": false
+}
