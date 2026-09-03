@@ -8,6 +8,6 @@
   },
   "dependencies": {
     "cross-spawn": "^7.0.6",
-    "express": "^4.19.2"
+    "express": "^5.2.1"
   }
 }
